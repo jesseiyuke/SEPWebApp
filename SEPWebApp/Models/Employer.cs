@@ -20,7 +20,7 @@ namespace SEPWebApp.Models
         [Required]
         public string JobTitle { get; set; }
         [Required]
-        public int CompanyRegNo { get; set; }
+        public long CompanyRegNo { get; set; }
         [Required]
         public string BusinessName { get; set; }
         [Required]
