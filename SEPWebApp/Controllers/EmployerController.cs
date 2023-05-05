@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SEPWebApp.Data;
+using SEPWebApp.Models;
 
 namespace SEPWebApp.Controllers
 {
@@ -13,7 +14,20 @@ namespace SEPWebApp.Controllers
         }
         public IActionResult Index()
         {
-            var objEmployerList = _db.Employers.ToList();
+            return View();
+        }
+
+        //GET
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        //POST
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(Employer obj)
+        {
             return View();
         }
     }
