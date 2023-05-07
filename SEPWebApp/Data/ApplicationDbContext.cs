@@ -9,5 +9,6 @@ namespace SEPWebApp.Data
         {
         }
         public DbSet<Employer> Employers { get; set; }
+        public DbSet<JobPost> JobPost { get; set; }
     }
 }
