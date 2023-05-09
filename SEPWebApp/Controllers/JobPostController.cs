@@ -17,5 +17,24 @@ namespace SEPWebApp.Controllers
             IEnumerable<JobPost> objJobPostList = _db.JobPost;
             return View(objJobPostList);
         }
+
+        //GET
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        //POST
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(JobPost obj)
+        {
+
+            _db.JobPost.Add(obj);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+
+        }
+
     }
 }
