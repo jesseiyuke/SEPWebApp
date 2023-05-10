@@ -38,6 +38,7 @@ namespace SEPWebApp.Controllers
             {
                 _db.JobPost.Add(obj);
                 _db.SaveChanges();
+                TempData["success"] = "Job post created successfully";
                 return RedirectToAction("Index");
             }
             return View(obj);
@@ -76,6 +77,7 @@ namespace SEPWebApp.Controllers
             {
                 _db.JobPost.Update(obj);
                 _db.SaveChanges();
+                TempData["success"] = "Job post updated successfully";
                 return RedirectToAction("Index");
             }
             return View(obj);
