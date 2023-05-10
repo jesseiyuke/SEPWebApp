@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SEPWebApp.Models;
+using SEP.Models;
 
-namespace SEPWebApp.Data
+namespace SEP.DataAccess
 {
     public class ApplicationDbContext : DbContext
     {
