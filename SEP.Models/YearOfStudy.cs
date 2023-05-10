@@ -1,4 +1,4 @@
-﻿namespace SEPWebApp.Models
+﻿namespace SEP.Models
 {
     public enum YearOfStudy
     {

@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using SEPWebApp.Data;
+using SEP.DataAccess;
 
 var builder = WebApplication.CreateBuilder(args);
 

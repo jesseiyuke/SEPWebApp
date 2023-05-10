@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SEPWebApp.Models;
+using SEP.Models;
 using System.Diagnostics;
 
 namespace SEPWebApp.Controllers
