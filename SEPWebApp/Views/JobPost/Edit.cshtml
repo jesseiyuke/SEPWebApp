@@ -1,0 +1,218 @@
+﻿@model JobPost
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<form method="post" asp-action="Edit">
+    <div class="border p-3 mt-2">
+        <div class="row pb-2">
+            <h2>Employer -> Create Post</h2>
+        </div>
+
+        <div class="mb-3 form-group row">
+            <div>
+                @foreach (var item in Html.GetEnumSelectList <EmployerType>())
+                {
+                    <label class="radio-inline col-5">
+                        <input type="radio" asp-for="EmployerType" value="@item.Value" />@item.Text
+                    </label>
+                }
+                <br />
+                <span asp-validation-for="EmployerType" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="mb-3 form-group row">
+            <div class="col-10">
+                <select asp-for="Faculty" asp-items="Html.GetEnumSelectList<Faculty>()">
+                    <option>Select Faculty</option> @*default value in select list*@
+                 </select>
+                 <br />
+                <span asp-validation-for="Faculty" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="mb-3 form-group row">
+            <div class="col-10">
+                <select asp-for="Department" asp-items="Html.GetEnumSelectList<Department>()">
+                    <option>Select Department</option>
+                </select>
+                <br />
+                <span asp-validation-for="Department" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="mb-3 form-group row">
+            <label asp-for="JobTitle" class="col-2"></label>
+            <div class="col-10">
+                <input asp-for="JobTitle" class="form-control">
+                <span asp-validation-for="JobTitle" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="mb-3 form-group row">
+            <label asp-for="Location" class="col-2"></label>
+            <div class="col-10">
+                <input asp-for="Location" class="form-control">
+                <span asp-validation-for="Location" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="mb-3 form-group row">
+            <label asp-for="JobDescription" class="col-2"></label>
+            <div class="col-10">
+                <input asp-for="JobDescription" class="form-control">
+                <span asp-validation-for="JobDescription" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="mb-3 form-group row">
+            <label asp-for="KeyResponsibilities" class="col-2"></label>
+            <div class="col-10">
+                <input asp-for="KeyResponsibilities" class="form-control">
+                <span asp-validation-for="KeyResponsibilities" class="text-danger"></span>
+            </div>
+        </div>
+
+
+        <div class="mb-3 form-group row">
+            <label asp-for="JobType" class="col-2"></label>
+            <div class="col-4">
+                <select asp-for="JobType" asp-items="Html.GetEnumSelectList<JobType>()">
+                    <option></option>
+                </select>
+                <br />
+                <span asp-validation-for="JobType" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="mb-3 form-group row">
+            <label asp-for="WeekHour" class="col-4"></label>
+            <div class="col-7">
+                <select asp-for="WeekHour" asp-items="Html.GetEnumSelectList<WeekHour>()">
+                    <option>Range</option>
+                </select>
+                <br />
+                <span asp-validation-for="WeekHour" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="mb-3 form-group row">
+            <label asp-for="StartDate" class="col-2 control-label"></label>
+            <div class="col-6">
+                <input asp-for="StartDate" type="text" class="datepicker form-control" />
+                <span asp-validation-for="StartDate" class="text-danger"></span>
+            </div> 
+        </div>
+
+        <div class="mb-3 form-group row">
+            <label asp-for="EndDate" class="col-2 control-label"></label>
+            <div class="col-6">
+                <input asp-for="EndDate" type="text" class="datepicker form-control" />
+                <span asp-validation-for="EndDate" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="mb-3 form-group row">
+            <label asp-for="HourlyRate" class="col-2"></label>
+            <div class="col-10">
+                <input asp-for="HourlyRate" class="form-control">
+                <span asp-validation-for="HourlyRate" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="mb-3 form-group row">
+            <label asp-for="YearOfStudy" class="col-2"></label>
+            <div>
+                @foreach (var item in Html.GetEnumSelectList<YearOfStudy>())
+                {
+                    <label class="radio-inline col-4">
+                        <input type="radio" asp-for="YearOfStudy" value="@item.Value" />@item.Text
+                    </label>
+                }
+                <br />
+                <span asp-validation-for="YearOfStudy" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="mb-3 form-group row">
+            <label asp-for="OpenTo" class="col-2"></label>
+            <div>
+                @foreach (var item in Html.GetEnumSelectList<OpenTo>())
+                {
+                    <input type="radio" asp-for="OpenTo" value="@item.Value" />@item.Text <br />
+                }
+                <br />
+                <span asp-validation-for="OpenTo" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="mb-3 form-group row">
+            <label asp-for="MinimumRequirements" class="col-3"></label>
+            <div class="col-9">
+                <input asp-for="MinimumRequirements" class="form-control">
+                <span asp-validation-for="MinimumRequirements" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="mb-3 form-group row">
+            <label asp-for="ApplicationInstruction" class="col-2"></label>
+            <div class="col-10">
+                <input asp-for="ApplicationInstruction" class="form-control">
+                <span asp-validation-for="ApplicationInstruction" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="mb-3 form-group row">
+            <label asp-for="ClosingDate" class="col-2 control-label"></label>
+            <div class="col-3">
+                <input asp-for="ClosingDate" type="text" class="datepicker form-control" />
+                <span asp-validation-for="ClosingDate" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="mb-3 form-group row">
+            <label asp-for="ContactPerson" class="col-5"></label>
+            <div class="col-7">
+                <input asp-for="ContactPerson" class="form-control">
+                <span asp-validation-for="ContactPerson" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="mb-3 form-group row">
+            <label asp-for="Email" class="col-2"></label>
+            <div class="col-10">
+                <input asp-for="Email" class="form-control">
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="mb-3 form-group row">
+            <label asp-for="ContactNo" class="col-2"></label>
+            <div class="col-10">
+                <input asp-for="ContactNo" class="form-control">
+                <span asp-validation-for="ContactNo" class="text-danger"></span>
+            </div>
+        </div>
+
+      
+        <button type="submit" class="btn btn-secondary" style="width:150px">Save changes</button>
+        <a asp-controller="JobPost" asp-action="Index" class="btn btn-secondary" style="width:150px">Back</a>
+    </div>
+
+
+</form>
+
+@section Scripts
+    {
+    <script>
+        $(function () {
+            $('.datepicker').datepicker();
+        });
+    </script>
+
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
+

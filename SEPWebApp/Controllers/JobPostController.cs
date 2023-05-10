@@ -42,7 +42,43 @@ namespace SEPWebApp.Controllers
             }
             return View(obj);
 
+        }
 
+        //GET
+        public IActionResult Edit(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+
+            var JobPostFromDb = _db.JobPost.Find(id);
+
+            if (JobPostFromDb == null)
+            {
+                return NotFound();
+            }
+
+            return View(JobPostFromDb);
+        }
+
+        //POST
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(JobPost obj)
+        {
+            if (obj.JobDescription == obj.KeyResponsibilities)
+            {
+                ModelState.AddModelError("JobDescription", "Description of job cannot exactly match the Key responsibilities.");
+            }
+
+            if (ModelState.IsValid)
+            {
+                _db.JobPost.Update(obj);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(obj);
 
         }
 
