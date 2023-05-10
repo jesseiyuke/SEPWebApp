@@ -29,10 +29,20 @@ namespace SEPWebApp.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(JobPost obj)
         {
+            if (obj.JobDescription == obj.KeyResponsibilities)
+            {
+                ModelState.AddModelError("JobDescription", "Description of job cannot exactly match the Key responsibilities.");
+            }
 
-            _db.JobPost.Add(obj);
-            _db.SaveChanges();
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                _db.JobPost.Add(obj);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(obj);
+
+
 
         }
 
