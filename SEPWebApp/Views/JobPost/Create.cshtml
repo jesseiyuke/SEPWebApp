@@ -14,10 +14,11 @@
                 @foreach (var item in Html.GetEnumSelectList <EmployerType>())
                 {
                     <label class="radio-inline col-5">
-                        <input type="radio" asp-for="EmployerType" value="@item.Text" />@item.Text
-@*                        <span asp-validation-for="EmployerType" class="text-danger"></span>*@
+                        <input type="radio" asp-for="EmployerType" value="@item.Value" />@item.Text
                     </label>
                 }
+                <br />
+                <span asp-validation-for="EmployerType" class="text-danger"></span>
             </div>
         </div>
 
@@ -126,10 +127,11 @@
                 @foreach (var item in Html.GetEnumSelectList<YearOfStudy>())
                 {
                     <label class="radio-inline col-4">
-                        <input type="radio" asp-for="YearOfStudy" value="@item.Text" />@item.Text
-@*                        <span asp-validation-for="YearOfStudy" class="text-danger"></span>*@
+                        <input type="radio" asp-for="YearOfStudy" value="@item.Value" />@item.Text
                     </label>
                 }
+                <br />
+                <span asp-validation-for="YearOfStudy" class="text-danger"></span>
             </div>
         </div>
 
@@ -138,9 +140,10 @@
             <div>
                 @foreach (var item in Html.GetEnumSelectList<OpenTo>())
                 {
-                    <input type="radio" asp-for="OpenTo" value="@item.Text" />@item.Text <br />
-@*                    <span asp-validation-for="OpenTo" class="text-danger"></span>*@
+                    <input type="radio" asp-for="OpenTo" value="@item.Value" />@item.Text <br />
                 }
+                <br />
+                <span asp-validation-for="OpenTo" class="text-danger"></span>
             </div>
         </div>
 
