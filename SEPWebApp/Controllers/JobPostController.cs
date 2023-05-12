@@ -1,20 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SEP.DataAccess;
+using SEP.DataAccess.Repository.IRepository;
 using SEP.Models;
 
 namespace SEPWebApp.Controllers
 {
     public class JobPostController : Controller
     {
-        private readonly ApplicationDbContext _db;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public JobPostController(ApplicationDbContext db)
+        public JobPostController(IUnitOfWork unitOfWork)
         {
-            _db = db;
+            _unitOfWork = unitOfWork;
         }
         public IActionResult Index()
         {
-            IEnumerable<JobPost> objJobPostList = _db.JobPost;
+            IEnumerable<JobPost> objJobPostList = _unitOfWork.JobPost.GetAll();
             return View(objJobPostList);
         }
 
@@ -36,8 +36,8 @@ namespace SEPWebApp.Controllers
 
             if (ModelState.IsValid)
             {
-                _db.JobPost.Add(obj);
-                _db.SaveChanges();
+                _unitOfWork.JobPost.Add(obj);
+                _unitOfWork.Save();
                 TempData["success"] = "Job post created successfully";
                 return RedirectToAction("Index");
             }
@@ -53,14 +53,15 @@ namespace SEPWebApp.Controllers
                 return NotFound();
             }
 
-            var JobPostFromDb = _db.JobPost.Find(id);
+            //var JobPostFromDb = _db.JobPost.Find(id);
+            var JobPostFromDbFirst = _unitOfWork.JobPost.GetFirstOrDefault(u => u.Id == id);
 
-            if (JobPostFromDb == null)
+            if (JobPostFromDbFirst == null)
             {
                 return NotFound();
             }
 
-            return View(JobPostFromDb);
+            return View(JobPostFromDbFirst);
         }
 
         //POST
@@ -75,8 +76,8 @@ namespace SEPWebApp.Controllers
 
             if (ModelState.IsValid)
             {
-                _db.JobPost.Update(obj);
-                _db.SaveChanges();
+                _unitOfWork.JobPost.Update(obj);
+                _unitOfWork.Save();
                 TempData["success"] = "Job post updated successfully";
                 return RedirectToAction("Index");
             }
