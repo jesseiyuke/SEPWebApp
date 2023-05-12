@@ -2,7 +2,7 @@
 using SEP.Models;
 using System.Diagnostics;
 
-namespace SEPWebApp.Controllers
+namespace SEPWebApp.Areas.Employer.Controllers
 {
     public class HomeController : Controller
     {

@@ -7,6 +7,33 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\Approver\Data\**" />
+    <Compile Remove="Areas\Approver\Models\**" />
+    <Compile Remove="Areas\Employer\Data\**" />
+    <Compile Remove="Areas\Employer\Models\**" />
+    <Compile Remove="Areas\Student\Data\**" />
+    <Compile Remove="Areas\Student\Models\**" />
+    <Content Remove="Areas\Approver\Data\**" />
+    <Content Remove="Areas\Approver\Models\**" />
+    <Content Remove="Areas\Employer\Data\**" />
+    <Content Remove="Areas\Employer\Models\**" />
+    <Content Remove="Areas\Student\Data\**" />
+    <Content Remove="Areas\Student\Models\**" />
+    <EmbeddedResource Remove="Areas\Approver\Data\**" />
+    <EmbeddedResource Remove="Areas\Approver\Models\**" />
+    <EmbeddedResource Remove="Areas\Employer\Data\**" />
+    <EmbeddedResource Remove="Areas\Employer\Models\**" />
+    <EmbeddedResource Remove="Areas\Student\Data\**" />
+    <EmbeddedResource Remove="Areas\Student\Models\**" />
+    <None Remove="Areas\Approver\Data\**" />
+    <None Remove="Areas\Approver\Models\**" />
+    <None Remove="Areas\Employer\Data\**" />
+    <None Remove="Areas\Employer\Models\**" />
+    <None Remove="Areas\Student\Data\**" />
+    <None Remove="Areas\Student\Models\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.16" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.5" />
@@ -18,6 +45,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Approver\Controllers\" />
+    <Folder Include="Areas\Student\Controllers\" />
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
 

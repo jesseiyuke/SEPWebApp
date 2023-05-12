@@ -2,7 +2,7 @@
 using SEP.DataAccess.Repository.IRepository;
 using SEP.Models;
 
-namespace SEPWebApp.Controllers
+namespace SEPWebApp.Areas.Employer.Controllers
 {
     public class JobPostController : Controller
     {
