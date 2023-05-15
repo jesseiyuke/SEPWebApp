@@ -4,6 +4,7 @@ using System.Diagnostics;
 
 namespace SEPWebApp.Areas.Employer.Controllers
 {
+    [Area("Employer")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

@@ -4,6 +4,7 @@ using SEP.Models;
 
 namespace SEPWebApp.Areas.Employer.Controllers
 {
+    [Area("Employer")]
     public class JobPostController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
