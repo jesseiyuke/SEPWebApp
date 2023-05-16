@@ -1,0 +1,160 @@
+﻿@model User
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<form>
+    
+
+    <div class="container h-100">
+
+        
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-xl-9">
+
+                <div class="card" style="border-radius: 15px;">
+                    <div class="card-body">
+
+                       
+
+                        <div class="row align-items-center py-3">
+                            <div class="col-md-9 ps-5">
+                                <h3 class="mb-0">REGISTER</h3>
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center py-3">
+                            <div class="col-md-3 ps-5">
+
+                                <label asp-for="FirstName" class="mb-0">First Name</label>
+
+                            </div>
+                            <div class="col-md-9 pe-5">
+                                
+                                <input type="text" asp-for="FirstName"  class="form-control form-control-lg" />
+
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center py-3">
+                            <div class="col-md-3 ps-5">
+
+                                <label asp-for="LastName" class="mb-0">Last Name</label>
+
+                            </div>
+                            <div class="col-md-9 pe-5">
+
+                                <input type="text" asp-for="LastName" class="form-control form-control-lg" />
+
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center py-3">
+                            <div class="col-md-3 ps-5">
+
+                                <label asp-for="Cellphone" class="mb-0">Cell</label>
+
+                            </div>
+                            <div class="col-md-9 pe-5">
+
+                                <input type="tel" asp-for="Cellphone" class="form-control form-control-lg" />
+
+                            </div>
+                        </div>
+                        <div class="row align-items-center py-3">
+                            <div class="col-md-3 ps-5">
+
+                                <label asp-for="Telephone" class="mb-0">Tell</label>
+
+                            </div>
+                            <div class="col-md-9 pe-5">
+
+                                <input type="tel" asp-for="Telephone" placeholder="Optional" class="form-control form-control-lg" />
+
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center py-3">
+                            <div class="col-md-3 ps-5">
+
+                                <label asp-for="Email" class="mb-0">Email</label>
+
+                            </div>
+                            <div class="col-md-9 pe-5">
+
+                                <input type="email" asp-for="Email" class="form-control form-control-lg"  />
+
+                            </div>
+                        </div>
+
+
+                        <div class="row align-items-center py-3">
+                            <div class="col-md-3 ps-5">
+
+                                <label asp-for="Password" class="mb-0">Password</label>
+
+                            </div>
+                            <div class="col-md-9 pe-5">
+
+                                <input type="password" asp-for="Password" id="form3Example4cd" class="form-control" />
+
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center py-3">
+                            <div class="col-md-3 ps-5">
+
+                                <label asp-for="rePassword" class="mb-0">Retype Password</label>
+
+                            </div>
+                            <div class="col-md-9 pe-5">
+
+                                <input type="password" asp-for="rePassword" id="form3Example4cd" class="form-control" />
+
+                            </div>
+                        </div>
+                        <div class="row align-items-center py-3">
+
+                            <div class="col-md-3 ps-5">
+
+                                <label  class="mb-0">Register as :</label>
+
+                            </div>
+
+                            
+                            <div class="col-md-9 pe-5">
+                                <select asp-for="Role" asp-items="Html.GetEnumSelectList<Roles>()">
+                                        <option>Select Role</option> @*default value in select list*@
+                                </select>
+                                <span asp-validation-for="Role" class="text-danger"></span>
+                            </div>
+                            
+                        </div>
+                        
+                        
+                        <div class="row align-items-center py-3">
+
+                            <div class="col-md-9 ps-5">
+                                <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3c" />
+                                <label class="form-check-label" for="form2Example3">
+                                    I have read and accept the <a href="#!">Terms and Conditions</a> for the use of this service
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="px-5 py-4">
+                            <button  type="submit" class="btn btn-secondary" style="width:150px">REGISTER</button>
+
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</form>
+

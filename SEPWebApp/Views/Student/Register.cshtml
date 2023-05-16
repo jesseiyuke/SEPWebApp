@@ -1,0 +1,153 @@
+﻿@model Student
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<form>
+
+
+    <div class="container h-100">
+
+
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-xl-9">
+
+                <div class="card" style="border-radius: 15px;">
+                    <div class="card-body">
+
+
+
+                        <div class="row align-items-center py-3">
+                            <div class="col-md-9 ps-5">
+                                <h3 class="mb-0">Personal details</h3>
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center py-3">
+                            <div class="col-md-3 ps-5">
+
+                                <label asp-for="FirstName" class="mb-0">First Name</label>
+
+                            </div>
+                            <div class="col-md-9 pe-5">
+
+                                <input type="text" asp-for="FirstName" class="form-control form-control-lg" />
+
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center py-3">
+                            <div class="col-md-3 ps-5">
+
+                                <label asp-for="LastName" class="mb-0">Last Name</label>
+
+                            </div>
+                            <div class="col-md-9 pe-5">
+
+                                <input type="text" asp-for="LastName" class="form-control form-control-lg" />
+
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center py-3">
+                            <div class="col-md-3 ps-5">
+
+                                <label asp-for="Address" class="mb-0">Address</label>
+
+                            </div>
+                            <div class="col-md-9 pe-5">
+
+                                <input type="text" asp-for="Address" class="form-control form-control-lg" />
+
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center py-3">
+                            <div class="col-md-3 ps-5">
+
+                                <label asp-for="Telephone" class="mb-0">Tell(optional)</label>
+
+                            </div>
+                            <div class="col-md-9 pe-5">
+
+                                <input type="tel" asp-for="Telephone" class="form-control form-control-lg" />
+
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center py-3">
+                            <div class="col-md-3 ps-5">
+
+                                <label asp-for="Cellphone" class="mb-0">Cell</label>
+
+                            </div>
+                            <div class="col-md-9 pe-5">
+
+                                <input type="tel" asp-for="Cellphone" class="form-control form-control-lg" />
+
+                            </div>
+                        </div>
+
+
+                        <div class="row align-items-center py-3">
+                            <div class="col-md-3 ps-5">
+
+                                <label asp-for="Email" class="mb-0">Email</label>
+
+                            </div>
+                            <div class="col-md-9 pe-5">
+
+                                <input type="email" asp-for="Email" class="form-control form-control-lg" />
+
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center py-3">
+                            <div class="col-md-3 ps-5">
+
+                                <label asp-for="IdNo" class="mb-0">ID/Passport No (optinal)</label>
+
+                            </div>
+                            <div class="col-md-9 pe-5">
+
+                                <input type="text" asp-for="IdNo" class="form-control form-control-lg" />
+
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center py-3">
+                            <div class="col-md-3 ps-5">
+
+                                <label asp-for="DriversLicense" class="mb-0">Drivers License</label>
+
+                            </div>
+                            <div class="col-md-9 pe-5">
+
+                                <input type="text" asp-for="DriversLicense" class="form-control form-control-lg" />
+
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center py-3">
+                            <div class="col-md-3 ps-5">
+
+                                <label asp-for="CareerObjective" class="mb-0">Career Objective</label>
+
+                            </div>
+                            <div class="col-md-9 pe-5">
+
+                                <input type="text" asp-for="CareerObjective" class="form-control form-control-lg" />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</form>
+
+

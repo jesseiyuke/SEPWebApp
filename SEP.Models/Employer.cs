@@ -2,21 +2,10 @@
 
 namespace SEP.Models
 {
-    public class Employer
+    public class Employer : Profile
     {
-        [Key]
-        public int Id { get; set; }
+
         public string Title { get; set; }
-        [Required]
-        public string FirstName { get; set; }
-        [Required]
-        public string LastName { get; set; }
-        [Required]
-        public string EmailAndUsername { get; set; }
-        [Required]
-        public int Telephone { get; set; }
-        [Required]
-        public int Cellphone { get; set; }
         [Required]
         public string JobTitle { get; set; }
         [Required]
@@ -29,8 +18,7 @@ namespace SEP.Models
         public string BusinessType { get; set; }
         [Required]
         public string RegisteredAddress { get; set; }
-        [Required]
-        public string Password { get; set; }
+
 
     }
 }
