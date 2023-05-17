@@ -4,6 +4,7 @@ using SEP.Models;
 
 namespace SEPWebApp.Controllers
 {
+    [Area("Employer")]
     public class EmployerController : Controller
     {
         private readonly ApplicationDbContext _db;
