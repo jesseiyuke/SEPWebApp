@@ -12,6 +12,7 @@ namespace SEP.DataAccess
         }
         public DbSet<Employer> Employers { get; set; }
         public DbSet<JobPost> JobPost { get; set; }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
