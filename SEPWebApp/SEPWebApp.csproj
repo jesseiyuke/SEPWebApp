@@ -54,6 +54,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SEP.DataAccess\SEP.DataAccess.csproj" />
+    <ProjectReference Include="..\SEP.Utility\SEP.Utility.csproj" />
   </ItemGroup>
 
 </Project>
