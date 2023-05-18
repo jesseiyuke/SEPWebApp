@@ -2,7 +2,7 @@
 using SEP.DataAccess;
 using SEP.Models;
 
-namespace SEPWebApp.Controllers
+namespace SEPWebApp.Areas.Controllers
 {
     [Area("Employer")]
     public class EmployerController : Controller

@@ -35,6 +35,7 @@
 
   <ItemGroup>
     <Folder Include="Areas\Approver\Controllers\" />
+    <Folder Include="Areas\Employer\" />
     <Folder Include="Areas\Student\Controllers\" />
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
