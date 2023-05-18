@@ -2,7 +2,7 @@
 using SEP.DataAccess.Repository.IRepository;
 using SEP.Models;
 
-namespace SEPWebApp.Areas.Employer.Controllers
+namespace SEPWebApp.Areas.Controllers
 {
     [Area("Employer")]
     public class JobPostController : Controller

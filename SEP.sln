@@ -5,11 +5,11 @@ VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SEPWebApp", "SEPWebApp\SEPWebApp.csproj", "{3EA26824-4A17-48E6-B5E3-07D78E3890EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SEP.DataAccess", "SEP.DataAccess\SEP.DataAccess.csproj", "{2D9E5B07-B0F9-4956-A6D6-5ECFC107789F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SEP.DataAccess", "SEP.DataAccess\SEP.DataAccess.csproj", "{2D9E5B07-B0F9-4956-A6D6-5ECFC107789F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SEP.Models", "SEP.Models\SEP.Models.csproj", "{746EB46E-B18C-4E8A-A4ED-B94DDC67F2D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SEP.Models", "SEP.Models\SEP.Models.csproj", "{746EB46E-B18C-4E8A-A4ED-B94DDC67F2D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SEP.Utility", "SEP.Utility\SEP.Utility.csproj", "{337B7DB7-6519-47C8-99D8-82A3894E9E86}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SEP.Utility", "SEP.Utility\SEP.Utility.csproj", "{337B7DB7-6519-47C8-99D8-82A3894E9E86}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -8,28 +8,24 @@
         </div>
 
         <div class="mb-3">
-            <label asp-for="Title"></label>
-            <input asp-for="Title"/>
+            <label asp-for="User.Title"></label>
+            <input asp-for="User.Title"/>
         </div>
         <div class="mb-3">
-            <label asp-for="FirstName"></label>
-            <input asp-for="FirstName"/>
+            <label asp-for="User.FirstName"></label>
+            <input asp-for="User.FirstName"/>
         </div>
         <div class="mb-3">
-            <label asp-for="LastName"></label>
-            <input asp-for="LastName" />
+            <label asp-for="User.LastName"></label>
+            <input asp-for="User.LastName" />
         </div>
         <div class="mb-3">
-            <label asp-for="EmailAndUsername"></label>
-            <input asp-for="EmailAndUsername" />
+            <label asp-for="User.Telephone"></label>
+            <input asp-for="User.Telephone" />
         </div>
         <div class="mb-3">
-            <label asp-for="Telephone"></label>
-            <input asp-for="Telephone" />
-        </div>
-        <div class="mb-3">
-            <label asp-for="Cellphone"></label>
-            <input asp-for="Cellphone" />
+            <label asp-for="User.PhoneNumber"></label>
+            <input asp-for="User.PhoneNumber" />
         </div>
         <div class="mb-3">
             <label asp-for="JobTitle"></label>
@@ -54,11 +50,6 @@
         <div class="mb-3">
             <label asp-for="RegisteredAddress"></label>
             <input asp-for="RegisteredAddress" />
-        </div>
-        <div class="mb-3">
-            <label asp-for="Password"></label>
-            <input asp-for="Password" />
-        </div>
 
         <button type="submit" class="btn btn-secondary" style="width:150px">Create</button>
         <a asp-controller="Employer" asp-action="Index" class="btn btn-secondary" style="width:150px">Back</a>

@@ -7,9 +7,8 @@ namespace SEP.Models
         public string? Title { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
-        public string? EmailAndUsername { get; set; }
-        public int? Telephone { get; set; }
-        public int? Cellphone { get; set; }
+        public string? Telephone { get; set; }
+
 
     }
 }
