@@ -29,6 +29,10 @@ namespace SEPWebApp.Areas.Home.Controllers
                 {
                     return RedirectToAction("Index", "Employer", new { area = "Employer" });
                 }
+                if (User.IsInRole("Student"))
+                {
+                    return RedirectToAction("Index", "Student", new { area = "Student" });
+                }
             }
 
             return RedirectToAction("Login", "Account", new { area = "Identity" });

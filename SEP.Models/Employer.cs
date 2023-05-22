@@ -1,23 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SEP.Models
 {
     public class Employer
     {
-        [Key]
-        public int Id { get; set; }
-        public string Title { get; set; }
+        public string Id { get; set; }
         [Required]
-        public string FirstName { get; set; }
-        [Required]
-        public string LastName { get; set; }
-        [Required]
-        public string EmailAndUsername { get; set; }
-        [Required]
-        public int Telephone { get; set; }
-        [Required]
-        public int Cellphone { get; set; }
-        [Required]
+        [ForeignKey("Id")]
+        public ApplicationUser User { get; set; }
         public string JobTitle { get; set; }
         [Required]
         public long CompanyRegNo { get; set; }
@@ -29,8 +20,6 @@ namespace SEP.Models
         public string BusinessType { get; set; }
         [Required]
         public string RegisteredAddress { get; set; }
-        [Required]
-        public string Password { get; set; }
 
     }
 }
