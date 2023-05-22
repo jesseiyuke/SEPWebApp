@@ -9,9 +9,11 @@ namespace SEP.DataAccess.Repository
         {
             _db = db;
             JobPost = new JobPostRepository(_db);
+            Employer = new EmployerRepository(_db);
         }
 
         public IJobPostRepository JobPost { get; private set; }
+        public IEmployerRepository Employer { get; private set; }
 
         public void Save()
         {

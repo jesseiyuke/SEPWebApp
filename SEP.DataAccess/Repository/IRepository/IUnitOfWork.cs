@@ -3,6 +3,8 @@
     public interface IUnitOfWork
     {
         IJobPostRepository JobPost { get; }
+        IEmployerRepository Employer { get; }
+
         void Save();
     }
 }
