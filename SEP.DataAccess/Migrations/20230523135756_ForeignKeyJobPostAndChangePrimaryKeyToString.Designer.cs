@@ -12,8 +12,8 @@ using SEP.DataAccess;
 namespace SEP.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230522131530_RestartMigrations")]
-    partial class RestartMigrations
+    [Migration("20230523135756_ForeignKeyJobPostAndChangePrimaryKeyToString")]
+    partial class ForeignKeyJobPostAndChangePrimaryKeyToString
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -266,11 +266,8 @@ namespace SEP.DataAccess.Migrations
 
             modelBuilder.Entity("SEP.Models.JobPost", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ApplicationInstruction")
                         .IsRequired()
@@ -279,8 +276,9 @@ namespace SEP.DataAccess.Migrations
                     b.Property<DateTime>("ClosingDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ContactNo")
-                        .HasColumnType("int");
+                    b.Property<string>("ContactNo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ContactPerson")
                         .IsRequired()
@@ -468,6 +466,17 @@ namespace SEP.DataAccess.Migrations
                 });
 
             modelBuilder.Entity("SEP.Models.Employer", b =>
+                {
+                    b.HasOne("SEP.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SEP.Models.JobPost", b =>
                 {
                     b.HasOne("SEP.Models.ApplicationUser", "User")
                         .WithMany()

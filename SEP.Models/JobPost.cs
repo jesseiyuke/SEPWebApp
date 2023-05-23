@@ -1,11 +1,17 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SEP.Models
 {
     public class JobPost
     {
         [Key]
-        public int Id { get; set; }
+        public string Id { get; set; }
+
+        [Required]
+        [ForeignKey("Id")]
+        public ApplicationUser User { get; set; }
+
         [Required]
         public EmployerType EmployerType { get; set; }
         [Required]
@@ -60,7 +66,7 @@ namespace SEP.Models
         public string Email { get; set; }
         [Required]
         [Display(Name = "Contact No")]
-        public int ContactNo { get; set; }
+        public string ContactNo { get; set; }
 
         [Display(Name = "Reviewer’s comment")]
         public string? ReviewerComment { get; set; }

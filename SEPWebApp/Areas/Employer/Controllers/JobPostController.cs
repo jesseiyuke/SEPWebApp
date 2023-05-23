@@ -47,9 +47,9 @@ namespace SEPWebApp.Areas.Employer.Controllers
         }
 
         //GET
-        public IActionResult Edit(int? id)
+        public IActionResult Edit(string? id)
         {
-            if (id == null || id == 0)
+            if (id == null)
             {
                 return NotFound();
             }
@@ -87,9 +87,9 @@ namespace SEPWebApp.Areas.Employer.Controllers
         }
 
         //GET
-        public IActionResult Delete(int? id)
+        public IActionResult Delete(string? id)
         {
-            if (id == null || id == 0)
+            if (id == null)
             {
                 return NotFound();
             }
@@ -107,7 +107,7 @@ namespace SEPWebApp.Areas.Employer.Controllers
         //POST
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeletePOST(int? id)
+        public IActionResult DeletePOST(string? id)
         {
             var obj = _unitOfWork.JobPost.GetFirstOrDefault(u => u.Id == id);
             if (obj == null)

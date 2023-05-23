@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SEP.DataAccess;
 
@@ -11,9 +12,11 @@ using SEP.DataAccess;
 namespace SEP.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230523110011_IntitialMigration")]
+    partial class IntitialMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -263,8 +266,11 @@ namespace SEP.DataAccess.Migrations
 
             modelBuilder.Entity("SEP.Models.JobPost", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ApplicationInstruction")
                         .IsRequired()
@@ -273,9 +279,8 @@ namespace SEP.DataAccess.Migrations
                     b.Property<DateTime>("ClosingDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("ContactNo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("ContactNo")
+                        .HasColumnType("int");
 
                     b.Property<string>("ContactPerson")
                         .IsRequired()
@@ -463,17 +468,6 @@ namespace SEP.DataAccess.Migrations
                 });
 
             modelBuilder.Entity("SEP.Models.Employer", b =>
-                {
-                    b.HasOne("SEP.Models.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("SEP.Models.JobPost", b =>
                 {
                     b.HasOne("SEP.Models.ApplicationUser", "User")
                         .WithMany()
