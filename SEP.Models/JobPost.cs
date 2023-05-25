@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SEP.Models
@@ -6,12 +7,9 @@ namespace SEP.Models
     public class JobPost
     {
         [Key]
-        public string Id { get; set; }
-
-        [Required]
-        [ForeignKey("Id")]
-        public ApplicationUser User { get; set; }
-
+        public int Id { get; set; }
+        [ValidateNever]
+        public ApplicationUser ApplicationUser { get; set; }
         [Required]
         public EmployerType EmployerType { get; set; }
         [Required]

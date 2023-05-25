@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SEP.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class IntitialMigration : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -53,40 +53,6 @@ namespace SEP.DataAccess.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "JobPost",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    EmployerType = table.Column<int>(type: "int", nullable: false),
-                    Faculty = table.Column<int>(type: "int", nullable: false),
-                    Department = table.Column<int>(type: "int", nullable: false),
-                    JobTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    JobDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    KeyResponsibilities = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    JobType = table.Column<int>(type: "int", nullable: false),
-                    WeekHour = table.Column<int>(type: "int", nullable: false),
-                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    HourlyRate = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    YearOfStudy = table.Column<int>(type: "int", nullable: false),
-                    OpenTo = table.Column<int>(type: "int", nullable: false),
-                    MinimumRequirements = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ApplicationInstruction = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ClosingDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ContactPerson = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ContactNo = table.Column<int>(type: "int", nullable: false),
-                    ReviewerComment = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Outcome = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_JobPost", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -199,7 +165,9 @@ namespace SEP.DataAccess.Migrations
                 name: "Employer",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     JobTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CompanyRegNo = table.Column<long>(type: "bigint", nullable: false),
                     BusinessName = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -211,18 +179,59 @@ namespace SEP.DataAccess.Migrations
                 {
                     table.PrimaryKey("PK_Employer", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Employer_AspNetUsers_Id",
-                        column: x => x.Id,
+                        name: "FK_Employer_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "JobPost",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    EmployerType = table.Column<int>(type: "int", nullable: false),
+                    Faculty = table.Column<int>(type: "int", nullable: false),
+                    Department = table.Column<int>(type: "int", nullable: false),
+                    JobTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    JobDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    KeyResponsibilities = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    JobType = table.Column<int>(type: "int", nullable: false),
+                    WeekHour = table.Column<int>(type: "int", nullable: false),
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    HourlyRate = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    YearOfStudy = table.Column<int>(type: "int", nullable: false),
+                    OpenTo = table.Column<int>(type: "int", nullable: false),
+                    MinimumRequirements = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ApplicationInstruction = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ClosingDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ContactPerson = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ContactNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ReviewerComment = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Outcome = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_JobPost", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_JobPost_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "Student",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IdNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DriversLicense = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -237,11 +246,10 @@ namespace SEP.DataAccess.Migrations
                 {
                     table.PrimaryKey("PK_Student", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Student_AspNetUsers_Id",
-                        column: x => x.Id,
+                        name: "FK_Student_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -282,6 +290,21 @@ namespace SEP.DataAccess.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Employer_ApplicationUserId",
+                table: "Employer",
+                column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_JobPost_ApplicationUserId",
+                table: "JobPost",
+                column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Student_ApplicationUserId",
+                table: "Student",
+                column: "ApplicationUserId");
         }
 
         /// <inheritdoc />

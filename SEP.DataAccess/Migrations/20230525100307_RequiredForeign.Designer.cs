@@ -12,8 +12,8 @@ using SEP.DataAccess;
 namespace SEP.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230523135756_ForeignKeyJobPostAndChangePrimaryKeyToString")]
-    partial class ForeignKeyJobPostAndChangePrimaryKeyToString
+    [Migration("20230525100307_RequiredForeign")]
+    partial class RequiredForeign
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -233,7 +233,14 @@ namespace SEP.DataAccess.Migrations
 
             modelBuilder.Entity("SEP.Models.Employer", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ApplicationUserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("BusinessName")
@@ -261,17 +268,26 @@ namespace SEP.DataAccess.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ApplicationUserId");
+
                     b.ToTable("Employer");
                 });
 
             modelBuilder.Entity("SEP.Models.JobPost", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ApplicationInstruction")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ApplicationUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("ClosingDate")
                         .HasColumnType("datetime2");
@@ -347,17 +363,26 @@ namespace SEP.DataAccess.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ApplicationUserId");
+
                     b.ToTable("JobPost");
                 });
 
             modelBuilder.Entity("SEP.Models.Student", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ApplicationUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CareerObjective")
                         .IsRequired()
@@ -391,6 +416,8 @@ namespace SEP.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
 
                     b.ToTable("Student");
                 });
@@ -467,35 +494,35 @@ namespace SEP.DataAccess.Migrations
 
             modelBuilder.Entity("SEP.Models.Employer", b =>
                 {
-                    b.HasOne("SEP.Models.ApplicationUser", "User")
+                    b.HasOne("SEP.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
-                        .HasForeignKey("Id")
+                        .HasForeignKey("ApplicationUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.Navigation("ApplicationUser");
                 });
 
             modelBuilder.Entity("SEP.Models.JobPost", b =>
                 {
-                    b.HasOne("SEP.Models.ApplicationUser", "User")
+                    b.HasOne("SEP.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
-                        .HasForeignKey("Id")
+                        .HasForeignKey("ApplicationUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.Navigation("ApplicationUser");
                 });
 
             modelBuilder.Entity("SEP.Models.Student", b =>
                 {
-                    b.HasOne("SEP.Models.ApplicationUser", "User")
+                    b.HasOne("SEP.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
-                        .HasForeignKey("Id")
+                        .HasForeignKey("ApplicationUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.Navigation("ApplicationUser");
                 });
 #pragma warning restore 612, 618
         }
