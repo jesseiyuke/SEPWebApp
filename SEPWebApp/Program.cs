@@ -20,6 +20,11 @@ builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddSingleton<IEmailSender, EmailSender>();
 
+/*builder.Services.AddControllersWithViews().AddRazorPagesOptions(options =>
+{
+    options.Conventions.AddAreaPageRoute("Identity", "/Account/Login", "");
+});*/
+
 
 var app = builder.Build();
 
@@ -42,8 +47,9 @@ app.UseAuthorization();
 
 app.MapRazorPages();
 
+
 app.MapControllerRoute(
     name: "default",
-    pattern: "{area=Employer}/{controller=Home}/{action=Index}/{id?}");
+    pattern: "{area=Home}/{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

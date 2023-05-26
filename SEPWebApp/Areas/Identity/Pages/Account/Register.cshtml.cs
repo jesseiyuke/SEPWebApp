@@ -101,9 +101,8 @@ namespace SEPWebApp.Areas.Identity.Pages.Account
             public string? Title { get; set; }
             public string? FirstName { get; set; }
             public string? LastName { get; set; }
-            public string? EmailAndUsername { get; set; }
-            public int? Telephone { get; set; }
-            public int? Cellphone { get; set; }
+            public string? Telephone { get; set; }
+            public string? Cellphone { get; set; }
 
             public string? Role { get; set; }
 
@@ -147,9 +146,9 @@ namespace SEPWebApp.Areas.Identity.Pages.Account
 
                 user.Title = Input.Title;
                 user.FirstName = Input.FirstName;
-                user.LastName = Input.Title;
+                user.LastName = Input.LastName;
                 user.Telephone = Input.Telephone;
-                user.Cellphone = Input.Cellphone;
+                user.PhoneNumber = Input.Cellphone;
 
 
                 var result = await _userManager.CreateAsync(user, Input.Password);

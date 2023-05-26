@@ -86,5 +86,41 @@ namespace SEPWebApp.Areas.Employer.Controllers
 
         }
 
+        //GET
+        public IActionResult Delete(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+
+            var JobPostFromDbFirst = _unitOfWork.JobPost.GetFirstOrDefault(u => u.Id == id);
+
+            if (JobPostFromDbFirst == null)
+            {
+                return NotFound();
+            }
+
+            return View(JobPostFromDbFirst);
+        }
+
+        //POST
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeletePOST(int? id)
+        {
+            var obj = _unitOfWork.JobPost.GetFirstOrDefault(u => u.Id == id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+
+            _unitOfWork.JobPost.Remove(obj);
+            _unitOfWork.Save();
+            TempData["success"] = "Job Post deleted successfully";
+            return RedirectToAction("Index");
+
+        }
+
     }
 }
