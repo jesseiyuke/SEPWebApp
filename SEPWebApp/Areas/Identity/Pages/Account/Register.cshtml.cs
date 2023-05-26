@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
+using SEP.DataAccess.Repository.IRepository;
 using SEP.Models;
 using SEP.Utility;
 using System.ComponentModel.DataAnnotations;
@@ -27,6 +28,7 @@ namespace SEPWebApp.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IUnitOfWork _unitOfWork;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
@@ -34,8 +36,10 @@ namespace SEPWebApp.Areas.Identity.Pages.Account
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
-            RoleManager<IdentityRole> roleManager)
+            RoleManager<IdentityRole> roleManager,
+            IUnitOfWork unitOfWork)
         {
+            _unitOfWork=unitOfWork;
             _roleManager = roleManager;
             _userManager = userManager;
             _userStore = userStore;
@@ -106,8 +110,12 @@ namespace SEPWebApp.Areas.Identity.Pages.Account
 
             public string? Role { get; set; }
 
+            public int? EmployerId { get; set; }
+
             [ValidateNever]
             public IEnumerable<SelectListItem> RoleList { get; set; }
+            [Required]
+            public string? JobTitle { get; set; }
         }
 
 
@@ -129,7 +137,9 @@ namespace SEPWebApp.Areas.Identity.Pages.Account
                 {
                     Text = i,
                     Value = i
-                })
+                }),
+
+                JobTitle = _unitOfWork.Employer.ToString(),
             };
         }
 
