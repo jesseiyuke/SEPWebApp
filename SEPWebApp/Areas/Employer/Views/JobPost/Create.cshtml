@@ -22,25 +22,7 @@
             </div>
         </div>
 
-        <div class="mb-3 form-group row">
-            <div class="col-10">
-                <select asp-for="Faculty" asp-items="Html.GetEnumSelectList<Faculty>()">
-                    <option>Select Faculty</option> @*default value in select list*@
-                 </select>
-                 <br />
-                <span asp-validation-for="Faculty" class="text-danger"></span>
-            </div>
-        </div>
 
-        <div class="mb-3 form-group row">
-            <div class="col-10">
-                <select asp-for="Department" asp-items="Html.GetEnumSelectList<Department>()">
-                    <option>Select Department</option>
-                </select>
-                <br />
-                <span asp-validation-for="Department" class="text-danger"></span>
-            </div>
-        </div>
 
         <div class="mb-3 form-group row">
             <label asp-for="JobTitle" class="col-2"></label>
@@ -121,19 +103,7 @@
             </div>
         </div>
 
-        <div class="mb-3 form-group row">
-            <label asp-for="YearOfStudy" class="col-2"></label>
-            <div>
-                @foreach (var item in Html.GetEnumSelectList<YearOfStudy>())
-                {
-                    <label class="radio-inline col-4">
-                        <input type="radio" asp-for="YearOfStudy" value="@item.Value" />@item.Text
-                    </label>
-                }
-                <br />
-                <span asp-validation-for="YearOfStudy" class="text-danger"></span>
-            </div>
-        </div>
+
 
         <div class="mb-3 form-group row">
             <label asp-for="OpenTo" class="col-2"></label>

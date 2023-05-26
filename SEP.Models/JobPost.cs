@@ -9,8 +9,6 @@ namespace SEP.Models
         [Required]
         public EmployerType EmployerType { get; set; }
         [Required]
-        public Faculty Faculty { get; set; }
-        [Required]
         public Department Department { get; set; }
         [Required]
         [Display(Name = "Job title")]

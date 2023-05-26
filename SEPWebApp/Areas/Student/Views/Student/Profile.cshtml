@@ -1,0 +1,271 @@
+﻿@model Student
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<h2>Student→Manage Profile</h2>
+
+
+<form>
+
+
+    <div class="container h-100">
+
+
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-xl-9">
+
+                <div class="card" style="border-radius: 15px;">
+                    <div class="card-body">
+
+
+
+                        <div class="row align-items-center py-3">
+                            <div class="col-md-9 ps-5">
+                                <h3 class="mb-0">Personal details</h3>
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center py-3">
+                            <div class="col-md-3 ps-5">
+
+                                <label asp-for="User.FirstName" class="mb-0">First Name</label>
+
+                            </div>
+                            <div class="col-md-9 pe-5">
+
+                                <input type="text" asp-for="User.FirstName" class="form-control form-control-lg" />
+
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center py-3">
+                            <div class="col-md-3 ps-5">
+
+                                <label asp-for="User.LastName" class="mb-0">Last Name</label>
+
+                            </div>
+                            <div class="col-md-9 pe-5">
+
+                                <input type="text" asp-for="User.LastName" class="form-control form-control-lg" />
+
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center py-3">
+                            <div class="col-md-3 ps-5">
+
+                                <label asp-for="Address" class="mb-0">Address</label>
+
+                            </div>
+                            <div class="col-md-9 pe-5">
+
+                                <input type="text" asp-for="Address" class="form-control form-control-lg" />
+
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center py-3">
+                            <div class="col-md-3 ps-5">
+
+                                <label asp-for="User.Telephone" class="mb-0">Tell(optional)</label>
+
+                            </div>
+                            <div class="col-md-9 pe-5">
+
+                                <input type="tel" asp-for="User.Telephone" class="form-control form-control-lg" />
+
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center py-3">
+                            <div class="col-md-3 ps-5">
+
+                                <label asp-for="User.PhoneNumber" class="mb-0">Cell</label>
+
+                            </div>
+                            <div class="col-md-9 pe-5">
+
+                                <input type="tel" asp-for="User.PhoneNumber" class="form-control form-control-lg" />
+
+                            </div>
+                        </div>
+
+
+                        <div class="row align-items-center py-3">
+                            <div class="col-md-3 ps-5">
+
+                                <label asp-for="User.Email" class="mb-0">Email</label>
+
+                            </div>
+                            <div class="col-md-9 pe-5">
+
+                                <input type="email" asp-for="User.Email" class="form-control form-control-lg" />
+
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center py-3">
+                            <div class="col-md-3 ps-5">
+
+                                <label asp-for="IdNo" class="mb-0">ID/Passport No (optinal)</label>
+
+                            </div>
+                            <div class="col-md-9 pe-5">
+
+                                <input type="text" asp-for="IdNo" class="form-control form-control-lg" />
+
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center py-3">
+                            <div class="col-md-3 ps-5">
+
+                                <label asp-for="DriversLicense" class="mb-0">Drivers License</label>
+
+                            </div>
+
+                            <div class="col-md-9 pe-5">
+
+                                @Html.DropDownListFor(model => model.DriversLicense, (SelectList)ViewBag.DriverLicense, "Select a Driver License")
+                                
+
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center py-3">
+                            <div class="col-md-3 ps-5">
+
+                                <label asp-for="CareerObjective" class="mb-0">Career Objective</label>
+
+                            </div>
+                            <div class="col-md-9 pe-5">
+
+                                <input type="text" asp-for="CareerObjective" class="form-control form-control-lg" />
+
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center py-3">
+                            <div class="col-md-3 ps-5">
+
+                                <label asp-for="Gender" class="mb-0">Gender</label>
+
+                            </div>
+
+                            <div class="col-md-9 pe-5">
+
+                                @Html.DropDownListFor(model => model.Gender, (SelectList)ViewBag.Gender, "Select Your Gender")
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="row align-items-center py-3">
+                            <div class="col-md-3 ps-5">
+
+                                <label asp-for="Race" class="mb-0">Race</label>
+
+                            </div>
+
+                            <div class="col-md-9 pe-5">
+
+                                @Html.DropDownListFor(model => model.Race, (SelectList)ViewBag.Race, "Select your Race")
+                            </div>
+                        </div>
+
+
+                        <div class="row align-items-center py-3">
+                            <div class="col-md-3 ps-5">
+
+                                <label asp-for="Nationality" class="mb-0">Nationality</label>
+
+                            </div>
+
+                            <div class="col-md-9 pe-5">
+
+                                @Html.DropDownListFor(model => model.Nationality, (SelectList)ViewBag.Nationality, "Select Nationality")
+                                
+
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center py-3">
+                            <div class="col-md-3 ps-5">
+
+                                <label asp-for="YearOfStudy" class="mb-0">Current year of study</label>
+
+                            </div>
+
+                            <div class="col-md-9 pe-5">
+                                @Html.DropDownListFor(model => model.YearOfStudy, (SelectList)ViewBag.YearOfStudy, "Select Year of study")
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center py-3">
+                            <div class="col-md-3 ps-5">
+
+                                <label asp-for="Department.Faculty" class="mb-0">Faculty</label>
+
+                            </div>
+
+                            <div class="col-md-9 pe-5">
+
+                                @Html.DropDownListFor(model => model.Department.Faculty, (SelectList)ViewBag.Faculty, "Select Faculty", new { id = "FacultyDropdown" })
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center py-3">
+                            <div class="col-md-3 ps-5">
+
+                                <label asp-for="Department" class="mb-0">Department</label>
+
+                            </div>
+
+                            <div class="col-md-9 pe-5">
+
+                                @Html.DropDownListFor(model => model.Department, (SelectList)ViewBag.Department, "Select Department", new { id = "DepartmentDropdown" })
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</form>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+
+            var facultyDropdown = $('#FacultyDropdown');
+            var departmentDropdown = $('#DepartmentDropdown');
+
+            facultyDropdown.on('change', function () {
+ 
+                var selectedFaculty = $(this).val();
+
+
+                $.ajax({
+                    url: '@Url.Action("GetDepartmentsByFaculty", "Student")',
+                    type: 'GET',
+                    data: { facultyId: selectedFaculty },
+                    success: function () {
+                       departmentDropdown.empty();
+                       
+
+                    },
+                    error: function () {
+                    }
+                });
+
+            });
+        });
+    </script>
+}
+

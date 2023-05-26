@@ -20,17 +20,17 @@ namespace SEP.Models
 
         public string IdNo { set; get; }
         [Required]
-        public string DriversLicense { set; get; }
+        public DriverLicense DriversLicense { set; get; }
         [Required]
         public string CareerObjective { set; get; }
         [Required]
-        public string Gender { set; get; }
+        public Gender Gender { set; get; }
         [Required]
-        public string Race { set; get; }
+        public Race Race { set; get; }
         [Required]
-        public string Nationality { set; get; }
+        public Nationality Nationality { set; get; }
         [Required]
-        public string YOS { set; get; }
+        public YearOfStudy YearOfStudy { set; get; }
         [Required]
         public Department Department { set; get; }
     }

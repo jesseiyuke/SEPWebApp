@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SEP.DataAccess;
 
@@ -11,9 +12,11 @@ using SEP.DataAccess;
 namespace SEP.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230525131035_addseedToDb")]
+    partial class addseedToDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -247,7 +250,7 @@ namespace SEP.DataAccess.Migrations
 
                     b.HasIndex("FacultyId");
 
-                    b.ToTable("Department", (string)null);
+                    b.ToTable("Departments", (string)null);
 
                     b.HasData(
                         new
@@ -508,7 +511,7 @@ namespace SEP.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Faculty", (string)null);
+                    b.ToTable("Faculties", (string)null);
 
                     b.HasData(
                         new
@@ -552,24 +555,7 @@ namespace SEP.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Gender", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Male"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Female"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Other"
-                        });
+                    b.ToTable("Gender");
                 });
 
             modelBuilder.Entity("SEP.Models.JobPost", b =>
@@ -675,109 +661,7 @@ namespace SEP.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Nationality", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "South African"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "British"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Dutch"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Indian"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Chinese"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "Portuguese"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Name = "German"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Name = "Zimbabwean"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Name = "Mozambican"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Name = "Namibian"
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Name = "Congolese"
-                        },
-                        new
-                        {
-                            Id = 12,
-                            Name = "Malawian"
-                        },
-                        new
-                        {
-                            Id = 13,
-                            Name = "Zambian"
-                        },
-                        new
-                        {
-                            Id = 14,
-                            Name = "Nigerian"
-                        },
-                        new
-                        {
-                            Id = 15,
-                            Name = "Ghanaian"
-                        },
-                        new
-                        {
-                            Id = 16,
-                            Name = "Tanzanian"
-                        },
-                        new
-                        {
-                            Id = 17,
-                            Name = "Kenyan"
-                        },
-                        new
-                        {
-                            Id = 18,
-                            Name = "Ugandan"
-                        },
-                        new
-                        {
-                            Id = 19,
-                            Name = "Ethiopian"
-                        },
-                        new
-                        {
-                            Id = 20,
-                            Name = "Somali"
-                        });
+                    b.ToTable("Nationality");
                 });
 
             modelBuilder.Entity("SEP.Models.Race", b =>
@@ -794,34 +678,7 @@ namespace SEP.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Race", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "African"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Coloured"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Indian"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "White"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Other"
-                        });
+                    b.ToTable("Race");
                 });
 
             modelBuilder.Entity("SEP.Models.Student", b =>
@@ -890,44 +747,7 @@ namespace SEP.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("YearOfStudy", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Year 1"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Year 2"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Year 3"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Year 4"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Honors"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "Master's"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Name = "PhD"
-                        });
+                    b.ToTable("YearOfStudy");
                 });
 
             modelBuilder.Entity("SEP.Models.ApplicationUser", b =>

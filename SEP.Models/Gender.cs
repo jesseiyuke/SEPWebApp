@@ -2,13 +2,12 @@
 
 namespace SEP.Models
 {
-    public class Faculty
+    public class Gender
     {
 
         [Key]
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
-        public List<Department> Departments { get; set; }
     }
 }

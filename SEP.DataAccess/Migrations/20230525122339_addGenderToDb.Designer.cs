@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SEP.DataAccess;
 
@@ -11,9 +12,11 @@ using SEP.DataAccess;
 namespace SEP.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230525122339_addGenderToDb")]
+    partial class addGenderToDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -247,201 +250,7 @@ namespace SEP.DataAccess.Migrations
 
                     b.HasIndex("FacultyId");
 
-                    b.ToTable("Department", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            FacultyId = 1,
-                            Name = "School of Accounting"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            FacultyId = 1,
-                            Name = "School of Economic and Business Sciences"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            FacultyId = 1,
-                            Name = "Wits Business School"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            FacultyId = 1,
-                            Name = "School of Governance"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            FacultyId = 1,
-                            Name = "School of Law"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            FacultyId = 1,
-                            Name = "Graduate School of Public and Development Management"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            FacultyId = 2,
-                            Name = "School of Architecture and Planning"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            FacultyId = 2,
-                            Name = "School of Chemical and Metallurgical Engineering"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            FacultyId = 2,
-                            Name = "School of Civil and Environmental Engineering"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            FacultyId = 2,
-                            Name = "School of Construction Economics and Management"
-                        },
-                        new
-                        {
-                            Id = 11,
-                            FacultyId = 2,
-                            Name = "School of Electrical and Information Engineering"
-                        },
-                        new
-                        {
-                            Id = 12,
-                            FacultyId = 2,
-                            Name = "School of Mechanical, Industrial, and Aeronautical Engineering"
-                        },
-                        new
-                        {
-                            Id = 13,
-                            FacultyId = 2,
-                            Name = "School of Mining Engineering"
-                        },
-                        new
-                        {
-                            Id = 14,
-                            FacultyId = 3,
-                            Name = "School of Anatomical Sciences"
-                        },
-                        new
-                        {
-                            Id = 15,
-                            FacultyId = 3,
-                            Name = "School of Clinical Medicine"
-                        },
-                        new
-                        {
-                            Id = 16,
-                            FacultyId = 3,
-                            Name = "School of Oral Health Sciences"
-                        },
-                        new
-                        {
-                            Id = 17,
-                            FacultyId = 3,
-                            Name = "School of Pathology"
-                        },
-                        new
-                        {
-                            Id = 18,
-                            FacultyId = 3,
-                            Name = "School of Physiology"
-                        },
-                        new
-                        {
-                            Id = 19,
-                            FacultyId = 3,
-                            Name = "School of Public Health"
-                        },
-                        new
-                        {
-                            Id = 20,
-                            FacultyId = 4,
-                            Name = "School of Arts"
-                        },
-                        new
-                        {
-                            Id = 21,
-                            FacultyId = 4,
-                            Name = "School of Education"
-                        },
-                        new
-                        {
-                            Id = 22,
-                            FacultyId = 4,
-                            Name = "School of Human and Community Development"
-                        },
-                        new
-                        {
-                            Id = 23,
-                            FacultyId = 4,
-                            Name = "School of Literature, Language and Media"
-                        },
-                        new
-                        {
-                            Id = 24,
-                            FacultyId = 4,
-                            Name = "School of Social Sciences"
-                        },
-                        new
-                        {
-                            Id = 25,
-                            FacultyId = 4,
-                            Name = "School of Therapeutic Sciences"
-                        },
-                        new
-                        {
-                            Id = 26,
-                            FacultyId = 5,
-                            Name = "School of Animal, Plant and Environmental Sciences"
-                        },
-                        new
-                        {
-                            Id = 27,
-                            FacultyId = 5,
-                            Name = "School of Chemistry"
-                        },
-                        new
-                        {
-                            Id = 28,
-                            FacultyId = 5,
-                            Name = "School of Computer Science and Applied Mathematics"
-                        },
-                        new
-                        {
-                            Id = 29,
-                            FacultyId = 5,
-                            Name = "School of Geography, Archaeology and Environmental Studies"
-                        },
-                        new
-                        {
-                            Id = 30,
-                            FacultyId = 5,
-                            Name = "School of Molecular and Cell Biology"
-                        },
-                        new
-                        {
-                            Id = 31,
-                            FacultyId = 5,
-                            Name = "School of Physics"
-                        },
-                        new
-                        {
-                            Id = 32,
-                            FacultyId = 5,
-                            Name = "School of Statistics and Actuarial Science"
-                        });
+                    b.ToTable("Department");
                 });
 
             modelBuilder.Entity("SEP.Models.DriverLicense", b =>
@@ -508,34 +317,7 @@ namespace SEP.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Faculty", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Faculty of Commerce, Law, and Management"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Faculty of Engineering and the Built Environment"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Faculty of Health Sciences"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Faculty of Humanities"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Faculty of Science"
-                        });
+                    b.ToTable("Faculty");
                 });
 
             modelBuilder.Entity("SEP.Models.Gender", b =>
@@ -552,24 +334,7 @@ namespace SEP.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Gender", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Male"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Female"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Other"
-                        });
+                    b.ToTable("Gender");
                 });
 
             modelBuilder.Entity("SEP.Models.JobPost", b =>
@@ -675,109 +440,7 @@ namespace SEP.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Nationality", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "South African"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "British"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Dutch"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Indian"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Chinese"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "Portuguese"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Name = "German"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Name = "Zimbabwean"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Name = "Mozambican"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Name = "Namibian"
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Name = "Congolese"
-                        },
-                        new
-                        {
-                            Id = 12,
-                            Name = "Malawian"
-                        },
-                        new
-                        {
-                            Id = 13,
-                            Name = "Zambian"
-                        },
-                        new
-                        {
-                            Id = 14,
-                            Name = "Nigerian"
-                        },
-                        new
-                        {
-                            Id = 15,
-                            Name = "Ghanaian"
-                        },
-                        new
-                        {
-                            Id = 16,
-                            Name = "Tanzanian"
-                        },
-                        new
-                        {
-                            Id = 17,
-                            Name = "Kenyan"
-                        },
-                        new
-                        {
-                            Id = 18,
-                            Name = "Ugandan"
-                        },
-                        new
-                        {
-                            Id = 19,
-                            Name = "Ethiopian"
-                        },
-                        new
-                        {
-                            Id = 20,
-                            Name = "Somali"
-                        });
+                    b.ToTable("Nationality");
                 });
 
             modelBuilder.Entity("SEP.Models.Race", b =>
@@ -794,34 +457,7 @@ namespace SEP.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Race", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "African"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Coloured"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Indian"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "White"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Other"
-                        });
+                    b.ToTable("Race");
                 });
 
             modelBuilder.Entity("SEP.Models.Student", b =>
@@ -890,44 +526,7 @@ namespace SEP.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("YearOfStudy", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Year 1"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Year 2"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Year 3"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Year 4"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Honors"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "Master's"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Name = "PhD"
-                        });
+                    b.ToTable("YearOfStudy");
                 });
 
             modelBuilder.Entity("SEP.Models.ApplicationUser", b =>
@@ -1003,9 +602,9 @@ namespace SEP.DataAccess.Migrations
             modelBuilder.Entity("SEP.Models.Department", b =>
                 {
                     b.HasOne("SEP.Models.Faculty", "Faculty")
-                        .WithMany("Departments")
+                        .WithMany()
                         .HasForeignKey("FacultyId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Faculty");
@@ -1098,11 +697,6 @@ namespace SEP.DataAccess.Migrations
                     b.Navigation("User");
 
                     b.Navigation("YearOfStudy");
-                });
-
-            modelBuilder.Entity("SEP.Models.Faculty", b =>
-                {
-                    b.Navigation("Departments");
                 });
 #pragma warning restore 612, 618
         }

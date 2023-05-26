@@ -24,15 +24,21 @@ namespace SEPWebApp.Areas.Home.Controllers
 
             if (_signInManager.IsSignedIn(User))
             {
+                if (User.IsInRole("Approver"))
+                {
+                    return RedirectToAction("Index","Approver",new {area ="Approver"});
+                }
 
-                if (User.IsInRole("Employer"))
+                else if (User.IsInRole("Employer"))
                 {
                     return RedirectToAction("Index", "Employer", new { area = "Employer" });
                 }
-                if (User.IsInRole("Student"))
+                else
                 {
                     return RedirectToAction("Index", "Student", new { area = "Student" });
+
                 }
+                
             }
 
             return RedirectToAction("Login", "Account", new { area = "Identity" });

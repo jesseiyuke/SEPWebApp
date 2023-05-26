@@ -12,8 +12,8 @@ using SEP.DataAccess;
 namespace SEP.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230522131530_RestartMigrations")]
-    partial class RestartMigrations
+    [Migration("20230525132010_aseedingToDb")]
+    partial class aseedingToDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -231,6 +231,239 @@ namespace SEP.DataAccess.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("SEP.Models.Department", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("FacultyId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FacultyId");
+
+                    b.ToTable("Department", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            FacultyId = 1,
+                            Name = "School of Accounting"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            FacultyId = 1,
+                            Name = "School of Economic and Business Sciences"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            FacultyId = 1,
+                            Name = "Wits Business School"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            FacultyId = 1,
+                            Name = "School of Governance"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            FacultyId = 1,
+                            Name = "School of Law"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            FacultyId = 1,
+                            Name = "Graduate School of Public and Development Management"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            FacultyId = 2,
+                            Name = "School of Architecture and Planning"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            FacultyId = 2,
+                            Name = "School of Chemical and Metallurgical Engineering"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            FacultyId = 2,
+                            Name = "School of Civil and Environmental Engineering"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            FacultyId = 2,
+                            Name = "School of Construction Economics and Management"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            FacultyId = 2,
+                            Name = "School of Electrical and Information Engineering"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            FacultyId = 2,
+                            Name = "School of Mechanical, Industrial, and Aeronautical Engineering"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            FacultyId = 2,
+                            Name = "School of Mining Engineering"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            FacultyId = 3,
+                            Name = "School of Anatomical Sciences"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            FacultyId = 3,
+                            Name = "School of Clinical Medicine"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            FacultyId = 3,
+                            Name = "School of Oral Health Sciences"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            FacultyId = 3,
+                            Name = "School of Pathology"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            FacultyId = 3,
+                            Name = "School of Physiology"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            FacultyId = 3,
+                            Name = "School of Public Health"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            FacultyId = 4,
+                            Name = "School of Arts"
+                        },
+                        new
+                        {
+                            Id = 21,
+                            FacultyId = 4,
+                            Name = "School of Education"
+                        },
+                        new
+                        {
+                            Id = 22,
+                            FacultyId = 4,
+                            Name = "School of Human and Community Development"
+                        },
+                        new
+                        {
+                            Id = 23,
+                            FacultyId = 4,
+                            Name = "School of Literature, Language and Media"
+                        },
+                        new
+                        {
+                            Id = 24,
+                            FacultyId = 4,
+                            Name = "School of Social Sciences"
+                        },
+                        new
+                        {
+                            Id = 25,
+                            FacultyId = 4,
+                            Name = "School of Therapeutic Sciences"
+                        },
+                        new
+                        {
+                            Id = 26,
+                            FacultyId = 5,
+                            Name = "School of Animal, Plant and Environmental Sciences"
+                        },
+                        new
+                        {
+                            Id = 27,
+                            FacultyId = 5,
+                            Name = "School of Chemistry"
+                        },
+                        new
+                        {
+                            Id = 28,
+                            FacultyId = 5,
+                            Name = "School of Computer Science and Applied Mathematics"
+                        },
+                        new
+                        {
+                            Id = 29,
+                            FacultyId = 5,
+                            Name = "School of Geography, Archaeology and Environmental Studies"
+                        },
+                        new
+                        {
+                            Id = 30,
+                            FacultyId = 5,
+                            Name = "School of Molecular and Cell Biology"
+                        },
+                        new
+                        {
+                            Id = 31,
+                            FacultyId = 5,
+                            Name = "School of Physics"
+                        },
+                        new
+                        {
+                            Id = 32,
+                            FacultyId = 5,
+                            Name = "School of Statistics and Actuarial Science"
+                        });
+                });
+
+            modelBuilder.Entity("SEP.Models.DriverLicense", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DriverLicense");
+                });
+
             modelBuilder.Entity("SEP.Models.Employer", b =>
                 {
                     b.Property<string>("Id")
@@ -264,6 +497,67 @@ namespace SEP.DataAccess.Migrations
                     b.ToTable("Employer");
                 });
 
+            modelBuilder.Entity("SEP.Models.Faculty", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Faculty", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Faculty of Commerce, Law, and Management"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Faculty of Engineering and the Built Environment"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Faculty of Health Sciences"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Faculty of Humanities"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Faculty of Science"
+                        });
+                });
+
+            modelBuilder.Entity("SEP.Models.Gender", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Gender");
+                });
+
             modelBuilder.Entity("SEP.Models.JobPost", b =>
                 {
                     b.Property<int>("Id")
@@ -286,7 +580,7 @@ namespace SEP.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Department")
+                    b.Property<int>("DepartmentId")
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
@@ -298,9 +592,6 @@ namespace SEP.DataAccess.Migrations
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("Faculty")
-                        .HasColumnType("int");
 
                     b.Property<string>("HourlyRate")
                         .IsRequired()
@@ -344,12 +635,50 @@ namespace SEP.DataAccess.Migrations
                     b.Property<int>("WeekHour")
                         .HasColumnType("int");
 
-                    b.Property<int>("YearOfStudy")
+                    b.Property<int>("YearOfStudyId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DepartmentId");
+
+                    b.HasIndex("YearOfStudyId");
+
                     b.ToTable("JobPost");
+                });
+
+            modelBuilder.Entity("SEP.Models.Nationality", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Nationality");
+                });
+
+            modelBuilder.Entity("SEP.Models.Race", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Race");
                 });
 
             modelBuilder.Entity("SEP.Models.Student", b =>
@@ -365,36 +694,60 @@ namespace SEP.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Department")
+                    b.Property<int>("DepartmentId")
                         .HasColumnType("int");
 
-                    b.Property<string>("DriversLicense")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("DriversLicenseId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Gender")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("GenderId")
+                        .HasColumnType("int");
 
                     b.Property<string>("IdNo")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Nationality")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("NationalityId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Race")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("RaceId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("YOS")
+                    b.Property<int>("YearOfStudyId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.HasIndex("DriversLicenseId");
+
+                    b.HasIndex("GenderId");
+
+                    b.HasIndex("NationalityId");
+
+                    b.HasIndex("RaceId");
+
+                    b.HasIndex("YearOfStudyId");
+
+                    b.ToTable("Student");
+                });
+
+            modelBuilder.Entity("SEP.Models.YearOfStudy", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Student");
+                    b.ToTable("YearOfStudy");
                 });
 
             modelBuilder.Entity("SEP.Models.ApplicationUser", b =>
@@ -467,6 +820,17 @@ namespace SEP.DataAccess.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("SEP.Models.Department", b =>
+                {
+                    b.HasOne("SEP.Models.Faculty", "Faculty")
+                        .WithMany("Departments")
+                        .HasForeignKey("FacultyId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Faculty");
+                });
+
             modelBuilder.Entity("SEP.Models.Employer", b =>
                 {
                     b.HasOne("SEP.Models.ApplicationUser", "User")
@@ -478,15 +842,87 @@ namespace SEP.DataAccess.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("SEP.Models.JobPost", b =>
+                {
+                    b.HasOne("SEP.Models.Department", "Department")
+                        .WithMany()
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SEP.Models.YearOfStudy", "YearOfStudy")
+                        .WithMany()
+                        .HasForeignKey("YearOfStudyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Department");
+
+                    b.Navigation("YearOfStudy");
+                });
+
             modelBuilder.Entity("SEP.Models.Student", b =>
                 {
+                    b.HasOne("SEP.Models.Department", "Department")
+                        .WithMany()
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SEP.Models.DriverLicense", "DriversLicense")
+                        .WithMany()
+                        .HasForeignKey("DriversLicenseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SEP.Models.Gender", "Gender")
+                        .WithMany()
+                        .HasForeignKey("GenderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("SEP.Models.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("SEP.Models.Nationality", "Nationality")
+                        .WithMany()
+                        .HasForeignKey("NationalityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SEP.Models.Race", "Race")
+                        .WithMany()
+                        .HasForeignKey("RaceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SEP.Models.YearOfStudy", "YearOfStudy")
+                        .WithMany()
+                        .HasForeignKey("YearOfStudyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Department");
+
+                    b.Navigation("DriversLicense");
+
+                    b.Navigation("Gender");
+
+                    b.Navigation("Nationality");
+
+                    b.Navigation("Race");
+
                     b.Navigation("User");
+
+                    b.Navigation("YearOfStudy");
+                });
+
+            modelBuilder.Entity("SEP.Models.Faculty", b =>
+                {
+                    b.Navigation("Departments");
                 });
 #pragma warning restore 612, 618
         }
