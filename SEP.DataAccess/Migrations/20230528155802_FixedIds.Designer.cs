@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SEP.DataAccess;
 
@@ -11,9 +12,11 @@ using SEP.DataAccess;
 namespace SEP.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230528155802_FixedIds")]
+    partial class FixedIds
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -593,6 +596,7 @@ namespace SEP.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ApplicationUserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("ClosingDate")
@@ -925,7 +929,7 @@ namespace SEP.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "Pending"
+                            Name = "Approved"
                         },
                         new
                         {
@@ -950,7 +954,7 @@ namespace SEP.DataAccess.Migrations
                         new
                         {
                             Id = 6,
-                            Name = "Approved"
+                            Name = "Pending"
                         },
                         new
                         {
@@ -1213,7 +1217,9 @@ namespace SEP.DataAccess.Migrations
                 {
                     b.HasOne("SEP.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("SEP.Models.Department", "Department")
                         .WithMany()

@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SEP.Models
 {
@@ -11,10 +9,11 @@ namespace SEP.Models
         public string? LastName { get; set; }
         public string? Telephone { get; set; }
 
-        public int ? EmployerId { get; set; }
-        [ForeignKey(nameof(EmployerId))]
-        [ValidateNever]
-        public Employer Employer { get; set; }
+        /*        For future use:
+         *        public int ? EmployerId { get; set; }
+                [ForeignKey(nameof(EmployerId))]
+                [ValidateNever]
+                public Employer Employer { get; set; }*/
 
 
     }

@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using SEP.DataAccess.Repository.IRepository;
 using SEP.Models;
+using SEP.Models.ViewModels;
 
 namespace SEPWebApp.Areas.Employer.Controllers
 {
@@ -20,67 +22,77 @@ namespace SEPWebApp.Areas.Employer.Controllers
         }
 
         //GET
-        public IActionResult Create()
+        public IActionResult Upsert(int? id)
         {
-            return View();
-        }
-
-        //POST
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Create(JobPost obj)
-        {
-            if (obj.JobDescription == obj.KeyResponsibilities)
+            //
+            JobPostVM JobPostVM = new()
             {
-                ModelState.AddModelError("JobDescription", "Description of job cannot exactly match the Key responsibilities.");
-            }
+                JobPost = new(),
+                //All drop down lists from ViewModel
+                FacultyList = _unitOfWork.Faculty.GetAll().Select(i => new SelectListItem
+                {
+                    Text = i.Name,
+                    Value = i.Id.ToString()
+                }),
+                DepartmentList = _unitOfWork.Department.GetAll().Select(i => new SelectListItem
+                {
+                    Text = i.Name,
+                    Value = i.Id.ToString()
+                }),
+                JobTypeList = _unitOfWork.JobType.GetAll().Select(i => new SelectListItem
+                {
+                    Text = i.Name,
+                    Value = i.Id.ToString()
+                }),
+                WeekHourList = _unitOfWork.WeekHour.GetAll().Select(i => new SelectListItem
+                {
+                    Text = i.Name,
+                    Value = i.Id.ToString()
+                }),
+                StatusList = _unitOfWork.Status.GetAll().Select(i => new SelectListItem
+                {
+                    Text = i.Name,
+                    Value = i.Id.ToString()
+                }),
+            };
 
-            if (ModelState.IsValid)
-            {
-                _unitOfWork.JobPost.Add(obj);
-                _unitOfWork.Save();
-                TempData["success"] = "Job post created successfully";
-                return RedirectToAction("Index");
-            }
-            return View(obj);
-
-        }
-
-
-        //GET
-        public IActionResult Edit(int? id)
-        {
             if (id == null || id == 0)
             {
-                return NotFound();
+                //create JobPost
+                return View(JobPostVM);
             }
-
-            //var JobPostFromDb = _db.JobPost.Find(id);
-            var JobPostFromDbFirst = _unitOfWork.JobPost.GetFirstOrDefault(u => u.Id == id);
-
-            if (JobPostFromDbFirst == null)
+            else
             {
-                return NotFound();
+                //update JobPost
+                JobPostVM.JobPost = _unitOfWork.JobPost.GetFirstOrDefault(u => u.Id == id);
+                return View(JobPostVM);
+
             }
 
-            return View(JobPostFromDbFirst);
         }
 
         //POST
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(JobPost obj)
+        public IActionResult Upsert(JobPostVM obj)
         {
-            if (obj.JobDescription == obj.KeyResponsibilities)
-            {
-                ModelState.AddModelError("JobDescription", "Description of job cannot exactly match the Key responsibilities.");
-            }
+            /*            if (obj.JobDescription == obj.KeyResponsibilities)
+                        {
+                            ModelState.AddModelError("JobDescription", "Description of job cannot exactly match the Key responsibilities.");
+                        }*/
 
             if (ModelState.IsValid)
             {
-                _unitOfWork.JobPost.Update(obj);
+                if (obj.JobPost.Id == 0)
+                {
+                    _unitOfWork.JobPost.Add(obj.JobPost);
+                }
+                else
+                {
+                    _unitOfWork.JobPost.Update(obj.JobPost);
+                }
                 _unitOfWork.Save();
-                TempData["success"] = "Job post updated successfully";
+                TempData["success"] = "Job Post created successfully";
                 return RedirectToAction("Index");
             }
             return View(obj);

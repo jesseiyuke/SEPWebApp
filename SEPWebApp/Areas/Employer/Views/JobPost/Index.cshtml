@@ -50,12 +50,12 @@
                     @obj.EndDate
                 </td>
                 <td width="10%">
-                    @obj.Outcome
+                    @obj.Status
                 </td>
 
                 <td width="10%">
                     <div class="w-75 btn-group" role="group">
-                        <a asp-controller="JobPost" asp-action="Edit" asp-route-id="@obj.Id"
+                        <a asp-controller="JobPost" asp-action="Upsert" asp-route-id="@obj.Id"
                            class="btn btn-secondary">Review</a>
                     </div>
                 </td>
@@ -67,6 +67,6 @@
 </table>
 
 <div>
-    <a asp-controller="JobPost" asp-action="Create" class="btn btn-secondary">Create Post</a>
+    <a asp-controller="JobPost" asp-action="Upsert" class="btn btn-secondary">Create Post</a>
 </div>
 

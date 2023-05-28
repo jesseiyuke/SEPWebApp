@@ -39,7 +39,7 @@ namespace SEPWebApp.Areas.Identity.Pages.Account
             RoleManager<IdentityRole> roleManager,
             IUnitOfWork unitOfWork)
         {
-            _unitOfWork=unitOfWork;
+            _unitOfWork = unitOfWork;
             _roleManager = roleManager;
             _userManager = userManager;
             _userStore = userStore;
@@ -110,12 +110,12 @@ namespace SEPWebApp.Areas.Identity.Pages.Account
 
             public string? Role { get; set; }
 
-            public int? EmployerId { get; set; }
-
             [ValidateNever]
             public IEnumerable<SelectListItem> RoleList { get; set; }
-            [Required]
-            public string? JobTitle { get; set; }
+
+            /*            public int? EmployerId { get; set; }*/
+            /*            [Required]
+                        public string? JobTitle { get; set; }*/
         }
 
 
@@ -139,7 +139,7 @@ namespace SEPWebApp.Areas.Identity.Pages.Account
                     Value = i
                 }),
 
-                JobTitle = _unitOfWork.Employer.ToString(),
+                /*                JobTitle = _unitOfWork.Employer.ToString(),*/
             };
         }
 

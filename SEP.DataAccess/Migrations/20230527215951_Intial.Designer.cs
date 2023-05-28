@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SEP.DataAccess;
 
@@ -11,9 +12,11 @@ using SEP.DataAccess;
 namespace SEP.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230527215951_Intial")]
+    partial class Intial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -593,6 +596,7 @@ namespace SEP.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ApplicationUserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("ClosingDate")
@@ -605,9 +609,6 @@ namespace SEP.DataAccess.Migrations
                     b.Property<string>("ContactPerson")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("DepartmentCheck")
-                        .HasColumnType("bit");
 
                     b.Property<int>("DepartmentId")
                         .HasColumnType("int");
@@ -623,20 +624,8 @@ namespace SEP.DataAccess.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("FacultyCheck")
-                        .HasColumnType("bit");
-
                     b.Property<int>("FacultyId")
                         .HasColumnType("int");
-
-                    b.Property<bool>("FirstYear")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Graduates")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Honours")
-                        .HasColumnType("bit");
 
                     b.Property<string>("HourlyRate")
                         .IsRequired()
@@ -645,6 +634,9 @@ namespace SEP.DataAccess.Migrations
                     b.Property<string>("JobDescription")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("JobPostId")
+                        .HasColumnType("int");
 
                     b.Property<string>("JobTitle")
                         .IsRequired()
@@ -661,9 +653,6 @@ namespace SEP.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("Masters")
-                        .HasColumnType("bit");
-
                     b.Property<string>("MinimumRequirements")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -672,26 +661,14 @@ namespace SEP.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("PhD")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Postdoc")
-                        .HasColumnType("bit");
-
                     b.Property<string>("ReviewerComment")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("SecondYear")
-                        .HasColumnType("bit");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("StatusId")
                         .HasColumnType("int");
-
-                    b.Property<bool>("ThirdYear")
-                        .HasColumnType("bit");
 
                     b.Property<int>("WeekHourId")
                         .HasColumnType("int");
@@ -703,6 +680,8 @@ namespace SEP.DataAccess.Migrations
                     b.HasIndex("DepartmentId");
 
                     b.HasIndex("FacultyId");
+
+                    b.HasIndex("JobPostId");
 
                     b.HasIndex("JobTypeId");
 
@@ -925,7 +904,7 @@ namespace SEP.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "Pending"
+                            Name = "Approved"
                         },
                         new
                         {
@@ -950,7 +929,7 @@ namespace SEP.DataAccess.Migrations
                         new
                         {
                             Id = 6,
-                            Name = "Approved"
+                            Name = "Pending"
                         },
                         new
                         {
@@ -1213,7 +1192,9 @@ namespace SEP.DataAccess.Migrations
                 {
                     b.HasOne("SEP.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("SEP.Models.Department", "Department")
                         .WithMany()
@@ -1226,6 +1207,10 @@ namespace SEP.DataAccess.Migrations
                         .HasForeignKey("FacultyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("SEP.Models.JobPost", null)
+                        .WithMany("YearOfStudy")
+                        .HasForeignKey("JobPostId");
 
                     b.HasOne("SEP.Models.JobType", "JobType")
                         .WithMany()
@@ -1320,6 +1305,11 @@ namespace SEP.DataAccess.Migrations
             modelBuilder.Entity("SEP.Models.Faculty", b =>
                 {
                     b.Navigation("Departments");
+                });
+
+            modelBuilder.Entity("SEP.Models.JobPost", b =>
+                {
+                    b.Navigation("YearOfStudy");
                 });
 #pragma warning restore 612, 618
         }
