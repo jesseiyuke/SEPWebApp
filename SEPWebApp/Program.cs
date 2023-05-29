@@ -20,6 +20,11 @@ builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddSingleton<IEmailSender, EmailSender>();
 
+builder.Services.AddControllersWithViews()
+    .AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+);
+
 /*builder.Services.AddControllersWithViews().AddRazorPagesOptions(options =>
 {
     options.Conventions.AddAreaPageRoute("Identity", "/Account/Login", "");
