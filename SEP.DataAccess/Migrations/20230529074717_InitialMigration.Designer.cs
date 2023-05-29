@@ -12,8 +12,8 @@ using SEP.DataAccess;
 namespace SEP.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230528161436_FixedValidation")]
-    partial class FixedValidation
+    [Migration("20230529074717_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -928,7 +928,7 @@ namespace SEP.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "Approved"
+                            Name = "Pending"
                         },
                         new
                         {
@@ -953,7 +953,7 @@ namespace SEP.DataAccess.Migrations
                         new
                         {
                             Id = 6,
-                            Name = "Pending"
+                            Name = "Approved"
                         },
                         new
                         {

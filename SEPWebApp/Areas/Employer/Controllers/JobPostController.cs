@@ -17,8 +17,9 @@ namespace SEPWebApp.Areas.Employer.Controllers
         }
         public IActionResult Index()
         {
-            IEnumerable<JobPost> objJobPostList = _unitOfWork.JobPost.GetAll();
-            return View(objJobPostList);
+/*            IEnumerable<JobPost> objJobPostList = _unitOfWork.JobPost.GetAll();
+            return View(objJobPostList);*/
+            return View();
         }
 
         //GET
@@ -98,6 +99,16 @@ namespace SEPWebApp.Areas.Employer.Controllers
             return View(obj);
 
         }
+
+        #region API CALLS
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            var JobPostList = _unitOfWork.JobPost.GetAll(includeProperties: "Faculty,Department,JobType,WeekHour,Status");
+            //var JobPostList = _unitOfWork.JobPost.GetAll();
+            return Json(new { data = JobPostList });
+        }
+        #endregion
 
         //GET
         public IActionResult Delete(int? id)

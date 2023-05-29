@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SEP.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class Intial : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -330,7 +330,7 @@ namespace SEP.DataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     EmoloyerType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FacultyId = table.Column<int>(type: "int", nullable: false),
                     DepartmentId = table.Column<int>(type: "int", nullable: false),
@@ -343,6 +343,16 @@ namespace SEP.DataAccess.Migrations
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     HourlyRate = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FirstYear = table.Column<bool>(type: "bit", nullable: false),
+                    SecondYear = table.Column<bool>(type: "bit", nullable: false),
+                    ThirdYear = table.Column<bool>(type: "bit", nullable: false),
+                    Honours = table.Column<bool>(type: "bit", nullable: false),
+                    Graduates = table.Column<bool>(type: "bit", nullable: false),
+                    Masters = table.Column<bool>(type: "bit", nullable: false),
+                    PhD = table.Column<bool>(type: "bit", nullable: false),
+                    Postdoc = table.Column<bool>(type: "bit", nullable: false),
+                    FacultyCheck = table.Column<bool>(type: "bit", nullable: false),
+                    DepartmentCheck = table.Column<bool>(type: "bit", nullable: false),
                     OpenTo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MinimumRequirements = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ApplicationInstruction = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -351,8 +361,7 @@ namespace SEP.DataAccess.Migrations
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ContactNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ReviewerComment = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    StatusId = table.Column<int>(type: "int", nullable: false),
-                    JobPostId = table.Column<int>(type: "int", nullable: true)
+                    StatusId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -361,8 +370,7 @@ namespace SEP.DataAccess.Migrations
                         name: "FK_JobPost_AspNetUsers_ApplicationUserId",
                         column: x => x.ApplicationUserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_JobPost_Department_DepartmentId",
                         column: x => x.DepartmentId,
@@ -375,11 +383,6 @@ namespace SEP.DataAccess.Migrations
                         principalTable: "Faculty",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_JobPost_JobPost_JobPostId",
-                        column: x => x.JobPostId,
-                        principalTable: "JobPost",
-                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_JobPost_JobType_JobTypeId",
                         column: x => x.JobTypeId,
@@ -537,12 +540,12 @@ namespace SEP.DataAccess.Migrations
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
-                    { 1, "Approved" },
+                    { 1, "Pending" },
                     { 2, "Rejected" },
                     { 3, "Queried" },
                     { 4, "Closed" },
                     { 5, "Withdrawn" },
-                    { 6, "Pending" },
+                    { 6, "Approved" },
                     { 7, "Unsuccessful" },
                     { 8, "Successful" },
                     { 9, "Cancelled" }
@@ -676,11 +679,6 @@ namespace SEP.DataAccess.Migrations
                 name: "IX_JobPost_FacultyId",
                 table: "JobPost",
                 column: "FacultyId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_JobPost_JobPostId",
-                table: "JobPost",
-                column: "JobPostId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_JobPost_JobTypeId",
