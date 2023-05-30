@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SEP.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class userToEmployerRelationship : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SEP.DataAccess;
 using SEP.Models;
+using SEP.Models.ViewModels;
 
 namespace SEPWebApp.Controllers
 {
@@ -19,8 +20,10 @@ namespace SEPWebApp.Controllers
         }
 
         //GET
-        public IActionResult Create()
+        public IActionResult Upsert(int? id)
         {
+            //EmployerVM employerVM=new()
+
             return View();
         }
 

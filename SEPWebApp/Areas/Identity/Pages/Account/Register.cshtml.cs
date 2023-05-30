@@ -121,6 +121,12 @@ namespace SEPWebApp.Areas.Identity.Pages.Account
 
         public async Task OnGetAsync(string returnUrl = null)
         {
+            /*            var roles = new[] { "Student", "Approver", "Employer" };
+                        foreach (var role in roles)
+                        {
+                            if(!await _roleManager.RoleExistsAsync(role))
+                                await _roleManager.CreateAsync(new IdentityRole(role)); 
+                        }*/
             if (!_roleManager.RoleExistsAsync(SD.Role_Approver).GetAwaiter().GetResult())
             {
                 _roleManager.CreateAsync(new IdentityRole(SD.Role_Approver)).GetAwaiter().GetResult();
@@ -139,11 +145,10 @@ namespace SEPWebApp.Areas.Identity.Pages.Account
                     Value = i
                 }),
 
-                /*                JobTitle = _unitOfWork.Employer.ToString(),*/
             };
         }
 
-        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
+        public async Task<IActionResult> OnPostAsync(string? returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
@@ -166,6 +171,7 @@ namespace SEPWebApp.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+
 
                     if (Input.Role == null) //if null it will be student
                     {
@@ -203,6 +209,16 @@ namespace SEPWebApp.Areas.Identity.Pages.Account
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
+
+            Input = new InputModel()
+            {
+                RoleList = _roleManager.Roles.Select(x => x.Name).Select(i => new SelectListItem
+                {
+                    Text = i,
+                    Value = i
+                }),
+
+            };
 
             // If we got this far, something failed, redisplay form
             return Page();

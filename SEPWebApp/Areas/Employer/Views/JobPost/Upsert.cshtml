@@ -1,4 +1,5 @@
 ﻿@model SEP.Models.ViewModels.JobPostVM
+@using SEP.Utility
 
 
 <form method="post" asp-action="Upsert">
@@ -122,6 +123,8 @@
 
         <div class="mb-3 form-group row">
             <div>
+                <label>Limited to</label>
+                <br />
                 <input type="checkbox" asp-for="JobPost.FirstYear" /><label class="col-2">Year 1</label>
                 <input type="checkbox" asp-for="JobPost.SecondYear" /><label class="col-2">Year 2</label>
                 <input type="checkbox" asp-for="JobPost.ThirdYear" /><label class="col-2">Year 3</label>
@@ -230,15 +233,16 @@
                 <span asp-validation-for="JobPost.ContactNo" class="text-danger"></span>
             </div>
         </div>
-
+        
         <div class="mb-3 form-group row">
-            <label asp-for="JobPost.StatusId" class="col-2"></label>
+            <label asp-for="JobPost.StatusId" class="col-2" hidden></label>
             <div class="col-6">
-                <select asp-for="JobPost.StatusId" asp-items=@Model.StatusList class="form-select">
+                <select asp-for="JobPost.StatusId" asp-items=@Model.StatusList class="form-select" hidden>
                 </select>
                 <br />
                 <span asp-validation-for="JobPost.StatusId" class="text-danger"></span>
             </div>
+
         </div>
 
       

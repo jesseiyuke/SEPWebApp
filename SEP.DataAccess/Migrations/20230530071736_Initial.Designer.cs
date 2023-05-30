@@ -12,8 +12,8 @@ using SEP.DataAccess;
 namespace SEP.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230529220520_userToEmployerRelationship")]
-    partial class userToEmployerRelationship
+    [Migration("20230530071736_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

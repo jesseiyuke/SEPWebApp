@@ -3,7 +3,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Employer -> Manage Posts</h2>
+<h2>Employer/Manage Posts</h2>
 
 
 <table id="tblData" class="table table-bordered table-striped" style="width:100%">
@@ -69,6 +69,7 @@
 
 <div>
     <a asp-controller="JobPost" asp-action="Upsert" class="btn btn-secondary">Create Post</a>
+    <a asp-controller="Employer" asp-action="Index" class="btn btn-secondary">Back</a>
 </div>
 
 @section Scripts{
