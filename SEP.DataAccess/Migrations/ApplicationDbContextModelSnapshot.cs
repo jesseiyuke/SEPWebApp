@@ -463,11 +463,8 @@ namespace SEP.DataAccess.Migrations
 
             modelBuilder.Entity("SEP.Models.Employer", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("BusinessName")
                         .IsRequired()
@@ -1114,10 +1111,6 @@ namespace SEP.DataAccess.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
-                    b.Property<int?>("EmployerId")
-                        .IsRequired()
-                        .HasColumnType("int");
-
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 
@@ -1129,8 +1122,6 @@ namespace SEP.DataAccess.Migrations
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
-
-                    b.HasIndex("EmployerId");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
                 });
@@ -1297,17 +1288,6 @@ namespace SEP.DataAccess.Migrations
                     b.Navigation("User");
 
                     b.Navigation("YearOfStudy");
-                });
-
-            modelBuilder.Entity("SEP.Models.ApplicationUser", b =>
-                {
-                    b.HasOne("SEP.Models.Employer", "Employer")
-                        .WithMany()
-                        .HasForeignKey("EmployerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Employer");
                 });
 
             modelBuilder.Entity("SEP.Models.Faculty", b =>

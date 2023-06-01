@@ -11,11 +11,6 @@ namespace SEP.Models
         public string? LastName { get; set; }
         public string? Telephone { get; set; }
 
-        public int? EmployerId { get; set; }
-        [ForeignKey("EmployerId")]
-        [ValidateNever]
-        public Employer Employer { get; set; }
-
         /*        For future use:
          *        public int ? EmployerId { get; set; }
                 [ForeignKey(nameof(EmployerId))]

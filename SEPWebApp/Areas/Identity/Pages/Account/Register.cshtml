@@ -60,11 +60,43 @@
                     <option disabled selected>-Select Role-</option>
                 </select>
             </div>
+@*            Employer*@
+           @* <div class="form-floating mb-3">
+                <input asp-for="Input.Employer.Employer.JobTitle" class="form-control" aria-required="true" style="display:none"/>
+                <label asp-for="Input.Employer.Employer.JobTitle">Job Title</label>
+                <span asp-validation-for="Input.Employer.Employer.JobTitle" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.Employer.Employer.CompanyRegNo" class="form-control" aria-required="true" style="display:none" />
+                <label asp-for="Input.Employer.Employer.CompanyRegNo">Company registration number</label>
+                <span asp-validation-for="Input.Employer.Employer.CompanyRegNo" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.Employer.Employer.BusinessName" class="form-control" aria-required="true" style="display:none" />
+                <label asp-for="Input.Employer.Employer.BusinessName">Registered name of business</label>
+                <span asp-validation-for="Input.Employer.Employer.BusinessName" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.Employer.Employer.TradingName" class="form-control" aria-required="true" style="display:none" />
+                <label asp-for="Input.Employer.Employer.TradingName">Trading name (displayed)</label>
+                <span asp-validation-for="Input.Employer.Employer.TradingName" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.Employer.Employer.BusinessType" class="form-control" aria-required="true" style="display:none" />
+                <label asp-for="Input.Employer.Employer.BusinessType">Business Type</label>
+                <span asp-validation-for="Input.Employer.Employer.BusinessType" class="text-danger"></span>
+            </div>
 
-@*            <div class="form-floating mb-3">
-                <input asp-for="Input.EmployerId" style="display:none;" asp-items="@Model.Input.JobTitle" class="form-control" aria-required="true" />
-                <label asp-for="Input.EmployerId">Job Title</label>
-                <span asp-validation-for="Input.EmployerId" class="text-danger"></span>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.Employer.Employer.RegisteredAddress" class="form-control" aria-required="true" style="display:none"/>
+                <label asp-for="Input.Employer.Employer.RegisteredAddress">Registered address</label>
+                <span asp-validation-for="Input.Employer.Employer.RegisteredAddress" class="text-danger"></span>
+            </div>*@
+
+            @*            <div class="form-floating mb-3">
+            <input asp-for="Input.EmployerId" style="display:none;" asp-items="@Model.Input.JobTitle" class="form-control" aria-required="true" />
+            <label asp-for="Input.EmployerId">Job Title</label>
+            <span asp-validation-for="Input.EmployerId" class="text-danger"></span>
             </div>*@
 
 
@@ -79,13 +111,23 @@
      <script>
         $(document).ready(function(){
             $('#Input_Role').change(function(){
-                var selection = this.value;
+                var selection = $('#Input_Role Option:Selected').text();
                 //('#Input_Role Option:Selected').text();
                 if(selection!='Employer'){
-                    $('#Input_EmployerId').hide();
+                    $('#Input_Employer_Employer_JobTitle').hide();
+                    $('#Input_Employer_Employer_CompanyRegNo').hide();
+                    $('#Input_Employer_Employer_BusinessName').hide();
+                    $('#Input_Employer_Employer_TradingName').hide();
+                    $('#Input_Employer_Employer_BusinessType').hide();
+                    $('#Input_Employer_Employer_RegisteredAddress').hide();
                 }
                 else{
-                    $('#Input_EmployerId').show();
+                    $('#Input_Employer_Employer_JobTitle').show();
+                    $('#Input_Employer_Employer_CompanyRegNo').show();
+                    $('#Input_Employer_Employer_BusinessName').show();
+                    $('#Input_Employer_Employer_TradingName').show();
+                    $('#Input_Employer_Employer_BusinessType').show();
+                    $('#Input_Employer_Employer_RegisteredAddress').show();
                 }
             })
         })

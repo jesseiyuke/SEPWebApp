@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using SEP.DataAccess.Repository.IRepository;
+using SEP.Models;
 using SEP.Models.ViewModels;
 
 namespace SEPWebApp.Controllers
@@ -9,10 +11,14 @@ namespace SEPWebApp.Controllers
     {
 
         private readonly IUnitOfWork _unitOfWork;
+        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public EmployerController(IUnitOfWork unitOfWork)
+        public EmployerController(IUnitOfWork unitOfWork, SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager)
         {
             _unitOfWork = unitOfWork;
+            _signInManager = signInManager;
+            _userManager = userManager;
         }
 
         public IActionResult Index()
@@ -23,14 +29,21 @@ namespace SEPWebApp.Controllers
         //GET
         public IActionResult Upsert()
         {
-            EmployerVM employerVM = new()
+            var EmployerId = _userManager.GetUserId(User);
+            ApplicationUser user = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == EmployerId);
+            Employer employer = _unitOfWork.Employer.GetFirstOrDefault(e => e.Id == EmployerId);
+
+/*            if(employer==null)
             {
-                Employer = new(),
-                ApplicationUser = new()
-            };
+                employer.Id=user.Id; //Manually set Employer Id
+            }*/
+
+            EmployerVM employerVM = new EmployerVM();
+
+            employerVM.Employer = employer;
+
 
             return View(employerVM);
-
 
         }
 
@@ -42,8 +55,21 @@ namespace SEPWebApp.Controllers
 
             if (ModelState.IsValid)
             {
-                //_unitOfWork.ApplicationUser.Update(obj.ApplicationUser);
-                _unitOfWork.Employer.Add(obj.Employer);
+
+                if (obj.Employer.Id == null)
+                {
+                    var EmployerId = _userManager.GetUserId(User);
+                    ApplicationUser user = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == EmployerId);
+                    Employer employer = _unitOfWork.Employer.GetFirstOrDefault(e => e.Id == EmployerId);
+                    employer.Id = user.Id; //Manually set Employer Id
+                    _unitOfWork.Employer.Add(obj.Employer);
+                }
+                else
+                {
+                    _unitOfWork.Employer.Update(obj.Employer);
+                }
+
+
                 _unitOfWork.Save();
                 TempData["success"] = "Profile updated successfully";
                 return RedirectToAction("Index");

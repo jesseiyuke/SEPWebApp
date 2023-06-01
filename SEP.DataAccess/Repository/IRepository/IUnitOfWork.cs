@@ -1,4 +1,5 @@
-﻿namespace SEP.DataAccess.Repository.IRepository
+﻿
+namespace SEP.DataAccess.Repository.IRepository
 {
     public interface IUnitOfWork
     {
@@ -15,6 +16,8 @@
         IJobTypeRepository JobType { get; }
         IWeekHourRepository WeekHour { get; }
         IStatusRepository Status { get; }
+
+        IApplicationUserRepository ApplicationUser { get; }
 
 
         void Save();

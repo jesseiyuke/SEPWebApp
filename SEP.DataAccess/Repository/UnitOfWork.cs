@@ -1,4 +1,6 @@
-﻿using SEP.DataAccess.Repository.IRepository;
+﻿using SEP.DataAccess.Repository;
+using SEP.DataAccess.Repository.IRepository;
+using SEP.Models;
 
 namespace SEP.DataAccess.Repository
 {
@@ -21,6 +23,8 @@ namespace SEP.DataAccess.Repository
             JobType = new JobTypeRepository(_db);
             WeekHour = new WeekHourRepository(_db);
             Status = new StatusRepository(_db);
+
+            ApplicationUser = new ApplicationUserRepository(_db);
         }
 
         public IJobPostRepository JobPost { get; private set; }
@@ -36,6 +40,8 @@ namespace SEP.DataAccess.Repository
         public IJobTypeRepository JobType { get; private set; }
         public IWeekHourRepository WeekHour { get; private set; }
         public IStatusRepository Status { get; private set; }
+
+        public IApplicationUserRepository ApplicationUser { get; private set; }
 
         public void Save()
         {

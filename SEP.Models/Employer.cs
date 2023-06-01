@@ -1,11 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SEP.Models
 {
     public class Employer
     {
         [Key]
-        public int Id { get; set; }
+        public string Id { get; set; }
         [Required]
         public string JobTitle { get; set; }
         [Required]

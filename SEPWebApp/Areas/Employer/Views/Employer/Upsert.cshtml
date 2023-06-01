@@ -8,6 +8,31 @@
             <h2 class="text-primary">Employer/Edit Profile</h2>
         </div>
 
+@*        Register section*@
+        <div class="form-floating mb-3">
+            <input asp-for="ApplicationUser.Title" class="form-control" aria-required="true" disabled="disabled"/>
+            <label asp-for="ApplicationUser.Title">Title</label>
+            <span asp-validation-for="ApplicationUser.Title" class="text-danger"></span>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="ApplicationUser.FirstName" class="form-control" aria-required="true" disabled="disabled" />
+            <label asp-for="ApplicationUser.FirstName">First Name</label>
+            <span asp-validation-for="ApplicationUser.FirstName" class="text-danger"></span>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="ApplicationUser.LastName" class="form-control" aria-required="true" disabled="disabled" />
+            <label asp-for="ApplicationUser.LastName">Last Name</label>
+            <span asp-validation-for="ApplicationUser.LastName" class="text-danger"></span>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="ApplicationUser.Telephone" class="form-control" aria-required="true" disabled="disabled" />
+            <label asp-for="ApplicationUser.Telephone">Telephone</label>
+            <span asp-validation-for="ApplicationUser.Telephone" class="text-danger"></span>
+        </div>
+
+
+
+@*        Employer section*@
         <div class="form-floating mb-3">
             <input asp-for="Employer.JobTitle" class="form-control" aria-required="true" />
             <label asp-for="Employer.JobTitle">Job Title</label>

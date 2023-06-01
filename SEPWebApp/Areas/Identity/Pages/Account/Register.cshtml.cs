@@ -17,6 +17,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Text.Encodings.Web;
 
+using SEP.Models.ViewModels;
+
 namespace SEPWebApp.Areas.Identity.Pages.Account
 {
     public class RegisterModel : PageModel
@@ -113,7 +115,7 @@ namespace SEPWebApp.Areas.Identity.Pages.Account
             [ValidateNever]
             public IEnumerable<SelectListItem> RoleList { get; set; }
 
-            //public int? EmployerId { get; set; }
+            //public EmployerVM Employer { get; set; }
             //public string? JobTitle { get; set; }
         }
 
@@ -136,6 +138,8 @@ namespace SEPWebApp.Areas.Identity.Pages.Account
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
+
+
             Input = new InputModel()
             {
                 RoleList = _roleManager.Roles.Select(x => x.Name).Select(i => new SelectListItem
@@ -144,9 +148,14 @@ namespace SEPWebApp.Areas.Identity.Pages.Account
                     Value = i
                 }),
 
+                //Create employer object
+                //Employer = new(),
+
+
                 //JobTitle=_unitOfWork.Employer.GetFirstOrDefault(u => u.JobTitle== )
 
             };
+
         }
 
         public async Task<IActionResult> OnPostAsync(string? returnUrl = null)
@@ -165,6 +174,7 @@ namespace SEPWebApp.Areas.Identity.Pages.Account
                 user.LastName = Input.LastName;
                 user.Telephone = Input.Telephone;
                 user.PhoneNumber = Input.Cellphone;
+
 
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
