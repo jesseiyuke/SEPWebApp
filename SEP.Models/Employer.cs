@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace SEP.Models
 {
@@ -8,11 +6,10 @@ namespace SEP.Models
     {
         [Key]
         public int Id { get; set; }
-        [ValidateNever]
-        public ApplicationUser ApplicationUser { get; set; }
+        [Required]
         public string JobTitle { get; set; }
         [Required]
-        public long CompanyRegNo { get; set; }
+        public string CompanyRegNo { get; set; }
         [Required]
         public string BusinessName { get; set; }
         [Required]

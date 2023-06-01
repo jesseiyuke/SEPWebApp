@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SEP.DataAccess;
 using SEP.DataAccess.Repository.IRepository;
-using SEP.Models;
 using SEP.Models.ViewModels;
 
 namespace SEPWebApp.Controllers
@@ -23,7 +21,7 @@ namespace SEPWebApp.Controllers
         }
 
         //GET
-        public IActionResult Upsert(int? id)
+        public IActionResult Upsert()
         {
             EmployerVM employerVM = new()
             {
@@ -44,8 +42,8 @@ namespace SEPWebApp.Controllers
 
             if (ModelState.IsValid)
             {
-/*                _unitOfWork.JobPost.Update(obj.ApplicationUser);
-                _unitOfWork.JobPost.Update(obj.Employer);*/
+                //_unitOfWork.ApplicationUser.Update(obj.ApplicationUser);
+                _unitOfWork.Employer.Add(obj.Employer);
                 _unitOfWork.Save();
                 TempData["success"] = "Profile updated successfully";
                 return RedirectToAction("Index");

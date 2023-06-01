@@ -113,9 +113,8 @@ namespace SEPWebApp.Areas.Identity.Pages.Account
             [ValidateNever]
             public IEnumerable<SelectListItem> RoleList { get; set; }
 
-            /*            public int? EmployerId { get; set; }*/
-            /*            [Required]
-                        public string? JobTitle { get; set; }*/
+            //public int? EmployerId { get; set; }
+            //public string? JobTitle { get; set; }
         }
 
 
@@ -144,6 +143,8 @@ namespace SEPWebApp.Areas.Identity.Pages.Account
                     Text = i,
                     Value = i
                 }),
+
+                //JobTitle=_unitOfWork.Employer.GetFirstOrDefault(u => u.JobTitle== )
 
             };
         }
