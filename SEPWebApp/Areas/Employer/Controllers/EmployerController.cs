@@ -58,10 +58,10 @@ namespace SEPWebApp.Controllers
 
                 if (obj.Employer.Id == null)
                 {
-                    var EmployerId = _userManager.GetUserId(User);
+/*                    var EmployerId = _userManager.GetUserId(User);
                     ApplicationUser user = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == EmployerId);
                     Employer employer = _unitOfWork.Employer.GetFirstOrDefault(e => e.Id == EmployerId);
-                    employer.Id = user.Id; //Manually set Employer Id
+                    employer.Id = user.Id; //Manually set Employer Id*/
                     _unitOfWork.Employer.Add(obj.Employer);
                 }
                 else

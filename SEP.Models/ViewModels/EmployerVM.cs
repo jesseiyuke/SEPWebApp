@@ -6,6 +6,7 @@ namespace SEP.Models.ViewModels
     {
         [ValidateNever]
         public ApplicationUser ApplicationUser { get; set; }
+        [ValidateNever]
         public Employer Employer { get; set; }
     }
 }
