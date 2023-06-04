@@ -29,21 +29,32 @@ namespace SEPWebApp.Controllers
         //GET
         public IActionResult Upsert()
         {
+            EmployerVM EmployerVM = new()
+            {
+                ApplicationUser = new(),
+                Employer = new()
+
+            };
             var EmployerId = _userManager.GetUserId(User);
             ApplicationUser user = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == EmployerId);
-            Employer employer = _unitOfWork.Employer.GetFirstOrDefault(e => e.Id == EmployerId);
+            Employer employer = _unitOfWork.Employer.GetFirstOrDefault(e => e.Id == EmployerId, includeProperties: "ApplicationUser");
 
-/*            if(employer==null)
+
+
+            //create JobPost
+            if (employer == null)
             {
-                employer.Id=user.Id; //Manually set Employer Id
-            }*/
+                EmployerVM.ApplicationUser = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == EmployerId);
+                return View(EmployerVM);
+            }
+            else
+            {
+                //update JobPost
+                EmployerVM.ApplicationUser = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == EmployerId);
+                EmployerVM.Employer = _unitOfWork.Employer.GetFirstOrDefault(u => u.Id == EmployerId);
+                return View(EmployerVM);
 
-            EmployerVM employerVM = new EmployerVM();
-
-            employerVM.Employer = employer;
-
-
-            return View(employerVM);
+            }
 
         }
 
@@ -58,10 +69,7 @@ namespace SEPWebApp.Controllers
 
                 if (obj.Employer.Id == null)
                 {
-/*                    var EmployerId = _userManager.GetUserId(User);
-                    ApplicationUser user = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == EmployerId);
-                    Employer employer = _unitOfWork.Employer.GetFirstOrDefault(e => e.Id == EmployerId);
-                    employer.Id = user.Id; //Manually set Employer Id*/
+                    obj.Employer.ApplicationUserId = _userManager.GetUserId(User);
                     _unitOfWork.Employer.Add(obj.Employer);
                 }
                 else

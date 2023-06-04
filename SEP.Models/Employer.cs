@@ -6,7 +6,7 @@ namespace SEP.Models
 {
     public class Employer
     {
-        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string Id { get; set; }
         public string ApplicationUserId { get; set; }
         [ForeignKey(nameof(ApplicationUserId))]

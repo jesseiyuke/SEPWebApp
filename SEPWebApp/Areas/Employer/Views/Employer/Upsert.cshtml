@@ -2,30 +2,29 @@
 
 
 <form method="post" asp-action="Upsert">
-    <input asp-for="Employer.Id" hidden />
     <div class="border p-3 mt-2">
         <div class="row pb-2">
-            <h2 class="text-primary">Employer/Edit Profile</h2>
+            <h2 class="text-primary">Employer → Manage Profile</h2>
         </div>
 
 @*        Register section*@
         <div class="form-floating mb-3">
-            <input asp-for="ApplicationUser.Title" class="form-control" aria-required="true" disabled="disabled"/>
+            <input asp-for="ApplicationUser.Title" disabled class="form-control" />
             <label asp-for="ApplicationUser.Title">Title</label>
             <span asp-validation-for="ApplicationUser.Title" class="text-danger"></span>
         </div>
         <div class="form-floating mb-3">
-            <input asp-for="ApplicationUser.FirstName" class="form-control" aria-required="true" disabled="disabled" />
+            <input asp-for="ApplicationUser.FirstName" disabled class="form-control" />
             <label asp-for="ApplicationUser.FirstName">First Name</label>
             <span asp-validation-for="ApplicationUser.FirstName" class="text-danger"></span>
         </div>
         <div class="form-floating mb-3">
-            <input asp-for="ApplicationUser.LastName" class="form-control" aria-required="true" disabled="disabled" />
+            <input asp-for="ApplicationUser.LastName" disabled class="form-control" />
             <label asp-for="ApplicationUser.LastName">Last Name</label>
             <span asp-validation-for="ApplicationUser.LastName" class="text-danger"></span>
         </div>
         <div class="form-floating mb-3">
-            <input asp-for="ApplicationUser.Telephone" class="form-control" aria-required="true" disabled="disabled" />
+            <input asp-for="ApplicationUser.Telephone" disabled class="form-control" />
             <label asp-for="ApplicationUser.Telephone">Telephone</label>
             <span asp-validation-for="ApplicationUser.Telephone" class="text-danger"></span>
         </div>

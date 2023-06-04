@@ -458,7 +458,7 @@ namespace SEP.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DriverLicense");
+                    b.ToTable("DriverLicense", (string)null);
                 });
 
             modelBuilder.Entity("SEP.Models.Employer", b =>
@@ -498,7 +498,7 @@ namespace SEP.DataAccess.Migrations
 
                     b.HasIndex("ApplicationUserId");
 
-                    b.ToTable("Employer");
+                    b.ToTable("Employer", (string)null);
                 });
 
             modelBuilder.Entity("SEP.Models.Faculty", b =>
@@ -704,7 +704,7 @@ namespace SEP.DataAccess.Migrations
 
                     b.HasIndex("WeekHourId");
 
-                    b.ToTable("JobPost");
+                    b.ToTable("JobPost", (string)null);
                 });
 
             modelBuilder.Entity("SEP.Models.JobType", b =>
@@ -1012,7 +1012,7 @@ namespace SEP.DataAccess.Migrations
 
                     b.HasIndex("YearOfStudyId");
 
-                    b.ToTable("Student");
+                    b.ToTable("Student", (string)null);
                 });
 
             modelBuilder.Entity("SEP.Models.WeekHour", b =>
