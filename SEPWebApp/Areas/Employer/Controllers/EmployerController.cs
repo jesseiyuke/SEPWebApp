@@ -32,7 +32,7 @@ namespace SEPWebApp.Controllers
 
             var EmployerId = _userManager.GetUserId(User);
             ApplicationUser user = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == EmployerId);
-            Employer employer = _unitOfWork.Employer.GetFirstOrDefault(e => e.Id == EmployerId);
+            Employer employer = _unitOfWork.Employer.GetFirstOrDefault(e => e.ApplicationUserId == EmployerId);
 
             EmployerVM employerVM = new EmployerVM();
 
@@ -79,6 +79,10 @@ namespace SEPWebApp.Controllers
 
             if (ModelState.IsValid)
             {
+                if (employerVM == null)
+                {
+                    employerVM= new Employer();
+                }
                 employerVM.ApplicationUser = user;
                 employerVM.JobTitle = employer.JobTitle;
                 employerVM.CompanyRegNo = employer.CompanyRegNo;
