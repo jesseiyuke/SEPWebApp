@@ -21,7 +21,10 @@ namespace SEP.Models
         [Required]
         public string TradingName { get; set; }
         [Required]
-        public string BusinessType { get; set; }
+        public int BusinessTypeId { get; set; }
+        [ForeignKey("BusinessTypeId")]
+        [ValidateNever]
+        public BusinessType BusinessType { get; set; }
         [Required]
         public string RegisteredAddress { get; set; }
 

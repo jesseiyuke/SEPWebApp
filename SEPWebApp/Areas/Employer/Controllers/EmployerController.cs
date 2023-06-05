@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using SEP.DataAccess.Repository.IRepository;
 using SEP.Models;
 using SEP.Models.ViewModels;
@@ -32,7 +33,12 @@ namespace SEPWebApp.Controllers
             EmployerVM EmployerVM = new()
             {
                 ApplicationUser = new(),
-                Employer = new()
+                Employer = new(),
+                BusinessTypeList = _unitOfWork.BusinessType.GetAll().Select(i => new SelectListItem
+                {
+                    Text = i.Name,
+                    Value = i.Id.ToString()
+                }),
 
             };
             var EmployerId = _userManager.GetUserId(User);

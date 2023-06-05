@@ -54,11 +54,20 @@
             <label asp-for="Employer.TradingName">Trading name (displayed)</label>
             <span asp-validation-for="Employer.TradingName" class="text-danger"></span>
         </div>
-        <div class="form-floating mb-3">
+
+        <div class="mb-3 form-group row">
+            <div class="col-10">
+                <select asp-for="Employer.BusinessTypeId" asp-items=@Model.BusinessTypeList class="form-select" aria-required="true">
+                    <option disabled selected>Select Business Type</option> @*default value in select list*@
+                </select>
+                <br />
+                <span asp-validation-for="Employer.BusinessTypeId" class="text-danger"></span>
+            </div>
+@*        <div class="form-floating mb-3">
             <input asp-for="Employer.BusinessType" class="form-control" aria-required="true" />
             <label asp-for="Employer.BusinessType">Business Type</label>
             <span asp-validation-for="Employer.BusinessType" class="text-danger"></span>
-        </div>
+        </div>*@
 
 
         <div class="form-floating mb-3">

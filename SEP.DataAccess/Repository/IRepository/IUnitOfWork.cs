@@ -16,6 +16,7 @@ namespace SEP.DataAccess.Repository.IRepository
         IJobTypeRepository JobType { get; }
         IWeekHourRepository WeekHour { get; }
         IStatusRepository Status { get; }
+        IBusinessTypeRepository BusinessType { get; }
 
         IApplicationUserRepository ApplicationUser { get; }
 

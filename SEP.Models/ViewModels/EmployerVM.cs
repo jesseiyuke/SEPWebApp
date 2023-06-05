@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace SEP.Models.ViewModels
 {
@@ -8,5 +9,7 @@ namespace SEP.Models.ViewModels
         public ApplicationUser ApplicationUser { get; set; }
         [ValidateNever]
         public Employer Employer { get; set; }
+        [ValidateNever]
+        public IEnumerable<SelectListItem> BusinessTypeList { get; set; }
     }
 }

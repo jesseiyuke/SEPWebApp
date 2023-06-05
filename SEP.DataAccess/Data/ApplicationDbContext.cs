@@ -25,6 +25,7 @@ namespace SEP.DataAccess
 
         public DbSet<WeekHour> WeekHour { get; set; }
         public DbSet<Status> Status { get; set; }
+        public DbSet<BusinessType> BusinessType { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -51,6 +52,12 @@ namespace SEP.DataAccess
             modelBuilder.Entity<Status>().HasKey(f => f.Id);
             modelBuilder.Entity<Status>().Property(f => f.Id).ValueGeneratedOnAdd();
             modelBuilder.Entity<Status>().Property(f => f.Name).IsRequired();
+
+            // Configure BusinessType entity
+            modelBuilder.Entity<BusinessType>().ToTable("BusinessType");
+            modelBuilder.Entity<BusinessType>().HasKey(f => f.Id);
+            modelBuilder.Entity<BusinessType>().Property(f => f.Id).ValueGeneratedOnAdd();
+            modelBuilder.Entity<BusinessType>().Property(f => f.Name).IsRequired();
 
 
             // Configure Faculty entity
@@ -122,6 +129,18 @@ namespace SEP.DataAccess
                 new Status { Id = 7, Name = "Unsuccessful" },
                 new Status { Id = 8, Name = "Successful" },
                 new Status { Id = 9, Name = "Cancelled" }
+
+            );
+
+            // Seed data for Status
+            modelBuilder.Entity<BusinessType>().HasData(
+                new BusinessType { Id = 1, Name = "Sole Proprietorship" },
+                new BusinessType { Id = 2, Name = "Partnership" },
+                new BusinessType { Id = 3, Name = "Pty Ltd - Proprietary limited company" },
+                new BusinessType { Id = 4, Name = "Public Company" },
+                new BusinessType { Id = 5, Name = "Private Company" },
+                new BusinessType { Id = 6, Name = "State Owned Companies" },
+                new BusinessType { Id = 7, Name = "Non-profit Company" }
 
             );
 
