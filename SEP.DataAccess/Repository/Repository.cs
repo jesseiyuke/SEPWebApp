@@ -34,7 +34,7 @@ namespace SEP.DataAccess.Repository
 
         public T GetFirstOrDefault(Expression<Func<T, bool>> filter, string? includeProperties = null)
         {
-            IQueryable<T> query = dbSet;
+            IQueryable<T> query = dbSet.AsNoTracking();
             query = query.Where(filter);
             if (includeProperties != null)
             {

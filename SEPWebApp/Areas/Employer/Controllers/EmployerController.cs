@@ -29,74 +29,66 @@ namespace SEPWebApp.Controllers
         //GET
         public IActionResult Upsert()
         {
+            EmployerVM EmployerVM = new()
+            {
+                ApplicationUser = new(),
+                Employer = new()
 
+            };
             var EmployerId = _userManager.GetUserId(User);
             ApplicationUser user = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == EmployerId);
             Employer employer = _unitOfWork.Employer.GetFirstOrDefault(e => e.ApplicationUserId == EmployerId);
 
-            EmployerVM employerVM = new EmployerVM();
 
-            if (employer == null) //Create Employer
+
+            //create JobPost
+            if (employer == null)
             {
-
-                employer = new Employer();
-                employer.ApplicationUser = user;
-                employerVM.Title = employer.ApplicationUser.Title;
-                employerVM.FirstName = employer.ApplicationUser.FirstName;
-                employerVM.LastName = employer.ApplicationUser.LastName;
-                employerVM.Telephone = employer.ApplicationUser.Telephone;
+                EmployerVM.ApplicationUser = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == EmployerId);
+                return View(EmployerVM);
             }
-            else //Edit Employer
+            else
             {
-                employer.ApplicationUser = user;
-                employerVM.Title = employer.ApplicationUser.Title;
-                employerVM.FirstName = employer.ApplicationUser.FirstName;
-                employerVM.LastName = employer.ApplicationUser.LastName;
-                employerVM.Telephone = employer.ApplicationUser.Telephone;
-
-                employerVM.JobTitle = employer.JobTitle;
-                employerVM.CompanyRegNo = employer.CompanyRegNo;
-                employerVM.BusinessName = employer.BusinessName;
-                employerVM.TradingName = employer.TradingName;
-                employerVM.BusinessType = employer.BusinessType;
-                employerVM.RegisteredAddress = employer.RegisteredAddress;
+                //update JobPost
+                EmployerVM.ApplicationUser = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == EmployerId);
+                EmployerVM.Employer = _unitOfWork.Employer.GetFirstOrDefault(u => u.ApplicationUserId == EmployerId);
+                return View(EmployerVM);
 
             }
-
-            return View(employerVM);
 
         }
 
         //POST
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult UpsertProfile(EmployerVM employer)
+        public IActionResult Upsert(EmployerVM obj)
         {
 
             var EmployerId = _userManager.GetUserId(User);
             ApplicationUser user = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == EmployerId);
-            Employer employerVM = _unitOfWork.Employer.GetFirstOrDefault(e => e.Id == EmployerId);
+            Employer employer = _unitOfWork.Employer.GetFirstOrDefault(e => e.ApplicationUserId == EmployerId);
 
             if (ModelState.IsValid)
             {
-                if (employerVM == null)
-                {
-                    employerVM= new Employer();
-                }
-                employerVM.ApplicationUser = user;
-                employerVM.JobTitle = employer.JobTitle;
-                employerVM.CompanyRegNo = employer.CompanyRegNo;
-                employerVM.BusinessName = employer.BusinessName;
-                employerVM.TradingName = employer.TradingName;
-                employerVM.BusinessType = employer.BusinessType;
-                employerVM.RegisteredAddress = employer.RegisteredAddress;
 
-                _unitOfWork.Employer.Update(employerVM);
+                if (employer == null)
+                {
+                    obj.Employer.ApplicationUserId = EmployerId;
+                    _unitOfWork.Employer.Add(obj.Employer);
+                }
+                else
+                {
+                    obj.ApplicationUser = user;
+                    obj.Employer.ApplicationUser = user;
+                    _unitOfWork.Employer.Update(obj.Employer);
+                }
+
+
                 _unitOfWork.Save();
                 TempData["success"] = "Profile updated successfully";
                 return RedirectToAction("Index");
             }
-            return View(employer);
+            return View(obj);
 
         }
 

@@ -2,71 +2,73 @@
 
 
 <form method="post" asp-action="Upsert">
+    <input asp-for="Employer.Id" hidden />
+    <input asp-for="Employer.ApplicationUserId" hidden />
     <div class="border p-3 mt-2">
         <div class="row pb-2">
             <h2 class="text-primary">Employer → Manage Profile</h2>
         </div>
 
-@*        Register section*@
+        @*        Register section*@
         <div class="form-floating mb-3">
-            <input asp-for="Title" disabled class="form-control" />
-            <label asp-for="Title">Title</label>
-            <span asp-validation-for="Title" class="text-danger"></span>
+            <input asp-for="ApplicationUser.Title" disabled class="form-control" />
+            <label asp-for="ApplicationUser.Title">Title</label>
+            <span asp-validation-for="ApplicationUser.Title" class="text-danger"></span>
         </div>
         <div class="form-floating mb-3">
-            <input asp-for="FirstName" disabled class="form-control" />
-            <label asp-for="FirstName">First Name</label>
-            <span asp-validation-for="FirstName" class="text-danger"></span>
+            <input asp-for="ApplicationUser.FirstName" disabled class="form-control" />
+            <label asp-for="ApplicationUser.FirstName">First Name</label>
+            <span asp-validation-for="ApplicationUser.FirstName" class="text-danger"></span>
         </div>
         <div class="form-floating mb-3">
-            <input asp-for="LastName" disabled class="form-control" />
-            <label asp-for="LastName">Last Name</label>
-            <span asp-validation-for="LastName" class="text-danger"></span>
+            <input asp-for="ApplicationUser.LastName" disabled class="form-control" />
+            <label asp-for="ApplicationUser.LastName">Last Name</label>
+            <span asp-validation-for="ApplicationUser.LastName" class="text-danger"></span>
         </div>
         <div class="form-floating mb-3">
-            <input asp-for="Telephone" disabled class="form-control" />
-            <label asp-for="Telephone">Telephone</label>
-            <span asp-validation-for="Telephone" class="text-danger"></span>
-        </div>
-
-
-
-@*        Employer section*@
-        <div class="form-floating mb-3">
-            <input asp-for="JobTitle" class="form-control" aria-required="true" />
-            <label asp-for="JobTitle">Job Title</label>
-            <span asp-validation-for="JobTitle" class="text-danger"></span>
-        </div>
-        <div class="form-floating mb-3">
-            <input asp-for="CompanyRegNo" class="form-control" aria-required="true" />
-            <label asp-for="CompanyRegNo">Company registration number</label>
-            <span asp-validation-for="CompanyRegNo" class="text-danger"></span>
-        </div>
-        <div class="form-floating mb-3">
-            <input asp-for="BusinessName" class="form-control" aria-required="true" />
-            <label asp-for="BusinessName">Registered name of business</label>
-            <span asp-validation-for="BusinessName" class="text-danger"></span>
-        </div>
-        <div class="form-floating mb-3">
-            <input asp-for="TradingName" class="form-control" aria-required="true" />
-            <label asp-for="TradingName">Trading name (displayed)</label>
-            <span asp-validation-for="TradingName" class="text-danger"></span>
-        </div>
-        <div class="form-floating mb-3">
-            <input asp-for="BusinessType" class="form-control" aria-required="true" />
-            <label asp-for="BusinessType">Business Type</label>
-            <span asp-validation-for="BusinessType" class="text-danger"></span>
+            <input asp-for="ApplicationUser.Telephone" disabled class="form-control" />
+            <label asp-for="ApplicationUser.Telephone">Telephone</label>
+            <span asp-validation-for="ApplicationUser.Telephone" class="text-danger"></span>
         </div>
 
 
+
+        @*        Employer section*@
         <div class="form-floating mb-3">
-            <input asp-for="RegisteredAddress" class="form-control" aria-required="true"/>
-            <label asp-for="RegisteredAddress">Registered address</label>
-            <span asp-validation-for="RegisteredAddress" class="text-danger"></span>
+            <input asp-for="Employer.JobTitle" class="form-control" aria-required="true" />
+            <label asp-for="Employer.JobTitle">Job Title</label>
+            <span asp-validation-for="Employer.JobTitle" class="text-danger"></span>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="Employer.CompanyRegNo" class="form-control" aria-required="true" />
+            <label asp-for="Employer.CompanyRegNo">Company registration number</label>
+            <span asp-validation-for="Employer.CompanyRegNo" class="text-danger"></span>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="Employer.BusinessName" class="form-control" aria-required="true" />
+            <label asp-for="Employer.BusinessName">Registered name of business</label>
+            <span asp-validation-for="Employer.BusinessName" class="text-danger"></span>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="Employer.TradingName" class="form-control" aria-required="true" />
+            <label asp-for="Employer.TradingName">Trading name (displayed)</label>
+            <span asp-validation-for="Employer.TradingName" class="text-danger"></span>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="Employer.BusinessType" class="form-control" aria-required="true" />
+            <label asp-for="Employer.BusinessType">Business Type</label>
+            <span asp-validation-for="Employer.BusinessType" class="text-danger"></span>
         </div>
 
 
-        <button type="submit" asp-action="UpsertProfile" class="btn btn-primary" style="width:150px">Update</button>
+        <div class="form-floating mb-3">
+            <input asp-for="Employer.RegisteredAddress" class="form-control" aria-required="true" />
+            <label asp-for="Employer.RegisteredAddress">Registered address</label>
+            <span asp-validation-for="Employer.RegisteredAddress" class="text-danger"></span>
+        </div>
+
+
+        <button type="submit" class="btn btn-primary" style="width:150px">Update</button>
         <a asp-controller="Employer" asp-action="Index" class="btn btn-secondary" style="width:150px">Back</a>
     </div>
 
@@ -85,4 +87,3 @@
         <partial name="_ValidationScriptsPartial" />
     }
 }
-
