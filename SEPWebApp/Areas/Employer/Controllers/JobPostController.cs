@@ -22,6 +22,20 @@ namespace SEPWebApp.Areas.Employer.Controllers
             return View();
         }
 
+        public JsonResult GetFaculties()
+        {
+            var faculties = _unitOfWork.Faculty.GetAll();
+
+            return new JsonResult(faculties);
+        }
+
+        public JsonResult GetDepartments(int id)
+        {
+            var departments = _unitOfWork.Department.GetAll().Where(d => d.FacultyId == id);
+
+            return new JsonResult(departments);
+        }
+
         //GET
         public IActionResult Upsert(int? id)
         {
@@ -30,7 +44,7 @@ namespace SEPWebApp.Areas.Employer.Controllers
             {
                 JobPost = new(),
                 //All drop down lists from ViewModel
-                FacultyList = _unitOfWork.Faculty.GetAll().Select(i => new SelectListItem
+                /*FacultyList = _unitOfWork.Faculty.GetAll().Select(i => new SelectListItem
                 {
                     Text = i.Name,
                     Value = i.Id.ToString()
@@ -39,7 +53,7 @@ namespace SEPWebApp.Areas.Employer.Controllers
                 {
                     Text = i.Name,
                     Value = i.Id.ToString()
-                }),
+                }),*/
                 JobTypeList = _unitOfWork.JobType.GetAll().Select(i => new SelectListItem
                 {
                     Text = i.Name,
@@ -66,6 +80,7 @@ namespace SEPWebApp.Areas.Employer.Controllers
             {
                 //update JobPost
                 JobPostVM.JobPost = _unitOfWork.JobPost.GetFirstOrDefault(u => u.Id == id);
+                //JobPostVM.FacultyList=
                 return View(JobPostVM);
 
             }

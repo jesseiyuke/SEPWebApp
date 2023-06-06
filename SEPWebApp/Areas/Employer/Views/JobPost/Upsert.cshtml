@@ -21,19 +21,47 @@
             </div>
         </div>
 
+@*        <div class="mb-3 form-group row">
+            <div class="col-10">
+                <select asp-for="JobPost.FacultyId" id="facultyNameID" class="form-select">
+                    <option disabled selected>Select Faculty</option> 
+                    @foreach(var faculty in @Model.FacultyList)
+                    {
+                        <option value="@faculty.Value">@faculty.Text</option>
+                    }
+                </select>
+                <br />
+                <span asp-validation-for="JobPost.FacultyId" class="text-danger"></span>
+            </div>
+        </div>*@
+
+@*        <div class="mb-3 form-group row">
+            <div class="col-10">
+                <select asp-for="JobPost.DepartmentId" id="departmentNameID" class="form-select">
+                    <option disabled selected>Select Department</option>
+                    @foreach (var department in @Model.DepartmentList)
+                    {
+                        <option value="@department.Value">@department.Text</option>
+                    }
+                </select>
+                <br />
+                <span asp-validation-for="JobPost.DepartmentId" class="text-danger"></span>
+            </div>
+        </div>*@
+
         <div class="mb-3 form-group row">
             <div class="col-10">
-                <select asp-for="JobPost.FacultyId" asp-items=@Model.FacultyList class="form-select">
-                    <option disabled selected>Select Faculty</option> @*default value in select list*@
-                 </select>
-                 <br />
+                <select asp-for="JobPost.FacultyId" id="faculty" class="form-select">
+                    <option disabled selected>Select Faculty</option>
+                </select>
+                <br />
                 <span asp-validation-for="JobPost.FacultyId" class="text-danger"></span>
             </div>
         </div>
 
         <div class="mb-3 form-group row">
             <div class="col-10">
-                <select asp-for="JobPost.DepartmentId" asp-items=@Model.DepartmentList class="form-select">
+                <select asp-for="JobPost.DepartmentId" id="department" class="form-select">
                     <option disabled selected>Select Department</option>
                 </select>
                 <br />
@@ -270,5 +298,27 @@
     @{
         <partial name="_ValidationScriptsPartial" />
     }
+@*    <script type="text/javascript">
+        $(document).ready(function () { 
+            $('#facultyNameID').(change(function(){
+                var obId = this.value
+                $('#departmentNameID').empty();
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("GetDepartments","JobPost")',
+                    dataType: 'json',
+                    data: { id: obId },
+                    success: function (dep) {
+                        $.each(dep, function (index, item) {
+                            $('#departmentNameID').append('<option value="' + item.id + '">' + item.name + '</option')
+                         });
+                    }
+                });
+            });
+        });
+    </script>*@
 }
+
+<script src="~/lib//jquery/dist/jquery.min.js"></script>
+<script src="~/js/Cascading.js"></script>
 
