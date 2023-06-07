@@ -1,0 +1,90 @@
+﻿@model Qualifications
+@{
+    ViewData["Title"] = "AddQualifications";
+}
+<h2>Student→ManageProfile→Referees</h2>
+
+<h3>Please enter your referees</h3>
+
+<div class="row align-items-center py-3">
+    <div class="col-md-3 ps-5">
+
+        <label asp-for="Institution" class="mb-0">Institution</label>
+
+    </div>
+    <div class="col-md-9 pe-5">
+
+        <input type="text" asp-for="Institution" class="form-control form-control-lg" />
+
+    </div>
+</div>
+
+<div class="mb-3 form-group row">
+    <div class="col-md-3 ps-5">
+        <label asp-for="StartDate" class="mb-0">Start Date</label>
+    </div>
+    <div class="col-6">
+        <input asp-for="StartDate" type="text" class="datepicker form-control" />
+    </div>
+</div>
+
+
+<div class="mb-3 form-group row">
+    <div class="col-md-3 ps-5">
+        <label asp-for="EndDate" class="mb-0">End Date</label>
+    </div>
+    <div class="col-6">
+        <input asp-for="EndDate" type="text" class="datepicker form-control" />
+    </div>
+</div>
+<div class="row align-items-center py-3">
+    <div class="col-md-3 ps-5">
+
+        <label asp-for="Qalificatiion" class="mb-0">Job title</label>
+
+    </div>
+    <div class="col-md-9 pe-5">
+
+        <input type="text" asp-for="Qalificatiion" class="form-control form-control-lg" />
+
+    </div>
+</div>
+<div class="row align-items-center py-3">
+    <div class="col-md-9 ps-5">
+        <label asp-for="Subjects" class="mb-0">Subjects</label>
+    </div>
+</div>
+<div class="form-group">
+    <textarea asp-for="Subjects" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+</div>
+<div class="row align-items-center py-3">
+    <div class="col-md-9 ps-5">
+        <label asp-for="Majors" class="mb-0">Majors</label>
+    </div>
+</div>
+<div class="form-group">
+    <textarea asp-for="Majors" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+</div>
+<div class="row align-items-center py-3">
+    <div class="col-md-9 ps-5">
+        <label asp-for="SubMajors" class="mb-0">Sub-majors</label>
+    </div>
+</div>
+<div class="form-group">
+    <textarea asp-for="SubMajors" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+</div>
+<div class="row align-items-center py-3">
+    <div class="col-md-3 ps-5">
+
+        <label asp-for="Research" class="mb-0">Research</label>
+
+    </div>
+    <div class="col-md-9 pe-5">
+
+        <input type="text" asp-for="Research" class="form-control form-control-lg" />
+
+    </div>
+</div>
+
+
+<a asp-area="Student" asp-action="Profile" class="btn btn-secondary" style="width:300px">Save</a>

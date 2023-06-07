@@ -1,4 +1,5 @@
 ﻿using SEP.DataAccess.Repository.IRepository;
+using SEP.Models;
 
 namespace SEP.DataAccess.Repository
 {
@@ -17,6 +18,7 @@ namespace SEP.DataAccess.Repository
             YearOfStudy = new YearOfStudyRepository(_db);
             Department = new DepartmentRepository(_db);
             Faculty = new FacultyRepository(_db);
+            Student = new StudentRepository(_db);
 
             JobType = new JobTypeRepository(_db);
             WeekHour = new WeekHourRepository(_db);
@@ -35,6 +37,10 @@ namespace SEP.DataAccess.Repository
         public IYearOfStudyRepository YearOfStudy { get; private set; }
         public IDepartmentRepository Department { get; private set; }
         public IFacultyRepository Faculty { get; private set; }
+        public IStudentRepository Student { get; private set; }
+        public IQualificationRepository Qualification { get; private set; }
+        public IRefereesRepository Referees { get; private set; }
+        public IExperienceRepository Experience { get; private set; }
 
         public IJobTypeRepository JobType { get; private set; }
         public IWeekHourRepository WeekHour { get; private set; }

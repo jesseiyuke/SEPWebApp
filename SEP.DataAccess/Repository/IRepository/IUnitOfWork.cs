@@ -12,6 +12,10 @@ namespace SEP.DataAccess.Repository.IRepository
         IYearOfStudyRepository YearOfStudy { get; }
         IDepartmentRepository Department { get; }
         IFacultyRepository Faculty { get; }
+        IStudentRepository Student { get; }
+        IRefereesRepository Referees { get; }
+        IExperienceRepository Experience { get; }
+        IQualificationRepository Qualification { get; }
 
         IJobTypeRepository JobType { get; }
         IWeekHourRepository WeekHour { get; }
