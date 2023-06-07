@@ -45,12 +45,6 @@ namespace SEPWebApp.Areas.Home.Controllers
         }
 
 
-
-        /*        public IActionResult Index()
-                {
-                    return view();
-                }*/
-
         public IActionResult Privacy()
         {
             return View();

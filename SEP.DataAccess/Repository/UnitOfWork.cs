@@ -18,6 +18,8 @@ namespace SEP.DataAccess.Repository
             YearOfStudy=new YearOfStudyRepository(_db);
             Department=new DepartmentRepository(_db);
             Faculty=new FacultyRepository(_db);
+            Student=new StudentRepository(_db);
+            User=new UserRepository(_db);
         }
 
         public IJobPostRepository JobPost { get; private set; }
@@ -29,6 +31,11 @@ namespace SEP.DataAccess.Repository
         public IYearOfStudyRepository YearOfStudy { get; private set; }
         public IDepartmentRepository Department { get; private set; }
         public IFacultyRepository Faculty { get; private set; }
+        public IStudentRepository Student { get; private set; }
+        public IQualificationRepository Qualification { get; private set; }
+        public IRefereesRepository Referees { get; private set; }
+        public IExperienceRepository Experience { get; private set; }
+        public IUserRepository User { get; private set; }
 
         public void Save()
         {

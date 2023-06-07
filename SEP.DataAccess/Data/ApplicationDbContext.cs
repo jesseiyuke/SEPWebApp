@@ -22,6 +22,9 @@ namespace SEP.DataAccess
         public DbSet<Nationality> Nationality { get; set; }
         public DbSet<Gender> Gender { get; set; }
         public DbSet<YearOfStudy> YearOfStudy { get; set; }
+        public DbSet<Qualifications> Qualifications { get; set; }
+        public DbSet<Referees> Referees { get; set; }
+        public DbSet<Experience> Experience { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -73,6 +76,12 @@ namespace SEP.DataAccess
             modelBuilder.Entity<YearOfStudy>().HasKey(y => y.Id);
             modelBuilder.Entity<YearOfStudy>().Property(y => y.Id).ValueGeneratedOnAdd();
             modelBuilder.Entity<YearOfStudy>().Property(y => y.Name).IsRequired();
+
+            // confingure DriverLicense entity
+            modelBuilder.Entity<DriverLicense>().ToTable("DriverLicense");
+            modelBuilder.Entity<DriverLicense>().HasKey(x => x.Id);
+            modelBuilder.Entity<DriverLicense>().Property(x => x.Id).ValueGeneratedOnAdd();
+            modelBuilder.Entity<DriverLicense>().Property(x => x.Name).IsRequired();
 
             // Seed data for Faculties
             modelBuilder.Entity<Faculty>().HasData(
@@ -148,26 +157,8 @@ namespace SEP.DataAccess
             // Seed data for Nationalities
             modelBuilder.Entity<Nationality>().HasData(
                 new Nationality { Id = 1, Name = "South African" },
-                new Nationality { Id = 2, Name = "British" },
-                new Nationality { Id = 3, Name = "Dutch" },
-                new Nationality { Id = 4, Name = "Indian" },
-                new Nationality { Id = 5, Name = "Chinese" },
-                new Nationality { Id = 6, Name = "Portuguese" },
-                new Nationality { Id = 7, Name = "German" },
-                new Nationality { Id = 8, Name = "Zimbabwean" },
-                new Nationality { Id = 9, Name = "Mozambican" },
-                new Nationality { Id = 10, Name = "Namibian" },
-                new Nationality { Id = 11, Name = "Congolese" },
-                new Nationality { Id = 12, Name = "Malawian" },
-                new Nationality { Id = 13, Name = "Zambian" },
-                new Nationality { Id = 14, Name = "Nigerian" },
-                new Nationality { Id = 15, Name = "Ghanaian" },
-                new Nationality { Id = 16, Name = "Tanzanian" },
-                new Nationality { Id = 17, Name = "Kenyan" },
-                new Nationality { Id = 18, Name = "Ugandan" },
-                new Nationality { Id = 19, Name = "Ethiopian" },
-                new Nationality { Id = 20, Name = "Somali" }
-            );
+                new Nationality { Id = 2, Name = "non South African" }
+            ); ;
 
             // Seed data for YearsOfStudy
             modelBuilder.Entity<YearOfStudy>().HasData(
@@ -179,6 +170,15 @@ namespace SEP.DataAccess
                 new YearOfStudy { Id = 6, Name = "Master's" },
                 new YearOfStudy { Id = 7, Name = "PhD" }
             );
+            // seed data for DriverLicense
+            modelBuilder.Entity<DriverLicense>().HasData(
+                new DriverLicense { Id=1,Name="A - MotorCycle"},
+                new DriverLicense { Id=2,Name="A1 - Light MotorCycle"},
+                new DriverLicense { Id=3,Name="B - Light Motor Vehicle"},
+                new DriverLicense { Id=4,Name="C - Heavy Motor Vehicle"},
+                new DriverLicense { Id=5,Name="C1 - Light Heavy Motor Vehicle"},
+                new DriverLicense { Id=6,Name="EB - Ligth Motor Vehicle + Trailer"}
+                );
         }
 
     }

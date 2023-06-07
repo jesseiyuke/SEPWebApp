@@ -1,0 +1,61 @@
+﻿@model Experience
+@{
+    ViewData["Title"] = "Referees";
+}
+<h2>Student→ManageProfile→Referees</h2>
+
+<h3>Please enter your referees</h3>
+
+<div class="row align-items-center py-3">
+    <div class="col-md-3 ps-5">
+
+        <label asp-for="EmployerName" class="mb-0">Employer Name</label>
+
+    </div>
+    <div class="col-md-9 pe-5">
+
+        <input type="text" asp-for="EmployerName" class="form-control form-control-lg" />
+
+    </div>
+</div>
+
+<div class="mb-3 form-group row">
+    <div class="col-md-3 ps-5">
+        <label asp-for="StartDate" class="mb-0">Start Date</label>
+    </div>
+    <div class="col-6">
+        <input asp-for="StartDate" type="text" class="datepicker form-control" />
+    </div>
+</div>
+
+
+<div class="mb-3 form-group row">
+    <div class="col-md-3 ps-5">
+        <label asp-for="EndDate" class="mb-0">End Date</label>
+    </div>
+    <div class="col-6">
+        <input asp-for="EndDate" type="text" class="datepicker form-control" />
+    </div>
+</div>
+<div class="row align-items-center py-3">
+    <div class="col-md-3 ps-5">
+
+        <label asp-for="JobTitle" class="mb-0">Job title</label>
+
+    </div>
+    <div class="col-md-9 pe-5">
+
+        <input type="text" asp-for="JobTitle" class="form-control form-control-lg" />
+
+    </div>
+</div>
+<div class="row align-items-center py-3">
+    <div class="col-md-9 ps-5">
+        <label asp-for="TasksAndResponsilities" class="mb-0">Tasks and Responsibilies</label>
+    </div>
+</div>
+<div class="form-group">
+    <textarea asp-for="TasksAndResponsilities" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+</div>
+
+<a asp-area="Student" asp-action="Profile" class="btn btn-secondary" style="width:300px">Save</a>

@@ -1,8 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SEP.DataAccess;
 using SEP.DataAccess.Repository.IRepository;
 using SEP.Models;
+using SEP.Models.ViewModels;
+using SEPWebApp.Areas.Home.Controllers;
+using System.ComponentModel.DataAnnotations;
 
 namespace SEPWebApp.Areas.Controllers
 {
@@ -10,42 +14,264 @@ namespace SEPWebApp.Areas.Controllers
     public class StudentController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly ILogger<HomeController> _logger;
+        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<IdentityUser> _userManager;
+        private ApplicationDbContext _db;
 
-        public StudentController(IUnitOfWork unitOfWork)
+        public StudentController(IUnitOfWork unitOfWork, ILogger<HomeController> logger, SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager)
         {
             _unitOfWork = unitOfWork;
+            _logger = logger;
+            _signInManager = signInManager;
+            _userManager = userManager;
         }
 
         public IActionResult Index()
         {
+
+            var studentID = _userManager.GetUserId(User);
+            Student student = _unitOfWork.Student.GetFirstOrDefault(d => d.Id == studentID);
+            if( student == null)
+            {
+                return RedirectToAction("AddStudent", "Student", new { area = "Student" });
+            }
             return View();
         }
-
-        public ActionResult GetDepartmentsByFaculty(int facultyId)
+        public IActionResult AddStudent()
         {
-            // Retrieve departments based on the facultyId using the Unit of Work
-            IEnumerable<Department> DepartmentList = _unitOfWork.Department.GetAll().Where(d => d.FacultyId == facultyId);
 
-            ViewBag.Department = new SelectList(DepartmentList, "Id", "Name");
-            return View();
+            var studentID = _userManager.GetUserId(User);
+            Student student = _unitOfWork.Student.GetFirstOrDefault(d => d.Id == studentID);
+            ApplicationUser user = _unitOfWork.User.GetFirstOrDefault(x => x.Id == studentID);
+            StudentVM studentVM = new StudentVM();
+            student = new Student();
+            student.User = user;
+            studentVM.Title = student.User.Title;
+            studentVM.Telephone = student.User.Telephone;
+            studentVM.cellPhone = student.User.PhoneNumber;
+            studentVM.Email = student.User.Email;
+            studentVM.FirstName = student.User.FirstName;
+            studentVM.LastName = student.User.LastName;
+            studentVM.DriverLicenceList = _unitOfWork.DriverLicence.GetAll().Select(i => new SelectListItem
+            {
+                Text = i.Name,
+                Value = i.Id.ToString()
+            });
+            studentVM.GenderList = _unitOfWork.Gender.GetAll().Select(i => new SelectListItem
+            {
+                Text = i.Name,
+                Value = i.Id.ToString()
+            });
+            studentVM.RaceList = _unitOfWork.Race.GetAll().Select(i => new SelectListItem
+            {
+                Text = i.Name,
+                Value = i.Id.ToString()
+            });
+            studentVM.NationalityList = _unitOfWork.Nationality.GetAll().Select(i => new SelectListItem
+            {
+                Text = i.Name,
+                Value = i.Id.ToString()
+            });
+            studentVM.YearOfStudyList = _unitOfWork.YearOfStudy.GetAll().Select(i => new SelectListItem
+            {
+                Text = i.Name,
+                Value = i.Id.ToString()
+            });
+            studentVM.FacutyList = _unitOfWork.Faculty.GetAll().Select(i => new SelectListItem
+            {
+                Text = i.Name,
+                Value = i.Id.ToString()
+            });
+            studentVM.DepartmentList = _unitOfWork.Department.GetAll().Where(d => d.FacultyId == 1).Select(i => new SelectListItem
+            {
+                Text = i.Name,
+                Value = i.Id.ToString()
+            });
+
+            return View(studentVM);
+        }
+        public IActionResult EditStudent(StudentVM student)
+        {
+            var studentID = _userManager.GetUserId(User);
+            ApplicationUser user = _unitOfWork.User.GetFirstOrDefault(x => x.Id == studentID);
+            Student studentVM = new Student();
+            studentVM.User = user;
+            studentVM.Achivements = student.Achivements;
+            studentVM.Address = student.Address;
+            studentVM.RaceId = (int)student.Race;
+            studentVM.GenderId = (int)student.Gender;
+            studentVM.IdNo = student.IdNo;
+            studentVM.Interests = student.Interests;
+            studentVM.User.Telephone = student.Telephone;
+            studentVM.CareerObjective = student.CareerObjective;
+            studentVM.DriversLicenseId = (int)student.DriversLicense;
+            studentVM.YearOfStudyId = (int)student.YearOfStudy;
+            studentVM.DepartmentId = (int)student.Department;
+            studentVM.Skills = student.Skills;
+            studentVM.NationalityId = (int)student.Nationality;
+            studentVM.Interests = student.Interests;
+            studentVM.User.PhoneNumber = student.cellPhone;
+
+            _unitOfWork.Student.Add(studentVM);
+            _unitOfWork.Save();
+            TempData["success"] = "Student update successfull";
+            return RedirectToAction("Index");
+
         }
 
-        public IActionResult Profile() 
+        public JsonResult GetDepartments(int facultyId)
         {
-            IEnumerable<DriverLicense> DriverLicenceList = _unitOfWork.DriverLicence.GetAll();
-            ViewBag.DriverLicense = new SelectList(DriverLicenceList, "Id", "Name");
-            IEnumerable<Gender> GenderList = _unitOfWork.Gender.GetAll();
-            ViewBag.Gender = new SelectList(GenderList,"Id","Name");
-            IEnumerable<Race> RaceList= _unitOfWork.Race.GetAll();
-            ViewBag.Race = new SelectList(RaceList, "Id", "Name");
-            IEnumerable<Nationality> NationalityList = _unitOfWork.Nationality.GetAll();
-            ViewBag.Nationality=new SelectList(NationalityList,"Id","Name");
-            IEnumerable<YearOfStudy> YearOfStudyList= _unitOfWork.YearOfStudy.GetAll();
-            ViewBag.YearOfStudy=new SelectList(YearOfStudyList,"Id","Name");
-            IEnumerable<Department> DepartmentList = _unitOfWork.Department.GetAll().Where(d => d.FacultyId == 1);
-            ViewBag.Department=new SelectList(DepartmentList,"Id","Name");
-            IEnumerable<Faculty> FacutyList = _unitOfWork.Faculty.GetAll();
-            ViewBag.Faculty=new SelectList(FacutyList,"Id","Name");
+            var departments = _unitOfWork.Department.GetAll().Where(d => d.FacultyId == facultyId);
+
+            return Json(departments);
+        }
+
+
+
+        public IActionResult Profile()
+        {
+
+            var studentID = _userManager.GetUserId(User);
+            Student student = _unitOfWork.Student.GetFirstOrDefault(d => d.Id == studentID);
+            ApplicationUser user = _unitOfWork.User.GetFirstOrDefault(x => x.Id == studentID);
+            StudentVM studentVM = new StudentVM();
+
+            Department department = _unitOfWork.Department.GetFirstOrDefault(d => d.Id == student.DepartmentId);
+            student.User = user;
+            studentVM.Achivements = student.Achivements;
+            studentVM.Address = student.Address;
+            studentVM.Race = student.RaceId;
+            studentVM.Gender = student.GenderId;
+            studentVM.cellPhone = student.User.PhoneNumber;
+            studentVM.Email = student.User.Email;
+            studentVM.FirstName = student.User.FirstName;
+            studentVM.LastName = student.User.LastName;
+            studentVM.IdNo = student.IdNo;
+            studentVM.Interests = student.Interests;
+            studentVM.Title = student.User.Title;
+            studentVM.Telephone = student.User.Telephone;
+            studentVM.CareerObjective = student.CareerObjective;
+            studentVM.DriversLicense = student.DriversLicenseId;
+            studentVM.YearOfStudy = student.YearOfStudyId;
+            studentVM.Department = student.DepartmentId;
+            studentVM.Skills = student.Skills;
+            studentVM.Nationality = student.NationalityId;
+            studentVM.Interests = student.Interests;
+            studentVM.Faculty = department.FacultyId;
+
+            studentVM.DriverLicenceList = _unitOfWork.DriverLicence.GetAll().Select(i => new SelectListItem
+            {
+                Text = i.Name,
+                Value=i.Id.ToString()
+            });
+            studentVM.GenderList = _unitOfWork.Gender.GetAll().Select(i => new SelectListItem
+            {
+                Text = i.Name,
+                Value = i.Id.ToString()
+            });
+            studentVM.RaceList = _unitOfWork.Race.GetAll().Select(i => new SelectListItem
+            {
+                Text = i.Name,
+                Value = i.Id.ToString()
+            });
+            studentVM.NationalityList = _unitOfWork.Nationality.GetAll().Select(i => new SelectListItem
+            {
+                Text = i.Name,
+                Value = i.Id.ToString()
+            });
+            studentVM.YearOfStudyList = _unitOfWork.YearOfStudy.GetAll().Select(i => new SelectListItem
+            {
+                Text = i.Name,
+                Value = i.Id.ToString()
+            });
+            studentVM.FacutyList = _unitOfWork.Faculty.GetAll().Select(i => new SelectListItem
+            {
+                Text = i.Name,
+                Value = i.Id.ToString()
+            });
+            studentVM.DepartmentList = _unitOfWork.Department.GetAll().Where(d => d.FacultyId == 1).Select(i => new SelectListItem
+            {
+                Text = i.Name,
+                Value = i.Id.ToString()
+            });
+
+            return View(studentVM);
+        }
+
+        public IActionResult AddReferees(Referees obj)
+        {
+            if (ModelState.IsValid)
+            {
+                _unitOfWork.Referees.Add(obj);
+                _unitOfWork.Save();
+                TempData["success"] = "Referee added successfully";
+                return RedirectToAction("Profile");
+            }
+            return View(obj);
+        }
+        public IActionResult AddExperince(Experience obj)
+        {
+            if (ModelState.IsValid)
+            {
+                _unitOfWork.Experience.Add(obj);
+                _unitOfWork.Save();
+                TempData["success"] = "Experience added successfully";
+                return RedirectToAction("Profile");
+            }
+            return View(obj);
+        }
+        public IActionResult AddQualifications(Qualifications obj)
+        {
+            if (ModelState.IsValid)
+            {
+                _unitOfWork.Qualification.Add(obj);
+                _unitOfWork.Save();
+                TempData["success"] = "Qualification added successfully";
+                return RedirectToAction("Profile");
+            }
+            return View(obj);
+        }
+        public IActionResult UpdateProfile(StudentVM student)
+        {
+            var studentID = _userManager.GetUserId(User);
+            ApplicationUser user = _unitOfWork.User.GetFirstOrDefault(x => x.Id == studentID);
+            Student studentVM = _unitOfWork.Student.GetFirstOrDefault(d => d.Id == studentID);
+
+            studentVM.User = user;
+            studentVM.Achivements = student.Achivements;
+            studentVM.Address = student.Address;
+            studentVM.RaceId = (int)student.Race;
+            studentVM.GenderId = (int)student.Gender;
+            studentVM.IdNo = student.IdNo;
+            studentVM.Interests = student.Interests;
+            studentVM.User.Telephone = student.Telephone;
+            studentVM.CareerObjective = student.CareerObjective;
+            studentVM.DriversLicenseId = (int)student.DriversLicense;
+            studentVM.YearOfStudyId = (int)student.YearOfStudy;
+            studentVM.DepartmentId = (int)student.Department;
+            studentVM.Skills = student.Skills;
+            studentVM.NationalityId = (int)student.Nationality;
+            studentVM.Interests = student.Interests;
+            studentVM.User.PhoneNumber = student.cellPhone;
+            _unitOfWork.Student.Update(studentVM);
+            _unitOfWork.Save();
+            TempData["success"] = "Student update successfull";
+            return RedirectToAction("Index");
+
+        }
+
+
+        public IActionResult Referees()
+        {
+            return View();
+        }
+        public IActionResult Education()
+        {
+            return View();
+        }
+        public IActionResult Employment()
+        {
             return View();
         }
         public IActionResult History()

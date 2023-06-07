@@ -16,22 +16,30 @@ namespace SEP.Models
         public ApplicationUser User { get; set; }
 
         [Required]
-        public string Address { set; get; }
+        public string? Address { set; get; }
+        public string? IdNo { set; get; }
+        [ForeignKey(nameof(DriversLicenseId))]
+        public int DriversLicenseId { get; set; }
+        public DriverLicense? DriversLicense { set; get; }
+        public string? CareerObjective { set; get; }
+        [ForeignKey(nameof(GenderId))]
+        public int GenderId { get; set; }
+        public Gender? Gender { set; get; }
+        [ForeignKey(nameof(RaceId))]
+        public int RaceId { get; set; }
+        public Race? Race { set; get; }
+        [ForeignKey(nameof(NationalityId))]
+        public int NationalityId { get; set; }
+        public Nationality? Nationality { set; get; }
+        [ForeignKey(nameof(YearOfStudyId))]
+        public int YearOfStudyId { get; set; }
+        public YearOfStudy? YearOfStudy { set; get; }
+        [ForeignKey(nameof(DepartmentId))]
+        public int DepartmentId { get; set; }
+        public Department? Department { set; get; }
+        public string? Skills { set; get; }
+        public string? Achivements { set; get; }
+        public string? Interests { set; get; }
 
-        public string IdNo { set; get; }
-        [Required]
-        public DriverLicense DriversLicense { set; get; }
-        [Required]
-        public string CareerObjective { set; get; }
-        [Required]
-        public Gender Gender { set; get; }
-        [Required]
-        public Race Race { set; get; }
-        [Required]
-        public Nationality Nationality { set; get; }
-        [Required]
-        public YearOfStudy YearOfStudy { set; get; }
-        [Required]
-        public Department Department { set; get; }
     }
 }

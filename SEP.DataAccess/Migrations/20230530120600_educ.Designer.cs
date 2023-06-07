@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SEP.DataAccess;
 
@@ -11,9 +12,11 @@ using SEP.DataAccess;
 namespace SEP.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230530120600_educ")]
+    partial class educ
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -458,39 +461,7 @@ namespace SEP.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DriverLicense", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "A - MotorCycle"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "A1 - Light MotorCycle"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "B - Light Motor Vehicle"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "C - Heavy Motor Vehicle"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "C1 - Light Heavy Motor Vehicle"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "EB - Ligth Motor Vehicle + Trailer"
-                        });
+                    b.ToTable("DriverLicense");
                 });
 
             modelBuilder.Entity("SEP.Models.Employer", b =>
@@ -548,7 +519,10 @@ namespace SEP.DataAccess.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("StudentId")
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("StudentId1")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
@@ -558,7 +532,7 @@ namespace SEP.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("StudentId");
+                    b.HasIndex("StudentId1");
 
                     b.ToTable("Experience");
                 });
@@ -789,7 +763,10 @@ namespace SEP.DataAccess.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("StudentId")
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("StudentId1")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
@@ -803,7 +780,7 @@ namespace SEP.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("StudentId");
+                    b.HasIndex("StudentId1");
 
                     b.ToTable("Qualifications");
                 });
@@ -880,13 +857,16 @@ namespace SEP.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("StudentId")
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("StudentId1")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("StudentId");
+                    b.HasIndex("StudentId1");
 
                     b.ToTable("Referees");
                 });
@@ -906,13 +886,13 @@ namespace SEP.DataAccess.Migrations
                     b.Property<string>("CareerObjective")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("DepartmentId")
+                    b.Property<int?>("DepartmentId")
                         .HasColumnType("int");
 
-                    b.Property<int>("DriversLicenseId")
+                    b.Property<int?>("DriversLicenseId")
                         .HasColumnType("int");
 
-                    b.Property<int>("GenderId")
+                    b.Property<int?>("GenderId")
                         .HasColumnType("int");
 
                     b.Property<string>("IdNo")
@@ -921,16 +901,16 @@ namespace SEP.DataAccess.Migrations
                     b.Property<string>("Interests")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("NationalityId")
+                    b.Property<int?>("NationalityId")
                         .HasColumnType("int");
 
-                    b.Property<int>("RaceId")
+                    b.Property<int?>("RaceId")
                         .HasColumnType("int");
 
                     b.Property<string>("Skills")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("YearOfStudyId")
+                    b.Property<int?>("YearOfStudyId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -1100,7 +1080,7 @@ namespace SEP.DataAccess.Migrations
                 {
                     b.HasOne("SEP.Models.Student", "Student")
                         .WithMany()
-                        .HasForeignKey("StudentId")
+                        .HasForeignKey("StudentId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1130,7 +1110,7 @@ namespace SEP.DataAccess.Migrations
                 {
                     b.HasOne("SEP.Models.Student", "Student")
                         .WithMany()
-                        .HasForeignKey("StudentId")
+                        .HasForeignKey("StudentId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1141,7 +1121,7 @@ namespace SEP.DataAccess.Migrations
                 {
                     b.HasOne("SEP.Models.Student", "Student")
                         .WithMany()
-                        .HasForeignKey("StudentId")
+                        .HasForeignKey("StudentId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1152,21 +1132,15 @@ namespace SEP.DataAccess.Migrations
                 {
                     b.HasOne("SEP.Models.Department", "Department")
                         .WithMany()
-                        .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DepartmentId");
 
                     b.HasOne("SEP.Models.DriverLicense", "DriversLicense")
                         .WithMany()
-                        .HasForeignKey("DriversLicenseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DriversLicenseId");
 
                     b.HasOne("SEP.Models.Gender", "Gender")
                         .WithMany()
-                        .HasForeignKey("GenderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("GenderId");
 
                     b.HasOne("SEP.Models.ApplicationUser", "User")
                         .WithMany()
@@ -1176,21 +1150,15 @@ namespace SEP.DataAccess.Migrations
 
                     b.HasOne("SEP.Models.Nationality", "Nationality")
                         .WithMany()
-                        .HasForeignKey("NationalityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("NationalityId");
 
                     b.HasOne("SEP.Models.Race", "Race")
                         .WithMany()
-                        .HasForeignKey("RaceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RaceId");
 
                     b.HasOne("SEP.Models.YearOfStudy", "YearOfStudy")
                         .WithMany()
-                        .HasForeignKey("YearOfStudyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("YearOfStudyId");
 
                     b.Navigation("Department");
 

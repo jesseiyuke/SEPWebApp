@@ -11,7 +11,11 @@
         IYearOfStudyRepository YearOfStudy { get; }
         IDepartmentRepository Department { get; }
         IFacultyRepository Faculty { get; }
-        
+        IStudentRepository Student { get; }
+        IRefereesRepository Referees { get; }
+        IExperienceRepository Experience { get; }
+        IQualificationRepository Qualification { get; }
+        IUserRepository User { get; }
 
         void Save();
     }
