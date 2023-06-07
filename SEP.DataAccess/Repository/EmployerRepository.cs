@@ -16,8 +16,6 @@ namespace SEP.DataAccess.Repository
 
         public void Update(Employer obj)
         {
-
-            _db.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
             _db.Employer.Update(obj);
         }
     }
