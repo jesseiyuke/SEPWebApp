@@ -97,10 +97,15 @@ namespace SEPWebApp.Controllers
                 }
                 else
                 {
-                    //obj.ApplicationUser = user;
-                    obj.Employer.ApplicationUser = user;
-                    //obj.BusinessTypeList
-                    _unitOfWork.Employer.Update(obj.Employer);
+                    employer.ApplicationUser = user;
+                    employer.JobTitle = obj.Employer.JobTitle;
+                    employer.CompanyRegNo = obj.Employer.CompanyRegNo;
+                    employer.BusinessName = obj.Employer.BusinessName;
+                    employer.TradingName = obj.Employer.TradingName;
+                    employer.BusinessTypeId = obj.Employer.BusinessTypeId;
+                    employer.RegisteredAddress=obj.Employer.RegisteredAddress;
+
+                    _unitOfWork.Employer.Update(employer);
                 }
 
 

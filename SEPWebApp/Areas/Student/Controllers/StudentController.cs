@@ -260,7 +260,7 @@ namespace SEPWebApp.Areas.Controllers
             studentVM.ApplicationUser.PhoneNumber = student.cellPhone;
             _unitOfWork.Student.Update(studentVM);
             _unitOfWork.Save();
-            TempData["success"] = "Student update successfull";
+            TempData["success"] = "Student   successfull";
             return RedirectToAction("Index");
 
         }
