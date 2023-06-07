@@ -6,11 +6,9 @@ namespace SEP.Models
 {
     public class Employer
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string Id { get; set; }
-        public string ApplicationUserId { get; set; }
-        [ForeignKey(nameof(ApplicationUserId))]
-        [ValidateNever]
+        [Required]
+        [ForeignKey("Id")]
         public ApplicationUser ApplicationUser { get; set; }
         [Required]
         public string JobTitle { get; set; }

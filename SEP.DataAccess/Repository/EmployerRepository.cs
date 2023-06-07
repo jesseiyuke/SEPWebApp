@@ -1,4 +1,5 @@
-﻿using SEP.DataAccess.Repository.IRepository;
+﻿using Microsoft.EntityFrameworkCore;
+using SEP.DataAccess.Repository.IRepository;
 using SEP.Models;
 
 namespace SEP.DataAccess.Repository
@@ -9,11 +10,13 @@ namespace SEP.DataAccess.Repository
         public EmployerRepository(ApplicationDbContext db) : base(db)
         {
             _db = db;
+            _db.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         }
 
 
         public void Update(Employer obj)
         {
+
             _db.Employer.Update(obj);
         }
     }

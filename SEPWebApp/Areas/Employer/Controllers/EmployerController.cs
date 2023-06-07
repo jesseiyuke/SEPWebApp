@@ -43,11 +43,11 @@ namespace SEPWebApp.Controllers
             };
             var EmployerId = _userManager.GetUserId(User);
             ApplicationUser user = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == EmployerId);
-            Employer employer = _unitOfWork.Employer.GetFirstOrDefault(e => e.ApplicationUserId == EmployerId);
+            Employer employer = _unitOfWork.Employer.GetFirstOrDefault(e => e.Id == EmployerId);
 
 
 
-            //create JobPost
+            //create Employer
             if (employer == null)
             {
                 EmployerVM.ApplicationUser = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == EmployerId);
@@ -55,9 +55,9 @@ namespace SEPWebApp.Controllers
             }
             else
             {
-                //update JobPost
+                //update Employer
                 EmployerVM.ApplicationUser = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == EmployerId);
-                EmployerVM.Employer = _unitOfWork.Employer.GetFirstOrDefault(u => u.ApplicationUserId == EmployerId);
+                EmployerVM.Employer = _unitOfWork.Employer.GetFirstOrDefault(u => u.Id == EmployerId);
                 return View(EmployerVM);
 
             }
@@ -72,20 +72,22 @@ namespace SEPWebApp.Controllers
 
             var EmployerId = _userManager.GetUserId(User);
             ApplicationUser user = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == EmployerId);
-            Employer employer = _unitOfWork.Employer.GetFirstOrDefault(e => e.ApplicationUserId == EmployerId);
+            Employer employer = _unitOfWork.Employer.GetFirstOrDefault(e => e.Id == EmployerId);
+
 
             if (ModelState.IsValid)
             {
 
                 if (employer == null)
                 {
-                    obj.Employer.ApplicationUserId = EmployerId;
+                    obj.Employer.Id = EmployerId;
                     _unitOfWork.Employer.Add(obj.Employer);
                 }
                 else
                 {
-                    obj.ApplicationUser = user;
+                    //obj.ApplicationUser = user;
                     obj.Employer.ApplicationUser = user;
+                    //obj.BusinessTypeList
                     _unitOfWork.Employer.Update(obj.Employer);
                 }
 
