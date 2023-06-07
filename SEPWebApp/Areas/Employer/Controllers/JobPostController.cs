@@ -1,12 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SEP.DataAccess.Repository.IRepository;
 using SEP.Models;
 using SEP.Models.ViewModels;
+using SEP.Utility;
+using System.Data;
 
 namespace SEPWebApp.Areas.Employer.Controllers
 {
     [Area("Employer")]
+    [Authorize(Roles = SD.Role_Employer)]
+    [Authorize(Roles = SD.Role_Approver)]
     public class JobPostController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

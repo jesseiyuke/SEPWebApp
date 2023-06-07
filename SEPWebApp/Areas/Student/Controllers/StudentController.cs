@@ -1,16 +1,20 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SEP.DataAccess;
 using SEP.DataAccess.Repository.IRepository;
 using SEP.Models;
 using SEP.Models.ViewModels;
+using SEP.Utility;
 using SEPWebApp.Areas.Home.Controllers;
 using System.ComponentModel.DataAnnotations;
+using System.Data;
 
 namespace SEPWebApp.Areas.Controllers
 {
     [Area("Student")]
+    [Authorize(Roles = SD.Role_Student)]
     public class StudentController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

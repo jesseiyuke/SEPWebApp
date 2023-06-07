@@ -10,13 +10,14 @@ namespace SEP.DataAccess.Repository
         public EmployerRepository(ApplicationDbContext db) : base(db)
         {
             _db = db;
-            _db.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+            //_db.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         }
 
 
         public void Update(Employer obj)
         {
 
+            _db.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
             _db.Employer.Update(obj);
         }
     }

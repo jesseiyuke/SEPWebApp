@@ -1,13 +1,18 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SEP.DataAccess.Repository.IRepository;
 using SEP.Models;
 using SEP.Models.ViewModels;
+using SEP.Utility;
+using System.Data;
 
 namespace SEPWebApp.Controllers
 {
     [Area("Employer")]
+    [Authorize(Roles = SD.Role_Employer)]
+    //[Authorize(Roles = SD.Role_Approver)]
     public class EmployerController : Controller
     {
 
@@ -24,6 +29,13 @@ namespace SEPWebApp.Controllers
 
         public IActionResult Index()
         {
+            var EmployerId = _userManager.GetUserId(User);
+            Employer employer = _unitOfWork.Employer.GetFirstOrDefault(e => e.Id == EmployerId);
+
+            if (employer == null)
+            {
+                return RedirectToAction("Upsert", "Employer", new { area = "Employer" });
+            }
             return View();
         }
 
