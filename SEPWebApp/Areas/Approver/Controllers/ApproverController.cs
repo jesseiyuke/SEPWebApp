@@ -1,13 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using SEP.DataAccess.Repository.IRepository;
-using SEP.Models;
-using SEP.Models.ViewModels;
 using SEP.Utility;
-using System.Data;
 
-namespace SEPWebApp.Areas.Employer.Controllers
+namespace SEPWebApp.Areas.Approver.Controllers
 {
     [Area("Approver")]
     [Authorize(Roles = SD.Role_Approver)]
@@ -36,6 +32,16 @@ namespace SEPWebApp.Areas.Employer.Controllers
         {
             return View();
         }
+
+        #region API CALLS
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            var JobPostList = _unitOfWork.JobPost.GetAll(includeProperties: "Faculty,Department,JobType,WeekHour,Status");
+            //var JobPostList = _unitOfWork.JobPost.GetAll();
+            return Json(new { data = JobPostList });
+        }
+        #endregion
 
     }
 }
