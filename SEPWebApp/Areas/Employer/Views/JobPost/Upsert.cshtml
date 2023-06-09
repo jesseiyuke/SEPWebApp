@@ -21,40 +21,44 @@
             </div>
         </div>
 
-@*        <div class="mb-3 form-group row">
-            <div class="col-10">
-                <select asp-for="JobPost.FacultyId" id="facultyNameID" class="form-select">
-                    <option disabled selected>Select Faculty</option> 
-                    @foreach(var faculty in @Model.FacultyList)
-                    {
-                        <option value="@faculty.Value">@faculty.Text</option>
-                    }
-                </select>
-                <br />
-                <span asp-validation-for="JobPost.FacultyId" class="text-danger"></span>
-            </div>
+        @*        <div class="mb-3 form-group row">
+        <div class="col-10">
+        <select asp-for="JobPost.FacultyId" id="facultyNameID" class="form-select">
+        <option disabled selected>Select Faculty</option>
+        @foreach(var faculty in @Model.FacultyList)
+        {
+        <option value="@faculty.Value">@faculty.Text</option>
+        }
+        </select>
+        <br />
+        <span asp-validation-for="JobPost.FacultyId" class="text-danger"></span>
+        </div>
         </div>*@
 
-@*        <div class="mb-3 form-group row">
-            <div class="col-10">
-                <select asp-for="JobPost.DepartmentId" id="departmentNameID" class="form-select">
-                    <option disabled selected>Select Department</option>
-                    @foreach (var department in @Model.DepartmentList)
-                    {
-                        <option value="@department.Value">@department.Text</option>
-                    }
-                </select>
-                <br />
-                <span asp-validation-for="JobPost.DepartmentId" class="text-danger"></span>
-            </div>
+        @*        <div class="mb-3 form-group row">
+        <div class="col-10">
+        <select asp-for="JobPost.DepartmentId" id="departmentNameID" class="form-select">
+        <option disabled selected>Select Department</option>
+        @foreach (var department in @Model.DepartmentList)
+        {
+        <option value="@department.Value">@department.Text</option>
+        }
+        </select>
+        <br />
+        <span asp-validation-for="JobPost.DepartmentId" class="text-danger"></span>
+        </div>
         </div>*@
 
-@*        asp-items=@Model.WeekHourList*@
+        @*        asp-items=@Model.WeekHourList*@
 
         <div class="mb-3 form-group row">
             <div class="col-10">
                 <select asp-for="JobPost.FacultyId" id="faculty" class="form-select">
-                    <option disabled selected>Select Faculty</option>
+                    @foreach (var fac in Model.FacultyList)
+                    {
+                        <option value="@fac.Id">@fac.Name</option>
+                    }
+                    @*<option disabled selected>Select Faculty</option>*@
                 </select>
                 <br />
                 <span asp-validation-for="JobPost.FacultyId" class="text-danger"></span>
@@ -64,7 +68,11 @@
         <div class="mb-3 form-group row">
             <div class="col-10">
                 <select asp-for="JobPost.DepartmentId" id="department" class="form-select">
-                    <option disabled selected>Select Department</option>
+                    @foreach (var dep in Model.DepartmentList)
+                    {
+                        <option value="@dep.Id">@dep.Name</option>
+                    }
+                    @*<option disabled selected>Select Department</option>*@
                 </select>
                 <br />
                 <span asp-validation-for="JobPost.DepartmentId" class="text-danger"></span>
@@ -131,7 +139,7 @@
             <div class="col-6">
                 <input asp-for="JobPost.StartDate" type="text" class="datepicker form-control" />
                 <span asp-validation-for="JobPost.StartDate" class="text-danger"></span>
-            </div> 
+            </div>
         </div>
 
         <div class="mb-3 form-group row">
@@ -167,35 +175,35 @@
                 <input type="checkbox" asp-for="JobPost.FacultyCheck" /><label class="col-2">Faculty</label>
                 <input type="checkbox" asp-for="JobPost.DepartmentCheck" /><label class="col-2">Department</label>
                 <br />
-@*                <span asp-validation-for="JobPost.FirstYear" class="text-danger"></span>*@
+                @*                <span asp-validation-for="JobPost.FirstYear" class="text-danger"></span>*@
             </div>
         </div>
 
-@*        <div class="mb-3 form-group row">
-            <label asp-for="YearOfStudy" class="col-2"></label>
-            <div>
-                @foreach (var item in Html.GetEnumSelectList<YearOfStudy>())
-                {
-                    <label class="radio-inline col-4">
-                        <input type="radio" asp-for="YearOfStudy" value="@item.Value" />@item.Text
-                    </label>
-                }
-                <br />
-                <span asp-validation-for="YearOfStudy" class="text-danger"></span>
-            </div>
+        @*        <div class="mb-3 form-group row">
+        <label asp-for="YearOfStudy" class="col-2"></label>
+        <div>
+        @foreach (var item in Html.GetEnumSelectList<YearOfStudy>())
+        {
+        <label class="radio-inline col-4">
+        <input type="radio" asp-for="YearOfStudy" value="@item.Value" />@item.Text
+        </label>
+        }
+        <br />
+        <span asp-validation-for="YearOfStudy" class="text-danger"></span>
+        </div>
         </div>*@
 
-@*        <div class="mb-3 form-group row">
-            <div>
-                @foreach (var YOS in Model.JobPost.YearOfStudys)
-                {
-                    <input type="checkbox" asp-for="JobPost.YearOfStudy" value="@YOS" />
+        @*        <div class="mb-3 form-group row">
+        <div>
+        @foreach (var YOS in Model.JobPost.YearOfStudys)
+        {
+        <input type="checkbox" asp-for="JobPost.YearOfStudy" value="@YOS" />
 
-                    @YOS
-                }
-                <br />
-                <span asp-validation-for="JobPost.YearOfStudy" class="text-danger"></span>
-            </div>
+        @YOS
+        }
+        <br />
+        <span asp-validation-for="JobPost.YearOfStudy" class="text-danger"></span>
+        </div>
         </div>*@
 
         <div class="mb-3 form-group row">
@@ -262,7 +270,7 @@
                 <span asp-validation-for="JobPost.ContactNo" class="text-danger"></span>
             </div>
         </div>
-        
+
         <div class="mb-3 form-group row">
             <label asp-for="JobPost.StatusId" class="col-2" hidden></label>
             <div class="col-6">
@@ -274,14 +282,14 @@
 
         </div>
 
-      
+
         @if (Model.JobPost.Id != 0)
         {
-                    <button type="submit" class="btn btn-primary" style="width:150px">Update</button>
+            <button type="submit" class="btn btn-primary" style="width:150px">Update</button>
         }
         else
         {
-                    <button type="submit" onclick="return ValidateInput()" class="btn btn-primary" style="width:150px">Create</button>
+            <button type="submit" onclick="return ValidateInput()" class="btn btn-primary" style="width:150px">Create</button>
         }
         <a asp-controller="JobPost" asp-action="Index" class="btn btn-secondary" style="width:150px">Back</a>
     </div>
@@ -291,7 +299,7 @@
 
 @section Scripts
     {
-    <script>
+    @*<script>
         $(function () {
             $('.datepicker').datepicker();
         });
@@ -299,28 +307,68 @@
 
     @{
         <partial name="_ValidationScriptsPartial" />
-    }
-@*    <script type="text/javascript">
-        $(document).ready(function () { 
-            $('#facultyNameID').(change(function(){
+    }*@
+    @*<script type="text/javascript">
+        $(document).ready(function () {
+            $('#faculty').(change(function () {
                 var obId = this.value
-                $('#departmentNameID').empty();
+                $('#department').empty();
                 $.ajax({
                     type: 'GET',
-                    url: '@Url.Action("GetDepartments","JobPost")',
+                    url: '@Url.Action("GetDepartments")',
                     dataType: 'json',
                     data: { id: obId },
                     success: function (dep) {
                         $.each(dep, function (index, item) {
-                            $('#departmentNameID').append('<option value="' + item.id + '">' + item.name + '</option')
+                            $('#department').append('<option value="' + item.id + '">' + item.name + '</option')
                          });
                     }
                 });
             });
         });
     </script>*@
+
+    @*<script type="text/javascript">
+        $(document).ready(function () {
+
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetFaculties","JobPost")',
+                dataType: 'json',
+                data: {},
+                success: function (dep) {
+                    $.each(dep, function (index, item) {
+                        $('#faculty').append('<option value="' + item.id + '">' + item.name + '</option')
+                    });
+                }
+            });
+
+        });
+    </script>*@
+    <script>
+        $(document).ready(function () {
+
+            $('#faculty').change(function(){
+                var obid = this.value;
+                $('#department').empty();
+                $.ajax({
+                    type: 'Get',
+                    url: '@Url.Action("getdepartments","JobPost")',
+                    datatype: 'json',
+                    data: { id: obid },
+                    success: function (dep) {
+                        $.each(dep, function (index, item) {
+                            $('#department').append('<option value="' + item.id + '">' + item.name + '</option')
+                        });
+                    }
+                });
+            });
+        })
+    </script>
+
 }
 
-<script src="~/lib//jquery/dist/jquery.min.js"></script>
-<script src="~/js/Cascading.js"></script>
+
+@*<script src="~/lib//jquery/dist/jquery.min.js"></script>
+<script src="~/js/Cascading.js"></script>*@
 

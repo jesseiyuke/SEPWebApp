@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using SEP.DataAccess;
 using SEP.DataAccess.Repository.IRepository;
 using SEP.Models;
 using SEP.Models.ViewModels;
@@ -14,10 +15,12 @@ namespace SEPWebApp.Areas.Employer.Controllers
     public class JobPostController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly ApplicationDbContext _con;
 
-        public JobPostController(IUnitOfWork unitOfWork)
+        public JobPostController(IUnitOfWork unitOfWork, ApplicationDbContext applicationDbContext)
         {
             _unitOfWork = unitOfWork;
+            _con = applicationDbContext;
         }
         public IActionResult Index()
         {
@@ -84,7 +87,14 @@ namespace SEPWebApp.Areas.Employer.Controllers
             {
                 //update JobPost
                 JobPostVM.JobPost = _unitOfWork.JobPost.GetFirstOrDefault(u => u.Id == id);
-                //JobPostVM.FacultyList=
+
+                IEnumerable<Faculty> faculties = _con.Faculty;
+
+                JobPostVM.FacultyList = faculties;
+
+                IEnumerable<Department> departments = _con.Department.Where(d => d.FacultyId == JobPostVM.JobPost.FacultyId);
+
+                JobPostVM.DepartmentList = departments;
                 return View(JobPostVM);
 
             }

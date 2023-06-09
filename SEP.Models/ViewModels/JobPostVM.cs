@@ -7,9 +7,9 @@ namespace SEP.Models.ViewModels
     {
         public JobPost JobPost { get; set; }
         [ValidateNever]
-        public IEnumerable<SelectListItem> FacultyList { get; set; }
+        public IEnumerable<Faculty> FacultyList { get; set; }
         [ValidateNever]
-        public IEnumerable<SelectListItem> DepartmentList { get; set; }
+        public IEnumerable<Department> DepartmentList { get; set; }
         [ValidateNever]
 
         public IEnumerable<SelectListItem> JobTypeList { get; set; }
