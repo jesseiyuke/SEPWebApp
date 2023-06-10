@@ -54,6 +54,7 @@
         <div class="mb-3 form-group row">
             <div class="col-10">
                 <select asp-for="JobPost.FacultyId" id="faculty" class="form-select">
+                    <option disabled selected>Select Faculty</option>
                     @foreach (var fac in Model.FacultyList)
                     {
                         <option value="@fac.Id">@fac.Name</option>
@@ -68,6 +69,7 @@
         <div class="mb-3 form-group row">
             <div class="col-10">
                 <select asp-for="JobPost.DepartmentId" id="department" class="form-select">
+                    <option disabled selected>Select Department</option>
                     @foreach (var dep in Model.DepartmentList)
                     {
                         <option value="@dep.Id">@dep.Name</option>
@@ -299,7 +301,7 @@
 
 @section Scripts
     {
-    @*<script>
+    <script>
         $(function () {
             $('.datepicker').datepicker();
         });
@@ -307,7 +309,7 @@
 
     @{
         <partial name="_ValidationScriptsPartial" />
-    }*@
+    }
     @*<script type="text/javascript">
         $(document).ready(function () {
             $('#faculty').(change(function () {

@@ -24,8 +24,8 @@ namespace SEPWebApp.Areas.Employer.Controllers
         }
         public IActionResult Index()
         {
-/*            IEnumerable<JobPost> objJobPostList = _unitOfWork.JobPost.GetAll();
-            return View(objJobPostList);*/
+            /*            IEnumerable<JobPost> objJobPostList = _unitOfWork.JobPost.GetAll();
+                        return View(objJobPostList);*/
             return View();
         }
 
@@ -81,6 +81,13 @@ namespace SEPWebApp.Areas.Employer.Controllers
             if (id == null || id == 0)
             {
                 //create JobPost
+                IEnumerable<Faculty> faculties = _con.Faculty;
+
+                JobPostVM.FacultyList = faculties;
+
+                IEnumerable<Department> departments = _con.Department;
+
+                JobPostVM.DepartmentList = departments;
                 return View(JobPostVM);
             }
             else
