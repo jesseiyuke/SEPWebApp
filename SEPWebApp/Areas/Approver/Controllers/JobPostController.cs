@@ -7,7 +7,6 @@ using SEP.Models;
 using SEP.Models.ViewModels;
 using SEP.Utility;
 using System.Data;
-using System.Drawing;
 
 namespace SEPWebApp.Areas.Approver.Controllers
 {
@@ -44,6 +43,20 @@ namespace SEPWebApp.Areas.Approver.Controllers
             return new JsonResult(departments);
         }
 
+        public JsonResult GetJobtype()
+        {
+            var jobtypes = _unitOfWork.JobType.GetAll();
+
+            return new JsonResult(jobtypes);
+        }
+
+        public JsonResult GetWeekHour(int id)
+        {
+            var WeekHour = _unitOfWork.WeekHour.GetAll().Where(d => d.JobTypeId == id);
+
+            return new JsonResult(WeekHour);
+        }
+
         //GET
         public IActionResult Upsert(int? id)
         {
@@ -51,16 +64,6 @@ namespace SEPWebApp.Areas.Approver.Controllers
             JobPostVM JobPostVM = new()
             {
                 JobPost = new(),
-                JobTypeList = _unitOfWork.JobType.GetAll().Select(i => new SelectListItem
-                {
-                    Text = i.Name,
-                    Value = i.Id.ToString(),
-                }),
-                WeekHourList = _unitOfWork.WeekHour.GetAll().Select(i => new SelectListItem
-                {
-                    Text = i.Name,
-                    Value = i.Id.ToString()
-                }),
                 StatusList = _unitOfWork.Status.GetAll().Select(i => new SelectListItem
                 {
                     Text = i.Name,
@@ -78,6 +81,12 @@ namespace SEPWebApp.Areas.Approver.Controllers
                 IEnumerable<Department> departments = _db.Department;
 
                 JobPostVM.DepartmentList = departments;
+
+                IEnumerable<JobType> jobTypes = _db.JobType;
+                JobPostVM.JobTypeList = jobTypes;
+
+                IEnumerable<WeekHour> weekHour = _db.WeekHour;
+                JobPostVM.WeekHourList = weekHour;
                 return View(JobPostVM);
             }
             else
@@ -92,6 +101,12 @@ namespace SEPWebApp.Areas.Approver.Controllers
                 IEnumerable<Department> departments = _db.Department.Where(d => d.FacultyId == JobPostVM.JobPost.FacultyId);
 
                 JobPostVM.DepartmentList = departments;
+
+                IEnumerable<JobType> jobTypes = _db.JobType;
+                JobPostVM.JobTypeList = jobTypes;
+
+                IEnumerable<WeekHour> weekHour = _db.WeekHour.Where(d => d.JobTypeId == JobPostVM.JobPost.JobTypeId);
+                JobPostVM.WeekHourList = weekHour;
                 return View(JobPostVM);
 
             }

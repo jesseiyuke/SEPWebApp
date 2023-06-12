@@ -115,10 +115,13 @@
 
 
         <div class="mb-3 form-group row">
-            <label asp-for="JobPost.JobTypeId" class="col-2">Fulltime or part-time</label>
-            <div class="col-4">
-                <select asp-for="JobPost.JobTypeId" asp-items=@Model.JobTypeList class="form-select">
-                    <option disabled selected></option>
+            <div class="col-10">
+                <select asp-for="JobPost.JobTypeId" id="jobtype" class="form-select">
+                    <option disabled selected>Select Job Type</option>
+                    @foreach (var job in Model.JobTypeList)
+                    {
+                        <option value="@job.Id">@job.Name</option>
+                    }
                 </select>
                 <br />
                 <span asp-validation-for="JobPost.JobTypeId" class="text-danger"></span>
@@ -126,10 +129,13 @@
         </div>
 
         <div class="mb-3 form-group row">
-            <label asp-for="JobPost.WeekHour" class="col-2"></label>
-            <div class="col-6">
-                <select asp-for="JobPost.WeekHourId" asp-items=@Model.WeekHourList class="form-select">
+            <div class="col-10">
+                <select asp-for="JobPost.WeekHourId" id="weekhour" class="form-select">
                     <option disabled selected>Range</option>
+                    @foreach (var week in Model.WeekHourList)
+                    {
+                        <option value="@week.Id">@week.Name</option>
+                    }
                 </select>
                 <br />
                 <span asp-validation-for="JobPost.WeekHourId" class="text-danger"></span>
@@ -310,43 +316,6 @@
     @{
         <partial name="_ValidationScriptsPartial" />
     }
-    @*<script type="text/javascript">
-        $(document).ready(function () {
-            $('#faculty').(change(function () {
-                var obId = this.value
-                $('#department').empty();
-                $.ajax({
-                    type: 'GET',
-                    url: '@Url.Action("GetDepartments")',
-                    dataType: 'json',
-                    data: { id: obId },
-                    success: function (dep) {
-                        $.each(dep, function (index, item) {
-                            $('#department').append('<option value="' + item.id + '">' + item.name + '</option')
-                         });
-                    }
-                });
-            });
-        });
-    </script>*@
-
-    @*<script type="text/javascript">
-        $(document).ready(function () {
-
-            $.ajax({
-                type: 'GET',
-                url: '@Url.Action("GetFaculties","JobPost")',
-                dataType: 'json',
-                data: {},
-                success: function (dep) {
-                    $.each(dep, function (index, item) {
-                        $('#faculty').append('<option value="' + item.id + '">' + item.name + '</option')
-                    });
-                }
-            });
-
-        });
-    </script>*@
     <script>
         $(document).ready(function () {
 
@@ -361,6 +330,27 @@
                     success: function (dep) {
                         $.each(dep, function (index, item) {
                             $('#department').append('<option value="' + item.id + '">' + item.name + '</option')
+                        });
+                    }
+                });
+            });
+        })
+    </script>
+
+    <script>
+        $(document).ready(function () {
+
+            $('#jobtype').change(function () {
+                var obid = this.value;
+                $('#weekhour').empty();
+                $.ajax({
+                    type: 'Get',
+                    url: '@Url.Action("getjobtype","JobPost")',
+                    datatype: 'json',
+                    data: { id: obid },
+                    success: function (dep) {
+                        $.each(dep, function (index, item) {
+                            $('#jobtype').append('<option value="' + item.id + '">' + item.name + '</option')
                         });
                     }
                 });

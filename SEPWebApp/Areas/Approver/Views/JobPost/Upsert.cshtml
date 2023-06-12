@@ -95,10 +95,18 @@
 
 
         <div class="mb-3 form-group row">
-            <label asp-for="JobPost.JobTypeId" class="col-2">Fulltime or part-time</label>
-            <div class="col-4">
-                <select asp-for="JobPost.JobTypeId" asp-items=@Model.JobTypeList class="form-select">
-                    <option disabled selected></option>
+            <div class="col-10">
+                <select disabled asp-for="JobPost.JobTypeId" id="jobtype" class="form-select">
+                    @foreach (var job in Model.JobTypeList)
+                    {
+                        <option disabled value="@job.Id">@job.Name</option>
+                    }
+                </select>
+                <select hidden asp-for="JobPost.JobTypeId" id="jobtype" class="form-select">
+                    @foreach (var job in Model.JobTypeList)
+                    {
+                        <option hidden value="@job.Id">@job.Name</option>
+                    }
                 </select>
                 <br />
                 <span asp-validation-for="JobPost.JobTypeId" class="text-danger"></span>
@@ -106,10 +114,18 @@
         </div>
 
         <div class="mb-3 form-group row">
-            <label asp-for="JobPost.WeekHour" class="col-2"></label>
-            <div class="col-6">
-                <select asp-for="JobPost.WeekHourId" asp-items=@Model.WeekHourList class="form-select">
-                    <option disabled selected>Range</option>
+            <div class="col-10">
+                <select disabled asp-for="JobPost.WeekHourId" id="weekhour" class="form-select">
+                    @foreach (var week in Model.WeekHourList)
+                    {
+                        <option disabled value="@week.Id">@week.Name</option>
+                    }
+                </select>
+                <select hidden asp-for="JobPost.WeekHourId" id="weekhour" class="form-select">
+                    @foreach (var week in Model.WeekHourList)
+                    {
+                        <option hidden value="@week.Id">@week.Name</option>
+                    }
                 </select>
                 <br />
                 <span asp-validation-for="JobPost.WeekHourId" class="text-danger"></span>
@@ -308,6 +324,27 @@
                     success: function (dep) {
                         $.each(dep, function (index, item) {
                             $('#department').append('<option value="' + item.id + '">' + item.name + '</option')
+                        });
+                    }
+                });
+            });
+        })
+    </script>
+
+    <script>
+        $(document).ready(function () {
+
+            $('#jobtype').change(function () {
+                var obid = this.value;
+                $('#weekhour').empty();
+                $.ajax({
+                    type: 'Get',
+                    url: '@Url.Action("getjobtype","JobPost")',
+                    datatype: 'json',
+                    data: { id: obid },
+                    success: function (dep) {
+                        $.each(dep, function (index, item) {
+                            $('#jobtype').append('<option value="' + item.id + '">' + item.name + '</option')
                         });
                     }
                 });

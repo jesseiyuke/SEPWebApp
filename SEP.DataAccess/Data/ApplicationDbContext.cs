@@ -50,6 +50,10 @@ namespace SEP.DataAccess
             modelBuilder.Entity<WeekHour>().HasKey(f => f.Id);
             modelBuilder.Entity<WeekHour>().Property(f => f.Id).ValueGeneratedOnAdd();
             modelBuilder.Entity<WeekHour>().Property(f => f.Name).IsRequired();
+            modelBuilder.Entity<WeekHour>().HasOne(d => d.JobType)
+                .WithMany(f => f.WeekHours)
+                .HasForeignKey(d => d.JobTypeId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             // Configure Status entity
             modelBuilder.Entity<Status>().ToTable("Status");
@@ -120,11 +124,11 @@ namespace SEP.DataAccess
 
             // Seed data for WeekHours
             modelBuilder.Entity<WeekHour>().HasData(
-                new WeekHour { Id = 1, Name = "<2" },
-                new WeekHour { Id = 2, Name = "4 to 6" },
-                new WeekHour { Id = 3, Name = "6 to 8" },
-                new WeekHour { Id = 4, Name = "8 to 12" },
-                new WeekHour { Id = 5, Name = ">12" }
+                new WeekHour { Id = 1, Name = "<2", JobTypeId = 1 },
+                new WeekHour { Id = 2, Name = "4 to 6", JobTypeId = 1 },
+                new WeekHour { Id = 3, Name = "6 to 8", JobTypeId = 2 },
+                new WeekHour { Id = 4, Name = "8 to 12", JobTypeId = 2 },
+                new WeekHour { Id = 5, Name = ">12", JobTypeId = 2 }
 
             );
 

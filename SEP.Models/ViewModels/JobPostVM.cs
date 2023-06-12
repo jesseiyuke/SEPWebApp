@@ -12,10 +12,10 @@ namespace SEP.Models.ViewModels
         public IEnumerable<Department> DepartmentList { get; set; }
         [ValidateNever]
 
-        public IEnumerable<SelectListItem> JobTypeList { get; set; }
+        public IEnumerable<JobType> JobTypeList { get; set; }
         [ValidateNever]
 
-        public IEnumerable<SelectListItem> WeekHourList { get; set; }
+        public IEnumerable<WeekHour> WeekHourList { get; set; }
         [ValidateNever]
         public IEnumerable<SelectListItem> StatusList { get; set; }
 
