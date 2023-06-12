@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using SEP.DataAccess;
 using SEP.DataAccess.Repository.IRepository;
+using SEP.Models;
 using SEP.Models.ViewModels;
 using SEP.Utility;
 using System.Data;
+using System.Drawing;
 
 namespace SEPWebApp.Areas.Approver.Controllers
 {
@@ -13,10 +16,12 @@ namespace SEPWebApp.Areas.Approver.Controllers
     public class JobPostController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly ApplicationDbContext _db;
 
-        public JobPostController(IUnitOfWork unitOfWork)
+        public JobPostController(IUnitOfWork unitOfWork, ApplicationDbContext applicationDbContext)
         {
             _unitOfWork = unitOfWork;
+            _db = applicationDbContext;
         }
         public IActionResult Index()
         {
@@ -46,21 +51,10 @@ namespace SEPWebApp.Areas.Approver.Controllers
             JobPostVM JobPostVM = new()
             {
                 JobPost = new(),
-                //All drop down lists from ViewModel
-                /*FacultyList = _unitOfWork.Faculty.GetAll().Select(i => new SelectListItem
-                {
-                    Text = i.Name,
-                    Value = i.Id.ToString()
-                }),
-                DepartmentList = _unitOfWork.Department.GetAll().Select(i => new SelectListItem
-                {
-                    Text = i.Name,
-                    Value = i.Id.ToString()
-                }),*/
                 JobTypeList = _unitOfWork.JobType.GetAll().Select(i => new SelectListItem
                 {
                     Text = i.Name,
-                    Value = i.Id.ToString()
+                    Value = i.Id.ToString(),
                 }),
                 WeekHourList = _unitOfWork.WeekHour.GetAll().Select(i => new SelectListItem
                 {
@@ -77,13 +71,27 @@ namespace SEPWebApp.Areas.Approver.Controllers
             if (id == null || id == 0)
             {
                 //create JobPost
+                IEnumerable<Faculty> faculties = _db.Faculty;
+
+                JobPostVM.FacultyList = faculties;
+
+                IEnumerable<Department> departments = _db.Department;
+
+                JobPostVM.DepartmentList = departments;
                 return View(JobPostVM);
             }
             else
             {
                 //update JobPost
                 JobPostVM.JobPost = _unitOfWork.JobPost.GetFirstOrDefault(u => u.Id == id);
-                //JobPostVM.FacultyList=
+
+                IEnumerable<Faculty> faculties = _db.Faculty;
+
+                JobPostVM.FacultyList = faculties;
+
+                IEnumerable<Department> departments = _db.Department.Where(d => d.FacultyId == JobPostVM.JobPost.FacultyId);
+
+                JobPostVM.DepartmentList = departments;
                 return View(JobPostVM);
 
             }
@@ -111,7 +119,7 @@ namespace SEPWebApp.Areas.Approver.Controllers
                     _unitOfWork.JobPost.Update(obj.JobPost);
                 }
                 _unitOfWork.Save();
-                TempData["success"] = "Job Post created successfully";
+                TempData["success"] = "Job Post status updated";
                 return RedirectToAction("Index");
             }
             return View(obj);

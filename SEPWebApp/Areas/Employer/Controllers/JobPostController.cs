@@ -15,12 +15,12 @@ namespace SEPWebApp.Areas.Employer.Controllers
     public class JobPostController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly ApplicationDbContext _con;
+        private readonly ApplicationDbContext _db;
 
         public JobPostController(IUnitOfWork unitOfWork, ApplicationDbContext applicationDbContext)
         {
             _unitOfWork = unitOfWork;
-            _con = applicationDbContext;
+            _db = applicationDbContext;
         }
         public IActionResult Index()
         {
@@ -81,11 +81,11 @@ namespace SEPWebApp.Areas.Employer.Controllers
             if (id == null || id == 0)
             {
                 //create JobPost
-                IEnumerable<Faculty> faculties = _con.Faculty;
+                IEnumerable<Faculty> faculties = _db.Faculty;
 
                 JobPostVM.FacultyList = faculties;
 
-                IEnumerable<Department> departments = _con.Department;
+                IEnumerable<Department> departments = _db.Department;
 
                 JobPostVM.DepartmentList = departments;
                 return View(JobPostVM);
@@ -95,11 +95,11 @@ namespace SEPWebApp.Areas.Employer.Controllers
                 //update JobPost
                 JobPostVM.JobPost = _unitOfWork.JobPost.GetFirstOrDefault(u => u.Id == id);
 
-                IEnumerable<Faculty> faculties = _con.Faculty;
+                IEnumerable<Faculty> faculties = _db.Faculty;
 
                 JobPostVM.FacultyList = faculties;
 
-                IEnumerable<Department> departments = _con.Department.Where(d => d.FacultyId == JobPostVM.JobPost.FacultyId);
+                IEnumerable<Department> departments = _db.Department.Where(d => d.FacultyId == JobPostVM.JobPost.FacultyId);
 
                 JobPostVM.DepartmentList = departments;
                 return View(JobPostVM);
@@ -126,6 +126,7 @@ namespace SEPWebApp.Areas.Employer.Controllers
                 }
                 else
                 {
+                    //obj.JobPost.Status.Name = "Pending"; //every update to leave status=pending
                     _unitOfWork.JobPost.Update(obj.JobPost);
                 }
                 _unitOfWork.Save();
