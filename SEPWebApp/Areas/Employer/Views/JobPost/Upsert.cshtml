@@ -21,36 +21,6 @@
             </div>
         </div>
 
-        @*        <div class="mb-3 form-group row">
-        <div class="col-10">
-        <select asp-for="JobPost.FacultyId" id="facultyNameID" class="form-select">
-        <option disabled selected>Select Faculty</option>
-        @foreach(var faculty in @Model.FacultyList)
-        {
-        <option value="@faculty.Value">@faculty.Text</option>
-        }
-        </select>
-        <br />
-        <span asp-validation-for="JobPost.FacultyId" class="text-danger"></span>
-        </div>
-        </div>*@
-
-        @*        <div class="mb-3 form-group row">
-        <div class="col-10">
-        <select asp-for="JobPost.DepartmentId" id="departmentNameID" class="form-select">
-        <option disabled selected>Select Department</option>
-        @foreach (var department in @Model.DepartmentList)
-        {
-        <option value="@department.Value">@department.Text</option>
-        }
-        </select>
-        <br />
-        <span asp-validation-for="JobPost.DepartmentId" class="text-danger"></span>
-        </div>
-        </div>*@
-
-        @*        asp-items=@Model.WeekHourList*@
-
         <div class="mb-3 form-group row">
             <div class="col-10">
                 <select asp-for="JobPost.FacultyId" id="faculty" class="form-select">
@@ -345,12 +315,12 @@
                 $('#weekhour').empty();
                 $.ajax({
                     type: 'Get',
-                    url: '@Url.Action("getjobtype","JobPost")',
+                    url: '@Url.Action("getweekhour","JobPost")',
                     datatype: 'json',
                     data: { id: obid },
-                    success: function (dep) {
-                        $.each(dep, function (index, item) {
-                            $('#jobtype').append('<option value="' + item.id + '">' + item.name + '</option')
+                    success: function (week) {
+                        $.each(week, function (index, item) {
+                            $('#weekhour').append('<option value="' + item.id + '">' + item.name + '</option')
                         });
                     }
                 });
