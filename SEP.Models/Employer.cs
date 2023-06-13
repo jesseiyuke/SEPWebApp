@@ -26,5 +26,7 @@ namespace SEP.Models
         [Required]
         public string RegisteredAddress { get; set; }
 
+
+
     }
 }

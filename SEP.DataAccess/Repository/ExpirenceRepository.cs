@@ -16,5 +16,11 @@ namespace SEP.DataAccess.Repository
         {
             _db.Experience.Update(obj);
         }
+
+        public IEnumerable<Experience> GetByUserId(string userId)
+        {
+            IEnumerable<Experience> experiences = _db.Experience.Where(d => d.StudentId == userId);
+            return experiences;
+        }
     }
 }

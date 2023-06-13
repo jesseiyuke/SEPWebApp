@@ -10,7 +10,8 @@ function loadDataTable() {
 			"url": "/Approver/GetAll"
 		},
 		"columns": [
-			{ "data": "name", "width": "15%" },
+			{ "data": "firstName.name", "width": "15%" },
+			{ "data": "lastName.name", "width": "15%" },
 			{ "data": "legalName", "width": "15%" },
 			{ "data": "tradingName", "width": "15%" },
 			{ "data": "registrationNumber", "width": "15%" },

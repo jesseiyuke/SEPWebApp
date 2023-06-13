@@ -19,7 +19,7 @@ namespace SEPWebApp.Areas.Approver.Controllers
         {
             return View();
         }
-        public IActionResult ReviewExternalEmployers()
+        public IActionResult ReviewEmployers()
         {
             return View();
         }
@@ -32,16 +32,6 @@ namespace SEPWebApp.Areas.Approver.Controllers
         {
             return View();
         }
-
-        #region API CALLS
-        [HttpGet]
-        public IActionResult GetAll()
-        {
-            var JobPostList = _unitOfWork.JobPost.GetAll(includeProperties: "Faculty,Department,JobType,WeekHour,Status");
-            //var JobPostList = _unitOfWork.JobPost.GetAll();
-            return Json(new { data = JobPostList });
-        }
-        #endregion
 
     }
 }

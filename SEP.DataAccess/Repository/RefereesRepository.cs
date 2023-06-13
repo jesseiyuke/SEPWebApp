@@ -16,5 +16,10 @@ namespace SEP.DataAccess.Repository
         {
             _db.Referees.Update(obj);
         }
+        public IEnumerable<Referees> GetByUserId(string userId)
+        {
+            IEnumerable<Referees> referees = _db.Referees.Where(d => d.StudentId == userId);
+            return referees;
+        }
     }
 }

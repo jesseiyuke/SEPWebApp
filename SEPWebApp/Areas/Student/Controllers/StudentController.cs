@@ -10,6 +10,7 @@ using SEP.Utility;
 using SEPWebApp.Areas.Home.Controllers;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
+using System.Security.Cryptography;
 
 namespace SEPWebApp.Areas.Controllers
 {
@@ -18,17 +19,14 @@ namespace SEPWebApp.Areas.Controllers
     public class StudentController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly ILogger<HomeController> _logger;
-        private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
         private ApplicationDbContext _db;
 
-        public StudentController(IUnitOfWork unitOfWork, ILogger<HomeController> logger, SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager)
+        public StudentController(IUnitOfWork unitOfWork, ILogger<HomeController> logger, SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager, ApplicationDbContext db)
         {
             _unitOfWork = unitOfWork;
-            _logger = logger;
-            _signInManager = signInManager;
             _userManager = userManager;
+            _db = db;
         }
 
         public IActionResult Index()
@@ -136,14 +134,14 @@ namespace SEPWebApp.Areas.Controllers
         public IActionResult Profile()
         {
 
-            var studentID = _userManager.GetUserId(User);
-            Student student = _unitOfWork.Student.GetFirstOrDefault(d => d.Id == studentID);
-            ApplicationUser user = _unitOfWork.ApplicationUser.GetFirstOrDefault(x => x.Id == studentID);
+            var studentId = _userManager.GetUserId(User);
+            Student student = _unitOfWork.Student.GetFirstOrDefault(d => d.Id == studentId);
+            ApplicationUser user = _unitOfWork.ApplicationUser.GetFirstOrDefault(x => x.Id == studentId);
             StudentVM studentVM = new StudentVM();
 
             Department department = _unitOfWork.Department.GetFirstOrDefault(d => d.Id == student.DepartmentId);
             student.ApplicationUser = user;
-            studentVM.Achivements = student.Achivements;
+            // studentVM =student;
             studentVM.Address = student.Address;
             studentVM.Race = student.RaceId;
             studentVM.Gender = student.GenderId;
@@ -199,20 +197,43 @@ namespace SEPWebApp.Areas.Controllers
                 Text = i.Name,
                 Value = i.Id.ToString()
             });
+            studentVM.Referees = _unitOfWork.Referees.GetByUserId(studentId);
+            studentVM.Qualification = _unitOfWork.Qualification.GetAll().Where(d => d.StudentId == studentId);
+            studentVM.Experience = _unitOfWork.Experience.GetAll().Where(d => d.StudentId == studentId);
+            IEnumerable<Referees> Referees = _unitOfWork.Referees.GetAll();
 
             return View(studentVM);
         }
 
-        public IActionResult AddReferees(Referees obj)
+        public IActionResult AddReferees(RefereeVM obj)
         {
-            if (ModelState.IsValid)
+            Referees referees = new Referees();
+            var studentID = _userManager.GetUserId(User);
+            Student student = _unitOfWork.Student.GetFirstOrDefault(d => d.Id == studentID);
+            referees.StudentId = studentID;
+            referees.Name = obj.Name;
+            referees.Insitution = obj.Insitution;
+            referees.Email = obj.Email;
+            referees.Cell = obj.Cell;
+            referees.JobTitle = obj.JobTitle;
+            referees.Student = student;
+            if (obj.Id == 0)
             {
-                _unitOfWork.Referees.Add(obj);
+
+                _unitOfWork.Referees.Add(referees);
+                _unitOfWork.Save();
+                TempData["success"] = "Referee added successfully";
+                return RedirectToAction("Profile");
+
+            }
+            else
+            {
+                referees.Id = obj.Id;
+                _unitOfWork.Referees.Update(referees);
                 _unitOfWork.Save();
                 TempData["success"] = "Referee added successfully";
                 return RedirectToAction("Profile");
             }
-            return View(obj);
         }
         public IActionResult AddExperince(Experience obj)
         {

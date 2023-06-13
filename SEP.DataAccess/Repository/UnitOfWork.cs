@@ -26,6 +26,9 @@ namespace SEP.DataAccess.Repository
             BusinessType = new BusinessTypeRepository(_db);
 
             ApplicationUser = new ApplicationUserRepository(_db);
+            Referees = new RefeeresRepository(_db);
+            Qualification = new QualificationRepository(_db);
+            Experience = new ExperienceRepository(_db);
         }
 
         public IJobPostRepository JobPost { get; private set; }
