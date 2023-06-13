@@ -269,6 +269,14 @@
                             </div>
                         </div>
                         <a asp-area="Student" asp-action="Education" class="btn btn-secondary" style="width:150px">add</a>
+                @foreach (var Education in Model.Qualification)
+                {
+                     <br />
+                     <br />
+                     <label>@Education.Qalificatiion</label>
+                     <button type="submit" class="btn btn-secondary" asp-action="AddQalificatiion" style="width:150px">Edit</button>
+                     <button type="submit" class="btn btn-secondary" asp-action="DeleteQalificatiion" style="width:150px">Delete</button>
+                }
 
                     </div>
                 </div>
@@ -292,7 +300,14 @@
                         </div>
                         <a asp-area="Student" asp-action="Employment" class="btn btn-secondary" style="width:150px">add</a>
 
-
+                @foreach (var Experience in Model.Experience)
+                {
+                         <br />
+                         <br />
+                             <label>@Experience.JobTitle</label>
+                         <button type="submit" class="btn btn-secondary" asp-action="AddExperience" style="width:150px">Edit</button>
+                         <button type="submit" class="btn btn-secondary" asp-action="DeleteExperience" style="width:150px">Delete</button>
+                }
                     </div>
                 </div>
             
@@ -370,50 +385,23 @@
 
                 <div class="card" style="border-radius: 15px;">
                     <div class="card-body">
-
-
-
                         <div class="row align-items-center py-3">
                             <div class="col-md-9 ps-5">
                                 <h3 class="mb-0">Referees</h3>
                             </div>
                         </div>
                         <a asp-area="Student" asp-action="Referees" class="btn btn-secondary" style="width:150px">add</a>
-
-
+                @foreach( var referee in Model.Referees)
+                {
+                          <br />
+                              <br />
+                        <label>@referee.JobTitle</label>
+                            <button type="submit" class="btn btn-secondary" asp-action="AddReferees" style="width:150px">Edit</button>
+                        <button type="submit" class="btn btn-secondary" asp-action="DeleteReferee" style="width:150px">Delete</button>
+                }
                     </div>
                 </div>
-            
         </div>
-
         <br />
-
         <button type="submit" class="btn btn-secondary" asp-action="UpdateProfile" style="width:150px">Save</button>
-
-    
-
 </form>
-
-@section Scripts {
-    <script>
-        $(document).ready(function () {
-                $("#FacultyDropdown").change( function () {
-
-                var facultyId = $(this).val();
-                $('#DepartmentDropdown').empty();
-                $.ajax({
-                    type: 'GET',
-                    url: '@Url.Action("Student/GetDepartments")',
-                    dataType:'json'
-                    data: { facultyId: facultyId},
-                    success: function (departments) {
-                        $.each(departments, function (index, department) {
-                            $('#DepartmentDropdown').append('<option value="'+department.Id+'">'+ department.Name+'</option'
-                        });
-                    }
-                });
-            });
-        });
-    </script>*
-}
-

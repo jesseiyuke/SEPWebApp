@@ -1,5 +1,7 @@
-﻿using SEP.DataAccess.Repository.IRepository;
+﻿using Microsoft.EntityFrameworkCore;
+using SEP.DataAccess.Repository.IRepository;
 using SEP.Models;
+using System.Linq.Expressions;
 
 namespace SEP.DataAccess.Repository
 {
@@ -10,7 +12,11 @@ namespace SEP.DataAccess.Repository
         {
             _db = db;
         }
-
+        public IEnumerable<Referees> GetByUserId(string userId)
+        {
+            IEnumerable<Referees> referees= _db.Referees.Where(d => d.StudentId == userId);
+            return referees;
+        }
 
         public void Update(Referees obj)
         {

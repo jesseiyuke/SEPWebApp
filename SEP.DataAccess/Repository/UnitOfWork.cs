@@ -19,13 +19,14 @@ namespace SEP.DataAccess.Repository
             Department = new DepartmentRepository(_db);
             Faculty = new FacultyRepository(_db);
             Student = new StudentRepository(_db);
-
             JobType = new JobTypeRepository(_db);
             WeekHour = new WeekHourRepository(_db);
             Status = new StatusRepository(_db);
             BusinessType = new BusinessTypeRepository(_db);
-
             ApplicationUser = new ApplicationUserRepository(_db);
+            Referees=new RefeeresRepository(_db);
+            Qualification = new QualificationRepository(_db);
+            Experience = new ExperienceRepository(_db);
         }
 
         public IJobPostRepository JobPost { get; private set; }

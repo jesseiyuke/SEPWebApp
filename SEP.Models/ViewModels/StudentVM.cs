@@ -38,6 +38,9 @@ namespace SEP.Models.ViewModels
         public IEnumerable<SelectListItem> DepartmentList { get; set; }
         [ValidateNever]
         public IEnumerable<SelectListItem> FacutyList { get; set; }
+        public IEnumerable<Referees>? Referees { get; set; }
+        public IEnumerable<Qualifications>? Qualification { get; set; }
+        public IEnumerable<Experience>? Experience { get; set; }
 
     }
 }

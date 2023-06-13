@@ -16,7 +16,6 @@ namespace SEP.DataAccess.Repository.IRepository
         IRefereesRepository Referees { get; }
         IExperienceRepository Experience { get; }
         IQualificationRepository Qualification { get; }
-
         IJobTypeRepository JobType { get; }
         IWeekHourRepository WeekHour { get; }
         IStatusRepository Status { get; }

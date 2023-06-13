@@ -8,14 +8,12 @@ namespace SEPWebApp.Areas.Home.Controllers
     [Area("Home")]
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
 
 
-        public HomeController(ILogger<HomeController> logger, SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager)
+        public HomeController(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager)
         {
-            _logger = logger;
             _signInManager = signInManager;
             _userManager = userManager;
         }
@@ -46,10 +44,6 @@ namespace SEPWebApp.Areas.Home.Controllers
 
 
 
-        /*        public IActionResult Index()
-                {
-                    return view();
-                }*/
 
         public IActionResult Privacy()
         {
