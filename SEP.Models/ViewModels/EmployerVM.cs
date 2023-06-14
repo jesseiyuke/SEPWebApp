@@ -5,11 +5,16 @@ namespace SEP.Models.ViewModels
 {
     public class EmployerVM
     {
+
+
         [ValidateNever]
         public ApplicationUser ApplicationUser { get; set; }
         [ValidateNever]
         public Employer Employer { get; set; }
         [ValidateNever]
         public IEnumerable<SelectListItem> BusinessTypeList { get; set; }
+
+        [ValidateNever]
+        public IEnumerable<SelectListItem> StatusList { get; set; }
     }
 }

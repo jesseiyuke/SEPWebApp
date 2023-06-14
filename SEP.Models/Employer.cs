@@ -26,6 +26,13 @@ namespace SEP.Models
         [Required]
         public string RegisteredAddress { get; set; }
 
+        [Required]
+        [Display(Name = "Outcome")]
+        public int StatusId { get; set; }
+        [ForeignKey("StatusId")]
+        [ValidateNever]
+        public Status Status { get; set; }
+
 
 
     }

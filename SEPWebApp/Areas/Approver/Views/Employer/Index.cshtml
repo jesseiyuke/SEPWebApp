@@ -1,6 +1,10 @@
 ﻿@*@model SEP.Models.ViewModels.EmployerVM*@
 @model IEnumerable<SEP.Models.ViewModels.EmployerVM>
 
+@{
+    ViewBag.Title = "Index";
+}
+
 
 <h1>ReviewExternalEmployers</h1>
 
@@ -72,7 +76,7 @@
     <a asp-controller="Approver" asp-action="Index" class="btn btn-secondary">Back</a>
 </div>
 
-@*@section Scripts{
+@section Scripts{
     <script src="~/js/Employer.js"></script>
-}*@
+}
 

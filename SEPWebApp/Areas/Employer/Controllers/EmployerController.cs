@@ -52,6 +52,12 @@ namespace SEPWebApp.Controllers
                     Value = i.Id.ToString()
                 }),
 
+                StatusList = _unitOfWork.Status.GetAll().Select(i => new SelectListItem
+                {
+                    Text = i.Name,
+                    Value = i.Id.ToString()
+                }),
+
             };
             var EmployerId = _userManager.GetUserId(User);
             ApplicationUser user = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == EmployerId);
@@ -104,6 +110,7 @@ namespace SEPWebApp.Controllers
                     employer.TradingName = obj.Employer.TradingName;
                     employer.BusinessTypeId = obj.Employer.BusinessTypeId;
                     employer.RegisteredAddress=obj.Employer.RegisteredAddress;
+                    employer.StatusId = obj.Employer.StatusId;
 
                     _unitOfWork.Employer.Update(employer);
                 }

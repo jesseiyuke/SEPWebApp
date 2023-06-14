@@ -250,6 +250,14 @@
         </div>
 
         <div class="mb-3 form-group row">
+            <label asp-for="JobPost.ReviewerComment" class="col-2"></label>
+            <div class="col-10">
+                <input asp-for="JobPost.ReviewerComment" class="form-control" readonly="readonly">
+                <span asp-validation-for="JobPost.ReviewerComment" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="mb-3 form-group row">
             <label asp-for="JobPost.StatusId" class="col-2" hidden></label>
             <div class="col-6">
                 <select asp-for="JobPost.StatusId" asp-items=@Model.StatusList class="form-select" hidden>

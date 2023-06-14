@@ -29,6 +29,7 @@ namespace SEPWebApp.Areas.Approver.Controllers
 
         public IActionResult Index()
         {
+
             return View();
         }
 
