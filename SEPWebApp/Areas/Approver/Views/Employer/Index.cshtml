@@ -1,4 +1,5 @@
-﻿@model SEP.Models.ViewModels.EmployerVM
+﻿@*@model SEP.Models.ViewModels.EmployerVM*@
+@model IEnumerable<SEP.Models.ViewModels.EmployerVM>
 
 
 <h1>ReviewExternalEmployers</h1>
@@ -29,13 +30,49 @@
         </tr>
     </thead>
 
+     <tbody>
+        @foreach (var obj in Model)
+        {
+            <tr>
+                <td width="10%">
+                    @obj.ApplicationUser.FirstName
+                </td>
+                <td width="10%">
+                    @obj.ApplicationUser.LastName
+                </td>
+                <td width="10%">
+                    @obj.Employer.BusinessName
+                </td>
+                <td width="10%">
+                    @obj.Employer.TradingName
+                </td>
+                <td width="10%">
+                    @obj.Employer.CompanyRegNo
+                </td>
+            </tr>
+        }
+    </tbody>
+
+@*    <td width="10%">
+    @obj.Status
+    </td>*@
+
+@*    <td width="10%">
+    <div class="w-75 btn-group" role="group">
+    <a asp-controller="Employer" asp-action="Upsert" asp-route-id="@obj.ApplicationUser.Id"
+    class="btn btn-secondary">Review</a>
+    </div>
+    </td>*@
+
+
+
 </table>
 
 <div>
     <a asp-controller="Approver" asp-action="Index" class="btn btn-secondary">Back</a>
 </div>
 
-@section Scripts{
+@*@section Scripts{
     <script src="~/js/Employer.js"></script>
-}
+}*@
 
