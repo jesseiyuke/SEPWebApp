@@ -10,7 +10,7 @@ function loadDataTable() {
 			"url": "/Approver/Employer/GetAll"
 		},
 		"columns": [
-			{ "data": "applicationUser.firstname", "width": "15%" },
+/*			{ "data": "applicationUser.firstname", "width": "15%" },*/
 /*			{ "data": "applicationUser.lastname", "width": "15%" },*/
 			{ "data": "businessName", "width": "15%" },
 			{ "data": "tradingName", "width": "15%" },

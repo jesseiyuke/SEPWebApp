@@ -1,12 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using SEP.DataAccess.Repository.IRepository;
-using SEP.Models;
-using SEP.Models.ViewModels;
 using SEP.Utility;
-using System.Data;
 
 namespace SEPWebApp.Areas.Approver.Controllers
 {
@@ -115,8 +111,10 @@ namespace SEPWebApp.Areas.Approver.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var UserList = _unitOfWork.Employer.GetAll(includeProperties: "ApplicationUser.FirstName, Status");
-            return Json(new { data = UserList });
+            var EmployerList = _unitOfWork.Employer.GetAll(includeProperties: "Status");
+            var UserList = _unitOfWork.ApplicationUser.GetAll();
+            var combinedList = _unitOfWork.Concat(EmployerList, UserList);
+            return Json(new { data = EmployerList });
         }
         #endregion
 
