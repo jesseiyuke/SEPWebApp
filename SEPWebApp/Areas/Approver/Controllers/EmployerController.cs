@@ -115,7 +115,7 @@ namespace SEPWebApp.Areas.Approver.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var UserList = _unitOfWork.ApplicationUser.GetAll(includeProperties: "FirstName,LastName");
+            var UserList = _unitOfWork.Employer.GetAll(includeProperties: "ApplicationUser.FirstName, Status");
             return Json(new { data = UserList });
         }
         #endregion

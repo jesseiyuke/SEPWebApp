@@ -7,14 +7,14 @@ $(document).ready(function () {
 function loadDataTable() {
 	dataTable = $('#tblData').DataTable({
 		"ajax": {
-			"url": "/Approver/GetAll"
+			"url": "/Approver/Employer/GetAll"
 		},
 		"columns": [
-			{ "data": "firstName.name", "width": "15%" },
-			{ "data": "lastName.name", "width": "15%" },
-			{ "data": "legalName", "width": "15%" },
+			{ "data": "applicationUser.firstname", "width": "15%" },
+/*			{ "data": "applicationUser.lastname", "width": "15%" },*/
+			{ "data": "businessName", "width": "15%" },
 			{ "data": "tradingName", "width": "15%" },
-			{ "data": "registrationNumber", "width": "15%" },
+			{ "data": "companyRegNo", "width": "15%" },
 			{ "data": "status.name", "width": "15%" },
 
 			{
@@ -22,7 +22,7 @@ function loadDataTable() {
 				"render": function (data) {
 					return `
 						<div class="w-75 btn-group" role="group">
-						<a href="/Approver/Upsert?id=${data}"
+						<a href="/Approver/Employer/JobPost/Upsert?id=${data}"
 						class="btn btn-primary mx-2">Review</a>
 					</div>
 						`
