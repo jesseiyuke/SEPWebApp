@@ -60,7 +60,7 @@
                 <select asp-for="Employer.BusinessTypeId" asp-items=@Model.BusinessTypeList class="form-select" aria-required="true" disabled>
                     <option disabled selected>Select Business Type</option> @*default value in select list*@
                 </select>
-                <select hidden asp-for="Employer.BusinessTypeId" asp-items=@Model.BusinessTypeList class="form-select" aria-required="true" disabled>
+                <select hidden asp-for="Employer.BusinessTypeId" asp-items=@Model.BusinessTypeList class="form-select" aria-required="true">
                     <option hidden selected>Select Business Type</option> @*default value in select list*@
                 </select>
                 <br />
