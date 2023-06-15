@@ -3,6 +3,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SEP.DataAccess.Repository.IRepository;
 using SEP.Utility;
+using System.Linq;
+using System;
+using System.Collections.Generic;
+using SEP.Models;
+using SEP.Models.ViewModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace SEPWebApp.Areas.Approver.Controllers
 {
@@ -25,8 +31,18 @@ namespace SEPWebApp.Areas.Approver.Controllers
 
         public IActionResult Index()
         {
+            var employerVM = new EmployerVM()
+            {
+                ApplicationUserList = _unitOfWork.ApplicationUser.GetAll(),
+                EmployerList=_unitOfWork.Employer.GetAll(),
+                StatusList = _unitOfWork.Status.GetAll().Select(i => new SelectListItem
+                {
+                    Text = i.Name,
+                    Value = i.Id.ToString()
+                }),
+            };
 
-            return View();
+            return View(employerVM);
         }
 
         //GET
@@ -113,7 +129,7 @@ namespace SEPWebApp.Areas.Approver.Controllers
         {
             var EmployerList = _unitOfWork.Employer.GetAll(includeProperties: "Status");
             var UserList = _unitOfWork.ApplicationUser.GetAll();
-            var combinedList = _unitOfWork.Concat(EmployerList, UserList);
+            /*            var combinedList = _unitOfWork.Concat(EmployerList, UserList);*/
             return Json(new { data = EmployerList });
         }
         #endregion

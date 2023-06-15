@@ -27,6 +27,5 @@ namespace SEP.DataAccess.Repository.IRepository
 
         void Save();
 
-        IEnumerable<T> Concat<T>(IEnumerable<T> list1, IEnumerable<T> list2);
     }
 }

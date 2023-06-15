@@ -1,4 +1,6 @@
-﻿using SEP.DataAccess.Repository.IRepository;
+﻿using Microsoft.EntityFrameworkCore;
+using SEP.DataAccess.Repository.IRepository;
+using SEP.Models;
 
 namespace SEP.DataAccess.Repository
 {
@@ -56,9 +58,5 @@ namespace SEP.DataAccess.Repository
             _db.SaveChanges();
         }
 
-        public IEnumerable<T> Concat<T>(IEnumerable<T> list1, IEnumerable<T> list2)
-        {
-            return list1.Concat(list2);
-        }
     }
 }
