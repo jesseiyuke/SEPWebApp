@@ -1,5 +1,4 @@
-﻿@*@model IEnumerable<Employer>*@
-@model SEP.Models.ViewModels.EmployerVM
+﻿@model SEP.Models.ViewModels.EmployerVM
 
 @{
     ViewBag.Title = "Index";
@@ -33,29 +32,16 @@
                             <td>@obj.BusinessName</td>
                             <td>@obj.TradingName</td>
                             <td>@obj.CompanyRegNo</td>
-                            <td>@obj.Status.Name</td>
+                            <td>@obj.Status.Name
+                                <a asp-controller="Employer" asp-action="Upsert" asp-route-id="@obj.Id"
+                                   class="btn btn-secondary">Review</a>
+                            </td>
                         </tr>
                     }
             }
         }
     </tbody>
 
-
-
-
-@*     <tbody>
-        @foreach (var obj in Model.ApplicationUserList)
-        {
-            <tr>
-                <td width="10%">
-                    @obj.FirstName
-                </td>
-                <td width="10%">
-                    @obj.LastName
-                </td>
-            </tr>
-        }
-    </tbody>*@
 
 
     @*     <tbody>
