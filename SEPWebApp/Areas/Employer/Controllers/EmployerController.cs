@@ -30,7 +30,7 @@ namespace SEPWebApp.Controllers
         public IActionResult Index()
         {
             var EmployerId = _userManager.GetUserId(User);
-            Employer employer = _unitOfWork.Employer.GetFirstOrDefault(e => e.Id == EmployerId);
+            Employer employer = _unitOfWork.Employer.GetFirstOrDefault(e => e.ApplicationUserId == EmployerId);
 
             if (employer == null)
             {
@@ -61,7 +61,7 @@ namespace SEPWebApp.Controllers
             };
             var EmployerId = _userManager.GetUserId(User);
             ApplicationUser user = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == EmployerId);
-            Employer employer = _unitOfWork.Employer.GetFirstOrDefault(e => e.Id == EmployerId);
+            Employer employer = _unitOfWork.Employer.GetFirstOrDefault(e => e.ApplicationUserId == EmployerId);
 
 
 
@@ -75,7 +75,7 @@ namespace SEPWebApp.Controllers
             {
                 //update Employer
                 EmployerVM.ApplicationUser = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == EmployerId);
-                EmployerVM.Employer = _unitOfWork.Employer.GetFirstOrDefault(u => u.Id == EmployerId);
+                EmployerVM.Employer = _unitOfWork.Employer.GetFirstOrDefault(u => u.ApplicationUserId == EmployerId);
                 return View(EmployerVM);
 
             }
@@ -90,7 +90,7 @@ namespace SEPWebApp.Controllers
 
             var EmployerId = _userManager.GetUserId(User);
             ApplicationUser user = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == EmployerId);
-            Employer employer = _unitOfWork.Employer.GetFirstOrDefault(e => e.Id == EmployerId);
+            Employer employer = _unitOfWork.Employer.GetFirstOrDefault(e => e.ApplicationUserId == EmployerId);
 
 
             if (ModelState.IsValid)
@@ -98,7 +98,7 @@ namespace SEPWebApp.Controllers
 
                 if (employer == null)
                 {
-                    obj.Employer.Id = EmployerId;
+                    obj.Employer.ApplicationUserId = EmployerId;
                     _unitOfWork.Employer.Add(obj.Employer);
                 }
                 else
@@ -109,7 +109,7 @@ namespace SEPWebApp.Controllers
                     employer.BusinessName = obj.Employer.BusinessName;
                     employer.TradingName = obj.Employer.TradingName;
                     employer.BusinessTypeId = obj.Employer.BusinessTypeId;
-                    employer.RegisteredAddress=obj.Employer.RegisteredAddress;
+                    employer.RegisteredAddress = obj.Employer.RegisteredAddress;
                     employer.StatusId = obj.Employer.StatusId;
 
                     _unitOfWork.Employer.Update(employer);

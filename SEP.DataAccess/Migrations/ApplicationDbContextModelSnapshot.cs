@@ -549,7 +549,14 @@ namespace SEP.DataAccess.Migrations
 
             modelBuilder.Entity("SEP.Models.Employer", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ApplicationUserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("BusinessName")
@@ -579,6 +586,8 @@ namespace SEP.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("BusinessTypeId");
 
@@ -1334,15 +1343,15 @@ namespace SEP.DataAccess.Migrations
 
             modelBuilder.Entity("SEP.Models.Employer", b =>
                 {
-                    b.HasOne("SEP.Models.BusinessType", "BusinessType")
+                    b.HasOne("SEP.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
-                        .HasForeignKey("BusinessTypeId")
+                        .HasForeignKey("ApplicationUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SEP.Models.ApplicationUser", "ApplicationUser")
+                    b.HasOne("SEP.Models.BusinessType", "BusinessType")
                         .WithMany()
-                        .HasForeignKey("Id")
+                        .HasForeignKey("BusinessTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

@@ -6,9 +6,12 @@ namespace SEP.Models
 {
     public class Employer
     {
-        public string Id { get; set; }
+        [Key]
+        public int Id { get; set; }
         [Required]
-        [ForeignKey("Id")]
+        public string ApplicationUserId { get; set; }
+        [ForeignKey("ApplicationUserId")]
+        [ValidateNever]
         public ApplicationUser ApplicationUser { get; set; }
         [Required]
         public string JobTitle { get; set; }

@@ -1,14 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using SEP.DataAccess.Repository.IRepository;
-using SEP.Utility;
-using System.Linq;
-using System;
-using System.Collections.Generic;
-using SEP.Models;
-using SEP.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using SEP.DataAccess;
+using SEP.DataAccess.Repository.IRepository;
+using SEP.Models.ViewModels;
+using SEP.Utility;
 
 namespace SEPWebApp.Areas.Approver.Controllers
 {
@@ -21,12 +18,15 @@ namespace SEPWebApp.Areas.Approver.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly ApplicationDbContext _db;
 
-        public EmployerController(IUnitOfWork unitOfWork, SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager)
+        public EmployerController(IUnitOfWork unitOfWork, SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager, ApplicationDbContext applicationDbContext)
         {
             _unitOfWork = unitOfWork;
             _signInManager = signInManager;
             _userManager = userManager;
+            _db = applicationDbContext;
+
         }
 
         public IActionResult Index()
@@ -34,7 +34,7 @@ namespace SEPWebApp.Areas.Approver.Controllers
             var employerVM = new EmployerVM()
             {
                 ApplicationUserList = _unitOfWork.ApplicationUser.GetAll(),
-                EmployerList=_unitOfWork.Employer.GetAll(),
+                EmployerList = _unitOfWork.Employer.GetAll(),
                 StatusList = _unitOfWork.Status.GetAll().Select(i => new SelectListItem
                 {
                     Text = i.Name,
@@ -46,7 +46,7 @@ namespace SEPWebApp.Areas.Approver.Controllers
         }
 
         //GET
-        public IActionResult Upsert(string? id)
+        public IActionResult Upsert(int? id)
         {
 
             EmployerVM EmployerVM = new()
@@ -67,10 +67,12 @@ namespace SEPWebApp.Areas.Approver.Controllers
             };
 
 
-                //update Employer
-                EmployerVM.ApplicationUser = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == id);
-                EmployerVM.Employer = _unitOfWork.Employer.GetFirstOrDefault(u => u.Id == id);
-                return View(EmployerVM);
+            //update Employer
+            // EmployerVM.ApplicationUser = _db.ApplicationUser.Where(u => u.Id == EmployerVM.Employer.ApplicationUserId);
+            EmployerVM.Employer = _unitOfWork.Employer.GetFirstOrDefault(u => u.Id == id);
+            EmployerVM.ApplicationUser = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == EmployerVM.Employer.ApplicationUserId);
+            //EmployerVM.Employer = _unitOfWork.Employer.GetFirstOrDefault(u => u.ApplicationUserId == EmployerVM.ApplicationUser.Id);
+            return View(EmployerVM);
 
 
         }
@@ -80,11 +82,11 @@ namespace SEPWebApp.Areas.Approver.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Upsert(EmployerVM obj)
         {
-            //EmployerVM employer = _unitOfWork.Employer.GetFirstOrDefault(e => e.Id == obj.ApplicationUser);
+            //EmployerVM.employer = _unitOfWork.Employer.GetFirstOrDefault(u => u.Id == obj.Employer.Id);
 
             if (ModelState.IsValid)
             {
-                if (obj.Employer.Id==null)
+                if (obj.Employer.Id == 0)
                 {
                     _unitOfWork.Employer.Add(obj.Employer);
                 }
