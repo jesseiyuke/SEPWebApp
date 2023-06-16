@@ -1,4 +1,4 @@
-﻿var dataTable;
+﻿﻿var dataTable;
 
 $(document).ready(function () {
 	loadDataTable();
@@ -10,8 +10,8 @@ function loadDataTable() {
 			"url": "/Approver/Employer/GetAll"
 		},
 		"columns": [
-/*			{ "data": "applicationUser.firstname", "width": "15%" },*/
-/*			{ "data": "applicationUser.lastname", "width": "15%" },*/
+			{ "data": "applicationUser.firstName", "width": "15%" },
+			{ "data": "applicationUser.lastName", "width": "15%" },
 			{ "data": "businessName", "width": "15%" },
 			{ "data": "tradingName", "width": "15%" },
 			{ "data": "companyRegNo", "width": "15%" },
@@ -22,7 +22,7 @@ function loadDataTable() {
 				"render": function (data) {
 					return `
 						<div class="w-75 btn-group" role="group">
-						<a href="/Approver/Employer/JobPost/Upsert?id=${data}"
+						<a href="/Approver/Employer/Upsert?id=${data}"
 						class="btn btn-primary mx-2">Review</a>
 					</div>
 						`
