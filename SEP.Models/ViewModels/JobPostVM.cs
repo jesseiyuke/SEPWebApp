@@ -5,7 +5,10 @@ namespace SEP.Models.ViewModels
 {
     public class JobPostVM
     {
+        [ValidateNever]
         public JobPost JobPost { get; set; }
+        [ValidateNever]
+        public ApplicationUser ApplicationUser { get; set; }
         [ValidateNever]
         public IEnumerable<Faculty> FacultyList { get; set; }
         [ValidateNever]

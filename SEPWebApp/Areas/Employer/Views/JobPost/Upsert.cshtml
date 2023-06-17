@@ -3,6 +3,7 @@
 
 <form method="post" asp-action="Upsert">
     <input asp-for="JobPost.Id" hidden />
+    <input asp-for="JobPost.ApplicationUserId" hidden />
     <div class="border p-3 mt-2">
         <div class="row pb-2">
             <h2 class="text-primary">Employer → @(Model.JobPost.Id != 0 ? "Update" : "Create") Post</h2>

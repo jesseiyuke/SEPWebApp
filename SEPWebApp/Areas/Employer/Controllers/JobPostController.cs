@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SEP.DataAccess;
@@ -16,11 +17,13 @@ namespace SEPWebApp.Areas.Employer.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ApplicationDbContext _db;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public JobPostController(IUnitOfWork unitOfWork, ApplicationDbContext applicationDbContext)
+        public JobPostController(IUnitOfWork unitOfWork, ApplicationDbContext applicationDbContext, UserManager<IdentityUser> userManager)
         {
             _unitOfWork = unitOfWork;
             _db = applicationDbContext;
+            _userManager = userManager;
         }
         public IActionResult Index()
         {
@@ -71,6 +74,8 @@ namespace SEPWebApp.Areas.Employer.Controllers
                 }),
             };
 
+            var EmployerId = _userManager.GetUserId(User);
+
             if (id == null || id == 0)
             {
                 //create JobPost
@@ -87,6 +92,8 @@ namespace SEPWebApp.Areas.Employer.Controllers
 
                 IEnumerable<WeekHour> weekHour = _db.WeekHour;
                 JobPostVM.WeekHourList = weekHour;
+
+                JobPostVM.ApplicationUser = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == EmployerId);
                 return View(JobPostVM);
             }
             else
@@ -108,6 +115,8 @@ namespace SEPWebApp.Areas.Employer.Controllers
                 IEnumerable<WeekHour> weekHour = _db.WeekHour.Where(d => d.JobTypeId == JobPostVM.JobPost.JobTypeId);
                 JobPostVM.WeekHourList = weekHour;
 
+                JobPostVM.ApplicationUser = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == EmployerId);
+
                 return View(JobPostVM);
 
             }
@@ -124,10 +133,13 @@ namespace SEPWebApp.Areas.Employer.Controllers
                             ModelState.AddModelError("JobDescription", "Description of job cannot exactly match the Key responsibilities.");
                         }*/
 
+            var EmployerId = _userManager.GetUserId(User);
             if (ModelState.IsValid)
             {
                 if (obj.JobPost.Id == 0)
                 {
+
+                    obj.JobPost.ApplicationUserId = EmployerId;
                     _unitOfWork.JobPost.Add(obj.JobPost);
                 }
                 else
@@ -147,7 +159,9 @@ namespace SEPWebApp.Areas.Employer.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var JobPostList = _unitOfWork.JobPost.GetAll(includeProperties: "Faculty,Department,JobType,WeekHour,Status");
+            var EmployerId = _userManager.GetUserId(User);
+
+            var JobPostList = _unitOfWork.JobPost.GetAll(includeProperties: "Faculty,Department,JobType,WeekHour,Status").Where(u => u.ApplicationUserId == EmployerId);
             //var JobPostList = _unitOfWork.JobPost.GetAll();
             return Json(new { data = JobPostList });
         }

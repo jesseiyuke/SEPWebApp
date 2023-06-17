@@ -10,6 +10,11 @@ namespace SEP.Models
     {
         [Key]
         public int Id { get; set; }
+        [Required]
+        public string ApplicationUserId { get; set; }
+        [ForeignKey("ApplicationUserId")]
+        [ValidateNever]
+        public ApplicationUser ApplicationUser { get; set; }
 
 
         //EmoloyerType
