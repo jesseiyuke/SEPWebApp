@@ -145,7 +145,8 @@ namespace SEPWebApp.Areas.Approver.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var JobPostList = _unitOfWork.JobPost.GetAll(includeProperties: "Faculty,Department,JobType,WeekHour,Status");
+            var JobPostList = _unitOfWork.JobPost.GetAll(includeProperties: "Department,JobType,WeekHour,Status");
+            //var JobPostList = _unitOfWork.JobPost.GetAll(includeProperties: "Status");
             //var JobPostList = _unitOfWork.JobPost.GetAll();
             return Json(new { data = JobPostList });
         }

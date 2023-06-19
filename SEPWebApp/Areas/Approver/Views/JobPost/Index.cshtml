@@ -6,64 +6,19 @@
 <h1>ReviewPosts</h1>
 
 
-<table id="tblData" class="table table-bordered table-striped" style="width:100%">
+<table id="tblData1" class="table table-bordered table-striped" style="width:100%">
     <thead>
         <tr>
-            <th>
-                Job Title
-            </th>
-            <th>
-                Department
-            </th>
-            <th>
-                FT/PT
-            </th>
-            <th>
-                Start Date
-            </th>
-            <th>
-                End Date
-            </th>
-            <th>
-                Status
-            </th>
+            <th>Job Title</th>
+            <th>Department</th>
+            <th>FT/PT</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Created By</th>
+            <th>Status</th>
             <th></th>
         </tr>
     </thead>
-
-    @* <tbody>
-    @foreach (var obj in Model)
-    {
-    <tr>
-    <td width="10%">
-    @obj.JobTitle
-    </td>
-    <td width="10%">
-    @obj.Department
-    </td>
-    <td width="10%">
-    @obj.JobType
-    </td>
-    <td width="10%">
-    @obj.StartDate
-    </td>
-    <td width="10%">
-    @obj.EndDate
-    </td>
-    <td width="10%">
-    @obj.Status
-    </td>
-
-    <td width="10%">
-    <div class="w-75 btn-group" role="group">
-    <a asp-controller="JobPost" asp-action="Upsert" asp-route-id="@obj.Id"
-    class="btn btn-secondary">Review</a>
-    </div>
-    </td>
-
-    </tr>
-    }
-    </tbody>*@
 
 </table>
 
@@ -72,6 +27,6 @@
 </div>
 
 @section Scripts{
-    <script src="~/js/JobPostApprover.js"></script>
+    <script src="~/js/JobPostApprover1.js"></script>
 }
 

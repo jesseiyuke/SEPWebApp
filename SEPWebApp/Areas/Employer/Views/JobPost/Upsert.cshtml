@@ -99,9 +99,9 @@
             </div>
         </div>
 
-        <div class="mb-3 form-group row">
+        <div class="mb-3 form-group row" id="weekhour">
             <div class="col-10">
-                <select asp-for="JobPost.WeekHourId" id="weekhour" class="form-select">
+                <select asp-for="JobPost.WeekHourId" class="form-select">
                     <option disabled selected>Range</option>
                     @foreach (var week in Model.WeekHourList)
                     {
@@ -316,23 +316,62 @@
         })
     </script>
 
+@*    <script>
+        $(document).ready(function()){
+
+        }
+    </script>*@
+
     <script>
         $(document).ready(function () {
 
             $('#jobtype').change(function () {
                 var obid = this.value;
-                $('#weekhour').empty();
-                $.ajax({
-                    type: 'Get',
-                    url: '@Url.Action("getweekhour","JobPost")',
-                    datatype: 'json',
-                    data: { id: obid },
-                    success: function (week) {
-                        $.each(week, function (index, item) {
-                            $('#weekhour').append('<option value="' + item.id + '">' + item.name + '</option')
-                        });
-                    }
-                });
+                
+                if (obid == "2")
+                {
+                    $('#weekhour').hide();
+                    //$('#weekhour').attr('disabled', true);
+                }
+                else{
+                    $('#weekhour').show();
+                    //$('#weekhour').empty();
+                    //$.ajax({
+                    //    type: 'Get',
+                    //    url: '@Url.Action("getweekhour","JobPost")',
+                    //    datatype: 'json',
+                    //    data: { id: obid },
+                    //    success: function (week) {
+                    //        alert("hello")
+                    //        $('#weekHourselect').show();
+                    //        $.each(week, function (index, item) {
+                    //            $('#weekHourselect').append('<option value="' + item.id + '">' + item.name + '</option')
+                    //        });
+                    //    },
+                    //});
+                }
+                //$('#weekhour').attr('hidden', true);
+                //$.ajax({
+                //    type: 'Get',
+                //    url: '@Url.Action("getweekhour","JobPost")',
+                //    datatype: 'json',
+                //    data: { id: obid },
+                //    success: function (week) {
+
+                //        if (week != 1) {
+                //            $('#weekhour').attr('disabled', false);
+                //            $.each(week, function (index, item) {
+                //                $('#weekhour').append('<option value="' + item.id + '">' + item.name + '</option')
+                //            });
+                //        }
+                //        else {
+                //            $('#weekhour').attr('hidden', true);
+                //            $.each(week, function (index, item) {
+                //                $('#weekhour').append('<option value="' + item.id + '">' + item.name + '</option')
+                //            });
+                //        }
+                //    },
+                //});
             });
         })
     </script>
@@ -341,5 +380,5 @@
 
 
 @*<script src="~/lib//jquery/dist/jquery.min.js"></script>
-<script src="~/js/Cascading.js"></script>*@
+<script src="~/js/CascadingJobtype.js"></script>*@
 

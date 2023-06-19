@@ -5,17 +5,18 @@ $(document).ready(function () {
 });
 
 function loadDataTable() {
-	dataTable = $('#tblData').DataTable({
+	dataTable = $('#tblData1').DataTable({
 		"ajax": {
 			"url": "/Approver/JobPost/GetAll"
 		},
 		"columns": [
-			{ "data": "jobTitle", "width": "15%" },
-			{ "data": "department.name", "width": "15%" },
-			{ "data": "jobType.name", "width": "15%" },
-			{ "data": "startDate", "width": "15%" },
-			{ "data": "endDate", "width": "15%" },
-			{ "data": "status.name", "width": "15%" },
+			{ "data": "jobTitle", "width": "10%" },
+			{ "data": "department.name", "width": "10%" },
+			{ "data": "jobType.name", "width": "10%" },
+			{ "data": "startDate", "width": "10%" },
+			{ "data": "endDate", "width": "10%" },
+			{ "data": "emoloyerType", "width": "10%" },
+			{ "data": "status.name", "width": "10%" },
 
 			{
 				"data": "id",
@@ -28,7 +29,7 @@ function loadDataTable() {
 						`
 				},
 				"width": "15%"
-			}
+			},
 
 		]
 	});

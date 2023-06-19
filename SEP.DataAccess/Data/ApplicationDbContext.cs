@@ -126,9 +126,9 @@ namespace SEP.DataAccess
             modelBuilder.Entity<WeekHour>().HasData(
                 new WeekHour { Id = 1, Name = "<2", JobTypeId = 1 },
                 new WeekHour { Id = 2, Name = "4 to 6", JobTypeId = 1 },
-                new WeekHour { Id = 3, Name = "6 to 8", JobTypeId = 2 },
-                new WeekHour { Id = 4, Name = "8 to 12", JobTypeId = 2 },
-                new WeekHour { Id = 5, Name = ">12", JobTypeId = 2 }
+                new WeekHour { Id = 3, Name = "6 to 8", JobTypeId = 1 },
+                new WeekHour { Id = 4, Name = "8 to 12", JobTypeId = 1 },
+                new WeekHour { Id = 5, Name = ">12", JobTypeId = 1 }
 
             );
 
