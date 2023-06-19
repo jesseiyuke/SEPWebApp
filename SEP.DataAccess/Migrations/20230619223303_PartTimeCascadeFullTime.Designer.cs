@@ -12,7 +12,7 @@ using SEP.DataAccess;
 namespace SEP.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230619102526_PartTimeCascadeFullTime")]
+    [Migration("20230619223303_PartTimeCascadeFullTime")]
     partial class PartTimeCascadeFullTime
     {
         /// <inheritdoc />
@@ -1217,7 +1217,7 @@ namespace SEP.DataAccess.Migrations
                         {
                             Id = 6,
                             JobTypeId = 2,
-                            Name = "FullTime"
+                            Name = "Fulltime"
                         });
                 });
 

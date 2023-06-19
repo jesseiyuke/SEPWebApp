@@ -5,24 +5,24 @@
 namespace SEP.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class RemovedWeekHourFullTime : Migration
+    public partial class PartTimeCascadeFullTime : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DeleteData(
+            migrationBuilder.InsertData(
                 table: "WeekHour",
-                keyColumn: "Id",
-                keyValue: 6);
+                columns: new[] { "Id", "JobTypeId", "Name" },
+                values: new object[] { 6, 2, "Fulltime" });
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.InsertData(
+            migrationBuilder.DeleteData(
                 table: "WeekHour",
-                columns: new[] { "Id", "JobTypeId", "Name" },
-                values: new object[] { 6, 2, "FullTime" });
+                keyColumn: "Id",
+                keyValue: 6);
         }
     }
 }

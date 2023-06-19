@@ -1209,6 +1209,12 @@ namespace SEP.DataAccess.Migrations
                             Id = 5,
                             JobTypeId = 1,
                             Name = ">12"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            JobTypeId = 2,
+                            Name = "Fulltime"
                         });
                 });
 

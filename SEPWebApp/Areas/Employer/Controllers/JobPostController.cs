@@ -112,8 +112,8 @@ namespace SEPWebApp.Areas.Employer.Controllers
                 IEnumerable<JobType> jobTypes = _db.JobType;
                 JobPostVM.JobTypeList = jobTypes;
 
-                //IEnumerable<WeekHour> weekHour = _db.WeekHour.Where(d => d.JobTypeId == JobPostVM.JobPost.JobTypeId);
-                IEnumerable<WeekHour> weekHour = _db.WeekHour;
+                IEnumerable<WeekHour> weekHour = _db.WeekHour.Where(d => d.JobTypeId == JobPostVM.JobPost.JobTypeId);
+                //IEnumerable<WeekHour> weekHour = _db.WeekHour;
                 JobPostVM.WeekHourList = weekHour;
 
                 JobPostVM.ApplicationUser = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == EmployerId);
