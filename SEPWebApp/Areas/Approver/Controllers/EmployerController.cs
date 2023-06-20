@@ -6,6 +6,7 @@ using SEP.DataAccess;
 using SEP.DataAccess.Repository.IRepository;
 using SEP.Models.ViewModels;
 using SEP.Utility;
+using SmartBreadcrumbs.Attributes;
 
 namespace SEPWebApp.Areas.Approver.Controllers
 {
@@ -29,6 +30,7 @@ namespace SEPWebApp.Areas.Approver.Controllers
 
         }
 
+        [Breadcrumb("Review Employers", AreaName = "Approver")]
         public IActionResult Index()
         {
             return View();
@@ -48,6 +50,7 @@ namespace SEPWebApp.Areas.Approver.Controllers
         }
 
         //GET
+        [Breadcrumb("Update", AreaName = "Approver")]
         public IActionResult Upsert(int? id)
         {
 

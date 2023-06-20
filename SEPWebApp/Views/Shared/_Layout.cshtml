@@ -32,6 +32,12 @@
     </header>
     <div class="container">
         <main role="main" class="pb-3">
+            <breadcrumb></breadcrumb>
+            @RenderBody()
+        </main>
+    </div>
+    <div class="container">
+        <main role="main" class="pb-3">
             <partial name="_Notification" />
             @RenderBody()
         </main>

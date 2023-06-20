@@ -6,6 +6,7 @@ using SEP.DataAccess.Repository.IRepository;
 using SEP.Models;
 using SEP.Models.ViewModels;
 using SEP.Utility;
+using SmartBreadcrumbs.Attributes;
 using System.Data;
 
 namespace SEPWebApp.Areas.Approver.Controllers
@@ -22,6 +23,7 @@ namespace SEPWebApp.Areas.Approver.Controllers
             _unitOfWork = unitOfWork;
             _db = applicationDbContext;
         }
+        [Breadcrumb("JobPosts", AreaName = "Approver")]
         public IActionResult Index()
         {
             /*            IEnumerable<JobPost> objJobPostList = _unitOfWork.JobPost.GetAll();
@@ -58,6 +60,7 @@ namespace SEPWebApp.Areas.Approver.Controllers
         }
 
         //GET
+        [Breadcrumb("Update", AreaName = "JobPost")]
         public IActionResult Upsert(int? id)
         {
             //

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SEP.DataAccess.Repository.IRepository;
 using SEP.Utility;
+using SmartBreadcrumbs.Attributes;
 
 namespace SEPWebApp.Areas.Approver.Controllers
 {
@@ -15,6 +16,8 @@ namespace SEPWebApp.Areas.Approver.Controllers
         {
             _unitOfWork = unitOfWork;
         }
+        //[DefaultBreadcrumb("Home", AreaName = "Approver")]
+        [Breadcrumb("Index", AreaName = "Approver")]
         public IActionResult Index()
         {
             return View();
@@ -28,6 +31,7 @@ namespace SEPWebApp.Areas.Approver.Controllers
         {
             return View();
         }
+        [Breadcrumb("Stats", FromAction = "Index")]
         public IActionResult Stats()
         {
             return View();

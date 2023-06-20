@@ -2,10 +2,12 @@
 using Microsoft.AspNetCore.Mvc;
 using SEP.Models;
 using System.Diagnostics;
+using SmartBreadcrumbs.Attributes;
 
 namespace SEPWebApp.Areas.Home.Controllers
 {
     [Area("Home")]
+    [DefaultBreadcrumb("Home")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
