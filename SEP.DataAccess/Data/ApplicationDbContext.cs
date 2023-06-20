@@ -30,6 +30,8 @@ namespace SEP.DataAccess
         public DbSet<WeekHour> WeekHour { get; set; }
         public DbSet<Status> Status { get; set; }
         public DbSet<BusinessType> BusinessType { get; set; }
+        public DbSet<StudentApplication> StudentApplication { get; set; }
+        public DbSet<ApplicationDocument> ApplicationDocument { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

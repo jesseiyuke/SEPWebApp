@@ -19,10 +19,11 @@ namespace SEPWebApp.Areas.Controllers
     public class StudentController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
+
         private readonly UserManager<IdentityUser> _userManager;
         private ApplicationDbContext _db;
 
-        public StudentController(IUnitOfWork unitOfWork, ILogger<HomeController> logger, SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager, ApplicationDbContext db)
+        public StudentController(IUnitOfWork unitOfWork, ILogger<HomeController> logger, SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager,ApplicationDbContext db)
         {
             _unitOfWork = unitOfWork;
             _userManager = userManager;
@@ -137,11 +138,11 @@ namespace SEPWebApp.Areas.Controllers
             var studentId = _userManager.GetUserId(User);
             Student student = _unitOfWork.Student.GetFirstOrDefault(d => d.Id == studentId);
             ApplicationUser user = _unitOfWork.ApplicationUser.GetFirstOrDefault(x => x.Id == studentId);
-            StudentVM studentVM = new StudentVM();
+            StudentVM studentVM = new StudentVM();  
 
             Department department = _unitOfWork.Department.GetFirstOrDefault(d => d.Id == student.DepartmentId);
             student.ApplicationUser = user;
-            // studentVM =student;
+           // studentVM =student;
             studentVM.Address = student.Address;
             studentVM.Race = student.RaceId;
             studentVM.Gender = student.GenderId;
@@ -198,64 +199,121 @@ namespace SEPWebApp.Areas.Controllers
                 Value = i.Id.ToString()
             });
             studentVM.Referees = _unitOfWork.Referees.GetByUserId(studentId);
-            studentVM.Qualification = _unitOfWork.Qualification.GetAll().Where(d => d.StudentId == studentId);
-            studentVM.Experience = _unitOfWork.Experience.GetAll().Where(d => d.StudentId == studentId);
-            IEnumerable<Referees> Referees = _unitOfWork.Referees.GetAll();
-
+            studentVM.Qualification = _unitOfWork.Qualification.GetByUserId(studentId);
+            studentVM.Experience = _unitOfWork.Experience.GetByUserId(studentId);
             return View(studentVM);
         }
 
-        public IActionResult AddReferees(RefereeVM obj)
+        public IActionResult AddReferees(Referees referees)
         {
-            Referees referees = new Referees();
             var studentID = _userManager.GetUserId(User);
             Student student = _unitOfWork.Student.GetFirstOrDefault(d => d.Id == studentID);
             referees.StudentId = studentID;
-            referees.Name = obj.Name;
-            referees.Insitution = obj.Insitution;
-            referees.Email = obj.Email;
-            referees.Cell = obj.Cell;
-            referees.JobTitle = obj.JobTitle;
             referees.Student = student;
-            if (obj.Id == 0)
-            {
-
-                _unitOfWork.Referees.Add(referees);
-                _unitOfWork.Save();
-                TempData["success"] = "Referee added successfully";
-                return RedirectToAction("Profile");
-
-            }
-            else
-            {
-                referees.Id = obj.Id;
-                _unitOfWork.Referees.Update(referees);
-                _unitOfWork.Save();
-                TempData["success"] = "Referee added successfully";
-                return RedirectToAction("Profile");
-            }
+            _unitOfWork.Referees.Add(referees);
+            _unitOfWork.Save();
+            TempData["success"] = "Referee added successfully";
+            return RedirectToAction("Profile");
         }
-        public IActionResult AddExperince(Experience obj)
+        public IActionResult UpdateReferees(Referees referees)
         {
-            if (ModelState.IsValid)
-            {
-                _unitOfWork.Experience.Add(obj);
-                _unitOfWork.Save();
-                TempData["success"] = "Experience added successfully";
-                return RedirectToAction("Profile");
-            }
-            return View(obj);
+            var studentID = _userManager.GetUserId(User);
+            Student student = _unitOfWork.Student.GetFirstOrDefault(d => d.Id == studentID);
+            referees.StudentId = studentID;
+            referees.Student = student;
+            _unitOfWork.Referees.Update(referees);
+            _unitOfWork.Save();
+            TempData["success"] = "Referee Updated successfully";
+            return RedirectToAction("Profile");
         }
-        public IActionResult AddQualifications(Qualifications obj)
+        public IActionResult EditReferees(int Id)
         {
-            if (ModelState.IsValid)
-            {
-                _unitOfWork.Qualification.Add(obj);
-                _unitOfWork.Save();
-                TempData["success"] = "Qualification added successfully";
-                return RedirectToAction("Profile");
-            }
-            return View(obj);
+            Referees referees = _unitOfWork.Referees.GetFirstOrDefault(d => d.Id == Id);
+            return View(referees);
+        }
+        public IActionResult DeleteReferees(int Id)
+        {
+            Referees referees = _unitOfWork.Referees.GetFirstOrDefault(d => d.Id == Id);
+            _unitOfWork.Referees.Remove(referees);
+            _unitOfWork.Save();
+            TempData["success"] = "Referee Deleted successfully";
+            return RedirectToAction("Profile");
+        }
+        public IActionResult AddExperience(Experience experience)
+        {
+            var studentID = _userManager.GetUserId(User);
+            Student student = _unitOfWork.Student.GetFirstOrDefault(d => d.Id == studentID);
+            experience.StudentId = studentID;
+            experience.Student = student;
+            _unitOfWork.Experience.Add(experience);
+            _unitOfWork.Save();
+            TempData["success"] = "Experience added successfully";
+            return RedirectToAction("Profile");
+        }
+        public IActionResult UpdateExperience(Experience experience)
+        {
+            var studentID = _userManager.GetUserId(User);
+            Student student = _unitOfWork.Student.GetFirstOrDefault(d => d.Id == studentID);
+            experience.StudentId = studentID;
+            experience.Student = student;
+            _unitOfWork.Experience.Update(experience);
+            _unitOfWork.Save();
+            TempData["success"] = "Experience Updated successfully";
+            return RedirectToAction("Profile");
+        }
+        public IActionResult EditExperience(int Id)
+        {
+            Experience experience = _unitOfWork.Experience.GetFirstOrDefault(d => d.Id == Id);
+            return View(experience);
+        }
+        public IActionResult DeleteExperience(int Id)
+        {
+            Experience experience = _unitOfWork.Experience.GetFirstOrDefault(d => d.Id == Id);
+            _unitOfWork.Experience.Remove(experience);
+            _unitOfWork.Save();
+            TempData["success"] = "Experience Deleted successfully";
+            return RedirectToAction("Profile");
+        }
+        public IActionResult AddQualification(Qualifications qualifications)
+        {
+            var studentID = _userManager.GetUserId(User);
+            Student student = _unitOfWork.Student.GetFirstOrDefault(d => d.Id == studentID);
+            qualifications.StudentId = studentID;
+            qualifications.Student = student;
+            _unitOfWork.Qualification.Add(qualifications);
+            _unitOfWork.Save();
+            TempData["success"] = "Qualification added successfully";
+            return RedirectToAction("Profile");
+        }
+        public IActionResult UpdateQualification(Qualifications qualifications)
+        {
+            var studentID = _userManager.GetUserId(User);
+            Student student = _unitOfWork.Student.GetFirstOrDefault(d => d.Id == studentID);
+            qualifications.StudentId = studentID;
+            qualifications.Student = student;
+            _unitOfWork.Qualification.Update(qualifications);
+            _unitOfWork.Save();
+            TempData["success"] = "Qualification Updated successfully";
+            return RedirectToAction("Profile");
+        }
+        public IActionResult EditQualification(int Id)
+        {
+            Qualifications qualifications = _unitOfWork.Qualification.GetFirstOrDefault(d => d.Id == Id);
+            return View(qualifications);
+        }
+        public IActionResult DeleteQualification(int Id)
+        {
+            Qualifications qualifications = _unitOfWork.Qualification.GetFirstOrDefault(d => d.Id == Id);
+            _unitOfWork.Qualification.Remove(qualifications);
+            _unitOfWork.Save();
+            TempData["success"] = "Referee Deleted successfully";
+            return RedirectToAction("Profile");
+        }
+        public IActionResult GetAllJobPost()
+        {
+            var JobPostList = _unitOfWork.JobPost.GetAll(includeProperties: "Faculty,Department,JobType,WeekHour");
+            //var JobPostList = _unitOfWork.JobPost.GetAll();
+            return Json(new { data = JobPostList });
         }
         public IActionResult UpdateProfile(StudentVM student)
         {
@@ -281,12 +339,15 @@ namespace SEPWebApp.Areas.Controllers
             studentVM.ApplicationUser.PhoneNumber = student.cellPhone;
             _unitOfWork.Student.Update(studentVM);
             _unitOfWork.Save();
-            TempData["success"] = "Student   successfull";
+            TempData["success"] = "Student update successfull";
             return RedirectToAction("Index");
 
         }
 
-
+        public IActionResult Apply(int id)
+        {
+            return View();
+        }
         public IActionResult Referees()
         {
             return View();
@@ -303,7 +364,7 @@ namespace SEPWebApp.Areas.Controllers
         {
             return View();
         }
-        public IActionResult Apply()
+        public IActionResult Search()
         {
             return View();
         }

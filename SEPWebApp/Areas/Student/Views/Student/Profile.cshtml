@@ -274,8 +274,8 @@
                      <br />
                      <br />
                      <label>@Education.Qalificatiion</label>
-                     <button type="submit" class="btn btn-secondary" asp-action="AddQalificatiion" style="width:150px">Edit</button>
-                     <button type="submit" class="btn btn-secondary" asp-action="DeleteQalificatiion" style="width:150px">Delete</button>
+                         <a asp-controller="Student" asp-action="EditQualification" asp-route-id="@Education.Id" class="btn btn-secondary" style="width:100px">Edit</a>
+                         <a asp-controller="Student" asp-action="DeleteQualification" asp-route-id="@Education.Id" class="btn btn-secondary" style="width:100px">Delete</a>
                 }
 
                     </div>
@@ -305,8 +305,8 @@
                          <br />
                          <br />
                              <label>@Experience.JobTitle</label>
-                         <button type="submit" class="btn btn-secondary" asp-action="AddExperience" style="width:150px">Edit</button>
-                         <button type="submit" class="btn btn-secondary" asp-action="DeleteExperience" style="width:150px">Delete</button>
+                             <a asp-controller="Student" asp-action="EditExperience" asp-route-id="@Experience.Id" class="btn btn-secondary" style="width:100px">Edit</a>
+                             <a asp-controller="Student" asp-action="DeleteExperience" asp-route-id="@Experience.Id" class="btn btn-secondary" style="width:100px">Delete</a>
                 }
                     </div>
                 </div>
@@ -396,8 +396,8 @@
                           <br />
                               <br />
                         <label>@referee.JobTitle</label>
-                            <button type="submit" class="btn btn-secondary" asp-action="AddReferees" style="width:150px">Edit</button>
-                        <button type="submit" class="btn btn-secondary" asp-action="DeleteReferee" style="width:150px">Delete</button>
+                    <a asp-controller="Student" asp-action="EditReferees" asp-route-id="@referee.Id" class="btn btn-secondary" style="width:100px">Edit</a>
+                    <a asp-controller="Student" asp-action="DeleteReferees" asp-route-id="@referee.Id" class="btn btn-secondary" style="width:100px">Delete</a>
                 }
                     </div>
                 </div>

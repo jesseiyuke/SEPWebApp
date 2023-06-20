@@ -354,7 +354,6 @@
 
                         if (week != 2) {
                             $('#weekhour').attr('disabled', false);
-                            $('#weekhour').append('<option disabled selected>Range</option>');
                             $.each(week, function (index, item) {
                                 $('#weekhour').append('<option value="' + item.id + '">' + item.name + '</option')
                             });
