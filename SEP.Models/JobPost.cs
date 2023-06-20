@@ -61,8 +61,10 @@ namespace SEP.Models
 
         [Required]
         [Display(Name = "Start Date")]
+        [DataType(DataType.Date)]
         public DateTime StartDate { get; set; }
         [Required]
+        [DataType(DataType.Date)]
         [Display(Name = "End Date")]
         public DateTime EndDate { get; set; }
         [Required]
@@ -103,6 +105,7 @@ namespace SEP.Models
         [Display(Name = "Application Instruction")]
         public string ApplicationInstruction { get; set; }
         [Required]
+        [DataType(DataType.Date)]
         [Display(Name = "Closing Date")]
         public DateTime ClosingDate { get; set; }
         [Required]

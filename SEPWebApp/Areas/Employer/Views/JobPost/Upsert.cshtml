@@ -113,10 +113,17 @@
             </div>
         </div>
 
-        <div class="mb-3 form-group row">
+@*        <div class="mb-3 form-group row">
             <label asp-for="JobPost.StartDate" class="col-2 control-label"></label>
             <div class="col-5">
                 <input asp-for="JobPost.StartDate" type="text" class="datepicker form-control" />
+                <span asp-validation-for="JobPost.StartDate" class="text-danger"></span>
+            </div>
+        </div>*@
+        <div class="mb-3 form-group row">
+            <label asp-for="JobPost.StartDate" class="col-2 control-label"></label>
+            <div class="col-5">
+                <input asp-for="JobPost.StartDate" class="datepicker"/>
                 <span asp-validation-for="JobPost.StartDate" class="text-danger"></span>
             </div>
         </div>
@@ -124,7 +131,7 @@
         <div class="mb-3 form-group row">
             <label asp-for="JobPost.EndDate" class="col-2 control-label"></label>
             <div class="col-5">
-                <input asp-for="JobPost.EndDate" type="text" class="datepicker form-control" />
+                <input asp-for="JobPost.EndDate" class="datepicker" />
                 <span asp-validation-for="JobPost.EndDate" class="text-danger"></span>
             </div>
         </div>
@@ -144,15 +151,15 @@
                 <input type="checkbox" asp-for="JobPost.FirstYear" /><label class="col-2">Year 1</label>
                 <input type="checkbox" asp-for="JobPost.SecondYear" /><label class="col-2">Year 2</label>
                 <input type="checkbox" asp-for="JobPost.ThirdYear" /><label class="col-2">Year 3</label>
-                <input type="checkbox" asp-for="JobPost.Honours" /><label class="col-2">Honours</label>
                 <br />
+                <input type="checkbox" asp-for="JobPost.Honours" /><label class="col-2">Honours</label>
                 <input type="checkbox" asp-for="JobPost.Graduates" /><label class="col-2">Graduates</label>
                 <input type="checkbox" asp-for="JobPost.Masters" /><label class="col-2">Master's</label>
+                <br />
                 <input type="checkbox" asp-for="JobPost.PhD" /><label class="col-2">PhD</label>
                 <input type="checkbox" asp-for="JobPost.Postdoc" /><label class="col-2">Postdoc</label>
-                <br />
-                <input type="checkbox" asp-for="JobPost.FacultyCheck" /><label class="col-2">Faculty</label>
-                <input type="checkbox" asp-for="JobPost.DepartmentCheck" /><label class="col-2">Department</label>
+@*                <input type="checkbox" asp-for="JobPost.FacultyCheck" /><label class="col-2">Faculty</label>
+                <input type="checkbox" asp-for="JobPost.DepartmentCheck" /><label class="col-2">Department</label>*@
                 <br />
                 @*                <span asp-validation-for="JobPost.FirstYear" class="text-danger"></span>*@
             </div>
@@ -204,7 +211,7 @@
 
         <div class="mb-3 form-group row">
             <label asp-for="JobPost.MinimumRequirements" class="col-2"></label>
-            <div class="col-7">
+            <div class="col-5">
                 <input asp-for="JobPost.MinimumRequirements" class="form-control">
                 <span asp-validation-for="JobPost.MinimumRequirements" class="text-danger"></span>
             </div>
@@ -212,7 +219,7 @@
 
         <div class="mb-3 form-group row">
             <label asp-for="JobPost.ApplicationInstruction" class="col-2"></label>
-            <div class="col-7">
+            <div class="col-5">
                 <input asp-for="JobPost.ApplicationInstruction" class="form-control">
                 <span asp-validation-for="JobPost.ApplicationInstruction" class="text-danger"></span>
             </div>
@@ -220,15 +227,15 @@
 
         <div class="mb-3 form-group row">
             <label asp-for="JobPost.ClosingDate" class="col-2 control-label"></label>
-            <div class="col-7">
-                <input asp-for="JobPost.ClosingDate" type="text" class="datepicker form-control" />
+            <div class="col-5">
+                <input asp-for="JobPost.ClosingDate" class="datepicker" />
                 <span asp-validation-for="JobPost.ClosingDate" class="text-danger"></span>
             </div>
         </div>
 
         <div class="mb-3 form-group row">
             <label asp-for="JobPost.ContactPerson" class="col-2"></label>
-            <div class="col-7">
+            <div class="col-5">
                 <input asp-for="JobPost.ContactPerson" class="form-control">
                 <span asp-validation-for="JobPost.ContactPerson" class="text-danger"></span>
             </div>
@@ -236,7 +243,7 @@
 
         <div class="mb-3 form-group row">
             <label asp-for="JobPost.Email" class="col-2"></label>
-            <div class="col-7">
+            <div class="col-5">
                 <input asp-for="JobPost.Email" class="form-control">
                 <span asp-validation-for="JobPost.Email" class="text-danger"></span>
             </div>
@@ -244,7 +251,7 @@
 
         <div class="mb-3 form-group row">
             <label asp-for="JobPost.ContactNo" class="col-2"></label>
-            <div class="col-7">
+            <div class="col-5">
                 <input asp-for="JobPost.ContactNo" class="form-control">
                 <span asp-validation-for="JobPost.ContactNo" class="text-danger"></span>
             </div>
@@ -252,7 +259,7 @@
 
         <div class="mb-3 form-group row">
             <label asp-for="JobPost.ReviewerComment" class="col-2"></label>
-            <div class="col-7">
+            <div class="col-5">
                 <input asp-for="JobPost.ReviewerComment" class="form-control" readonly="readonly">
                 <span asp-validation-for="JobPost.ReviewerComment" class="text-danger"></span>
             </div>
@@ -260,7 +267,7 @@
 
         <div class="mb-3 form-group row">
             <label asp-for="JobPost.StatusId" class="col-2" hidden></label>
-            <div class="col-7">
+            <div class="col-5">
                 <select asp-for="JobPost.StatusId" asp-items=@Model.StatusList class="form-select" hidden>
                 </select>
                 <br />
@@ -286,19 +293,15 @@
 
 @section Scripts
     {
-    <script>
+@*    <script>
         $(function () {
             $('.datepicker').datepicker();
         });
-    </script>
-
-    @{
-        <partial name="_ValidationScriptsPartial" />
-    }
+    </script>*@
     <script>
         $(document).ready(function () {
 
-            $('#faculty').change(function(){
+            $('#faculty').change(function () {
                 var obid = this.value;
                 $('#department').empty();
                 $.ajax({
@@ -314,6 +317,25 @@
                 });
             });
         })
+    </script>
+
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+    <script>
+        $(function () {
+            // Get the current date
+            var currentDate = new Date();
+
+            // Set the date format for display
+            $("#datepicker").datepicker({
+                dateFormat: "yy-mm-dd",
+                // Set the default date to the current date
+                defaultDate: currentDate,
+                // Only allow selection of dates in the future
+                minDate: currentDate
+            });
+        });
     </script>
 
     <script>
@@ -332,6 +354,7 @@
 
                         if (week != 2) {
                             $('#weekhour').attr('disabled', false);
+                            $('#weekhour').append('<option disabled selected>Range</option>');
                             $.each(week, function (index, item) {
                                 $('#weekhour').append('<option value="' + item.id + '">' + item.name + '</option')
                             });
