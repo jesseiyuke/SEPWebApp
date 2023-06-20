@@ -5,6 +5,8 @@
 <h2>Student→ManageProfile→Referees</h2>
 
 <h3>Please enter your referees</h3>
+<form>
+
 
 <div class="row align-items-center py-3">
     <div class="col-md-3 ps-5">
@@ -58,4 +60,6 @@
     <textarea asp-for="TasksAndResponsilities" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
 </div>
 
-<a asp-area="Student" asp-action="Profile" class="btn btn-secondary" style="width:300px">Save</a>
+
+<button type="submit" class="btn btn-secondary" asp-action="AddExperience" style="width:150px">Save</button>
+</form>

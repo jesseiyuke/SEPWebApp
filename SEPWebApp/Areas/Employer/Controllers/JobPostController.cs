@@ -11,7 +11,7 @@ namespace SEPWebApp.Areas.Employer.Controllers
 {
     [Area("Employer")]
     [Authorize(Roles = SD.Role_Employer)]
-    [Authorize(Roles = SD.Role_Approver)]
+    //[Authorize(Roles = SD.Role_Approver)]
     public class JobPostController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

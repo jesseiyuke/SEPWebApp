@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SEP.DataAccess;
 
@@ -11,9 +12,11 @@ using SEP.DataAccess;
 namespace SEP.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230620091347_app")]
+    partial class app
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -723,6 +726,9 @@ namespace SEP.DataAccess.Migrations
                     b.Property<bool>("DepartmentCheck")
                         .HasColumnType("bit");
 
+                    b.Property<int>("DepartmentId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -736,6 +742,9 @@ namespace SEP.DataAccess.Migrations
 
                     b.Property<bool>("FacultyCheck")
                         .HasColumnType("bit");
+
+                    b.Property<int>("FacultyId")
+                        .HasColumnType("int");
 
                     b.Property<bool>("FirstYear")
                         .HasColumnType("bit");
@@ -805,6 +814,10 @@ namespace SEP.DataAccess.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.HasIndex("FacultyId");
 
                     b.HasIndex("JobTypeId");
 
@@ -1136,9 +1149,6 @@ namespace SEP.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("JobPostId")
-                        .HasColumnType("int");
-
                     b.Property<string>("StudentId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -1148,8 +1158,6 @@ namespace SEP.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("JobPostId");
 
                     b.HasIndex("StudentId");
 
@@ -1367,6 +1375,18 @@ namespace SEP.DataAccess.Migrations
 
             modelBuilder.Entity("SEP.Models.JobPost", b =>
                 {
+                    b.HasOne("SEP.Models.Department", "Department")
+                        .WithMany()
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SEP.Models.Faculty", "Faculty")
+                        .WithMany()
+                        .HasForeignKey("FacultyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("SEP.Models.JobType", "JobType")
                         .WithMany()
                         .HasForeignKey("JobTypeId")
@@ -1384,6 +1404,10 @@ namespace SEP.DataAccess.Migrations
                         .HasForeignKey("WeekHourId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Department");
+
+                    b.Navigation("Faculty");
 
                     b.Navigation("JobType");
 
@@ -1475,12 +1499,6 @@ namespace SEP.DataAccess.Migrations
 
             modelBuilder.Entity("SEP.Models.StudentApplication", b =>
                 {
-                    b.HasOne("SEP.Models.JobPost", "jobPost")
-                        .WithMany()
-                        .HasForeignKey("JobPostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("SEP.Models.Student", "Student")
                         .WithMany()
                         .HasForeignKey("StudentId")
@@ -1488,8 +1506,6 @@ namespace SEP.DataAccess.Migrations
                         .IsRequired();
 
                     b.Navigation("Student");
-
-                    b.Navigation("jobPost");
                 });
 
             modelBuilder.Entity("SEP.Models.Faculty", b =>

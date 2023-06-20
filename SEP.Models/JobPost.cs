@@ -18,17 +18,17 @@ namespace SEP.Models
         public string EmoloyerType { get; set; }
         public string[] EmoloyerTypes = new[] { "Internal (within Wits)", "External (created on behalf of)" };
 
-        [Required]
-        public int FacultyId { get; set; }
-        [ForeignKey("FacultyId")]
-        [ValidateNever]
-        public Faculty Faculty { get; set; }
+        //[Required]
+        //public int FacultyId { get; set; }
+        //[ForeignKey("FacultyId")]
+       // [ValidateNever]
+       // public Faculty Faculty { get; set; }
 
-        [Required]
-        public int DepartmentId { get; set; }
-        [ForeignKey("DepartmentId")]
-        [ValidateNever]
-        public Department Department { get; set; }
+        //[Required]
+        //public int DepartmentId { get; set; }
+       // [ForeignKey("DepartmentId")]
+        //[ValidateNever]
+        //public Department Department { get; set; }
 
         [Required]
         [Display(Name = "Job title")]

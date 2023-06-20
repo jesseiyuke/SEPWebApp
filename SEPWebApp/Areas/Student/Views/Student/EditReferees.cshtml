@@ -1,0 +1,71 @@
+﻿@model Referees
+@{
+    ViewData["Title"] = "AddReferees";
+}
+<h2>Student→ManageProfile→Referees</h2>
+
+<h3>Please enter your referees</h3>
+
+<form method="post">
+    <input type="text" asp-for="Id" hidden class="form-control form-control-lg" />
+
+    <div class="row align-items-center py-3">
+        <div class="col-md-3 ps-5">
+
+            <label asp-for="Name" class="mb-0">Name</label>
+
+        </div>
+        <div class="col-md-9 pe-5">
+
+            <input type="text" asp-for="Name" class="form-control form-control-lg" />
+
+        </div>
+    </div>
+    <div class="row align-items-center py-3">
+        <div class="col-md-3 ps-5">
+
+            <label asp-for="JobTitle" class="mb-0">Job title</label>
+
+        </div>
+        <div class="col-md-9 pe-5">
+
+            <input type="text" asp-for="JobTitle" class="form-control form-control-lg" />
+
+        </div>
+    </div>
+    <div class="row align-items-center py-3">
+        <div class="col-md-3 ps-5">
+
+            <label asp-for="Insitution" class="mb-0">Insutution</label>
+
+        </div>
+        <div class="col-md-9 pe-5">
+            <input type="text" asp-for="Insitution" class="form-control form-control-lg" />
+        </div>
+    </div>
+    <div class="row align-items-center py-3">
+        <div class="col-md-3 ps-5">
+
+            <label asp-for="Cell" class="mb-0">Cell</label>
+
+        </div>
+        <div class="col-md-9 pe-5">
+
+            <input type="text" asp-for="Cell" class="form-control form-control-lg" />
+        </div>
+    </div>
+    <div class="row align-items-center py-3">
+        <div class="col-md-3 ps-5">
+
+            <label asp-for="Email" class="mb-0">Email</label>
+
+        </div>
+        <div class="col-md-9 pe-5">
+
+            <input type="text" asp-for="Email" class="form-control form-control-lg" />
+
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-secondary" asp-action="UpdateReferees" style="width:150px">Save</button>
+</form>

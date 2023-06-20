@@ -24,12 +24,13 @@ namespace SEP.DataAccess
         public DbSet<Qualifications> Qualifications { get; set; }
         public DbSet<Referees> Referees { get; set; }
         public DbSet<Experience> Experience { get; set; }
-
-
         public DbSet<JobType> JobType { get; set; }
         public DbSet<WeekHour> WeekHour { get; set; }
         public DbSet<Status> Status { get; set; }
         public DbSet<BusinessType> BusinessType { get; set; }
+        public DbSet<StudentApplication> StudentApplication { get; set; }
+        public DbSet<ApplicationDocument> ApplicationDocument { get; set; } 
+
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
