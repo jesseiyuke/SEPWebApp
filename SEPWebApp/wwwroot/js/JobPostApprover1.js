@@ -13,8 +13,20 @@ function loadDataTable() {
 			{ "data": "jobTitle", "width": "10%" },
 			{ "data": "department.name", "width": "10%" },
 			{ "data": "jobType.name", "width": "10%" },
-			{ "data": "startDate", "width": "10%" },
-			{ "data": "endDate", "width": "10%" },
+			{
+				"data": "startDate",
+				"width": "12%",
+				"render": function (data) {
+					return formatDate(data);
+				}
+			},
+			{
+				"data": "endDate",
+				"width": "12%",
+				"render": function (data) {
+					return formatDate(data);
+				}
+			},
 			{ "data": "emoloyerType", "width": "10%" },
 			{ "data": "status.name", "width": "10%" },
 
@@ -33,4 +45,14 @@ function loadDataTable() {
 
 		]
 	});
+}
+
+function formatDate(date) {
+	var formattedDate = new Date(date).toLocaleDateString('en-US', {
+
+		year: 'numeric',
+		month: '2-digit',
+		day: '2-digit'
+	});
+	return formattedDate;
 }
