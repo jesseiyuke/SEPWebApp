@@ -1,0 +1,41 @@
+﻿@model SEP.Models.ViewModels.FileVM
+
+<form method="post" asp-action="File" enctype="multipart/form-data">
+    <input asp-for="ApplicationDocument.Id" hidden />
+    <div class="p-3 mt-2">
+        <div class="row pb-2">
+            <h2 class="text-primary">Upload Document</h2>
+        </div>
+
+        <div class="mb-3 form-group row">
+            <div class="col-5">
+                <input type="file" id="uploadBox" name="file" class="form-control">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:150px" onclick="return ValidateInput()" >Upload</button>
+        <a asp-controller="Student" asp-action="Index" class="btn btn-secondary" style="width:150px">Back</a>
+
+    </div>
+
+</form>
+
+@section Scripts
+    {
+    <script>
+        function ValidateInput(){
+            if (document.getElementById("uploadBox").value==""){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Please upload a document!'
+                });
+                return false;
+            }
+            return true;
+        }
+    </script>
+
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

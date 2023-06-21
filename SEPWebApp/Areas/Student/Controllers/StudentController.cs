@@ -22,12 +22,14 @@ namespace SEPWebApp.Areas.Controllers
 
         private readonly UserManager<IdentityUser> _userManager;
         private ApplicationDbContext _db;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public StudentController(IUnitOfWork unitOfWork, ILogger<HomeController> logger, SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager,ApplicationDbContext db)
+        public StudentController(IUnitOfWork unitOfWork, ILogger<HomeController> logger, SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager,ApplicationDbContext db, IWebHostEnvironment webHostEnvironment)
         {
             _unitOfWork = unitOfWork;
             _userManager = userManager;
             _db = db;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public IActionResult Index()
@@ -366,6 +368,41 @@ namespace SEPWebApp.Areas.Controllers
         }
         public IActionResult Search()
         {
+            return View();
+        }
+
+        //File Upload
+        //GET
+        public IActionResult File()
+        {
+            return View();
+        }
+        //POST
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult File(FileVM obj, IFormFile? file)
+        {
+            if(ModelState.IsValid)
+            {
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+                if (file != null)
+                {
+                    string fileName=Guid.NewGuid().ToString();
+                    var uploads=Path.Combine(wwwRootPath, @"\files");
+                    var extension=Path.GetExtension(file.FileName);
+
+                    using(var fileStreams= new FileStream(Path.Combine(uploads,fileName+extension),FileMode.Create))
+                    {
+                        file.CopyTo(fileStreams);
+                    }
+                    obj.ApplicationDocument.FilePath=@"\files\"+fileName+extension;
+                }
+                _unitOfWork.ApplicationDocument.Add(obj.ApplicationDocument);
+                _unitOfWork.Save();
+                TempData["success"] = "Document uploaded successfully";
+                return RedirectToAction("Index");
+            }
+
             return View();
         }
     }

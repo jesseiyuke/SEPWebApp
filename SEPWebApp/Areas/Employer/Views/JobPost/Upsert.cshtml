@@ -351,19 +351,15 @@
                     datatype: 'json',
                     data: { id: obid },
                     success: function (week) {
-
-                        if (week != 2) {
+                        if (obid != 2) {
+                            $('#weekhour').show();
                             $('#weekhour').attr('disabled', false);
                             $.each(week, function (index, item) {
                                 $('#weekhour').append('<option value="' + item.id + '">' + item.name + '</option')
                             });
                         }
                         else {
-                            $('#weekhour').attr('disabled', true);
-                            $('#weekhour').append('<option disabled selected></option>');
-                            //$.each(week, function (index, item) {
-                            //    $('#weekhour').append('<option value="' + item.id + '">' + item.name + '</option')
-                            //});
+                            $('#weekhour').hide();
                         }
                     }
                 });
