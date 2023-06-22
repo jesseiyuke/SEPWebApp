@@ -285,6 +285,8 @@
         {
             <button type="submit" onclick="return ValidateInput()" class="btn btn-primary" style="width:150px">Create</button>
         }
+        <a asp-controller="JobPost" asp-action="ApplicationIndex" class="btn btn-secondary" style="width:150px">View Applicants</a>
+
         <a asp-controller="JobPost" asp-action="Index" class="btn btn-secondary" style="width:150px">Back</a>
     </div>
 
@@ -368,59 +370,6 @@
     </script>
     }
 
-@*    <script>
-        $(document).ready(function () {
-
-            $('#jobtype').change(function () {
-                var obid = this.value;
-                
-                if (obid == "2")
-                {
-                    $('#weekhour').hide();
-                    //$('#weekhour').attr('disabled', true);
-                }
-                else{
-                    $('#weekhour').show();
-                    //$('#weekhour').empty();
-                    //$.ajax({
-                    //    type: 'Get',
-                    //    url: '@Url.Action("getweekhour","JobPost")',
-                    //    datatype: 'json',
-                    //    data: { id: obid },
-                    //    success: function (week) {
-                    //        alert("hello")
-                    //        $('#weekHourselect').show();
-                    //        $.each(week, function (index, item) {
-                    //            $('#weekHourselect').append('<option value="' + item.id + '">' + item.name + '</option')
-                    //        });
-                    //    },
-                    //});
-                }
-                //$('#weekhour').attr('hidden', true);
-                //$.ajax({
-                //    type: 'Get',
-                //    url: '@Url.Action("getweekhour","JobPost")',
-                //    datatype: 'json',
-                //    data: { id: obid },
-                //    success: function (week) {
-
-                //        if (week != 1) {
-                //            $('#weekhour').attr('disabled', false);
-                //            $.each(week, function (index, item) {
-                //                $('#weekhour').append('<option value="' + item.id + '">' + item.name + '</option')
-                //            });
-                //        }
-                //        else {
-                //            $('#weekhour').attr('hidden', true);
-                //            $.each(week, function (index, item) {
-                //                $('#weekhour').append('<option value="' + item.id + '">' + item.name + '</option')
-                //            });
-                //        }
-                //    },
-                //});
-            });
-        })
-    </script> *@
 
 
 

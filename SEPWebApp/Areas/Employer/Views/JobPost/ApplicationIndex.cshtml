@@ -1,0 +1,67 @@
+﻿@model SEP.Models.ViewModels.JobPostVM
+
+
+<h2>Employer → Manage Post → View Applicants</h2>
+
+<form method="get" asp-action="ApplicationIndex">
+    <input asp-for="JobPost.Id" hidden />
+
+    <div class="mb-3 form-group row">
+        <label asp-for="JobPost.JobTitle" class="col-2"></label>
+        <div class="col-5">
+            <input asp-for="JobPost.JobTitle" class="form-control" disabled>
+        </div>
+    </div>
+
+    <div class="mb-3 form-group row">
+        <label asp-for="JobPost.JobDescription" class="col-2"></label>
+        <div class="col-5">
+            <input asp-for="JobPost.JobDescription" class="form-control" disabled>
+        </div>
+    </div>
+</form>
+
+
+
+
+<table id="tblData" class="table table-bordered table-striped" style="width:100%">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Surname
+            </th>
+            <th>
+                Department
+            </th>
+            <th>
+                Course
+            </th>
+            <th>
+                Level
+            </th>
+            <th>
+                Gender
+            </th>
+            <th>
+                Status
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+</table>
+
+
+
+
+<div>
+    <a asp-controller="JobPost" asp-action="Export" class="btn btn-secondary">Export to Excel</a>
+    <a asp-controller="JobPost" asp-action="Upsert" class="btn btn-secondary">Back</a>
+</div>
+
+@section Scripts{
+    <script src="~/js/JobPostApplicant.js" asp-append-version="true"></script>
+}
+

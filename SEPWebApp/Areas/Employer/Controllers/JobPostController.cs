@@ -169,6 +169,12 @@ namespace SEPWebApp.Areas.Employer.Controllers
             //var JobPostList = _unitOfWork.JobPost.GetAll();
             return Json(new { data = JobPostList });
         }
+
+        public IActionResult GetAllApplicant()
+        {
+            var StudentList = _unitOfWork.Student.GetAll(includeProperties: "Student");
+            return Json(new { data = StudentList });
+        }
         #endregion
 
         //GET
@@ -206,6 +212,28 @@ namespace SEPWebApp.Areas.Employer.Controllers
             return RedirectToAction("Index");
 
         }
+
+        //Applications
+        public IActionResult ApplicationIndex(int? id)
+        {
+            JobPostVM JobPostVM = new()
+            {
+                JobPost = new(),
+                StatusList = _unitOfWork.Status.GetAll().Select(i => new SelectListItem
+                {
+                    Text = i.Name,
+                    Value = i.Id.ToString()
+                }),
+            };
+
+            var EmployerId = _userManager.GetUserId(User);
+
+            JobPostVM.JobPost = _unitOfWork.JobPost.GetFirstOrDefault(u => u.Id == id);
+            JobPostVM.ApplicationUser = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == EmployerId);
+
+            return View(JobPostVM);
+        }
+
 
     }
 }
