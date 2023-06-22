@@ -1,25 +1,61 @@
 ﻿@model SEP.Models.ViewModels.FileVM
 
+<div class="row pb-2">
+    <h2 class="text-primary">Upload Document</h2>
+</div>
+
+<table id="tblData" class="table table-bordered table-striped" style="width:100%">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Description
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+</table>
+
+
 <form method="post" asp-action="File" enctype="multipart/form-data">
-@*    <input asp-for="ApplicationDocument.Id" hidden />*@
+    <input asp-for="ApplicationDocument.Id" hidden />
+    <input asp-for="ApplicationDocument.ApplicationUserId" hidden />
+    <input asp-for="ApplicationDocument.FilePath" hidden />
     <div class="p-3 mt-2">
-        <div class="row pb-2">
-            <h2 class="text-primary">Upload Document</h2>
+
+        <div class="mb-3 form-group row">
+            <label asp-for="ApplicationDocument.Description" class="col-2"></label>
+            <div class="col-5">
+                <input asp-for="ApplicationDocument.Description" class="form-control">
+                <span asp-validation-for="ApplicationDocument.Description" class="text-danger"></span>
+            </div>
         </div>
 
         <div class="mb-3 form-group row">
             <div class="col-5">
-@*                <input asp-for="ApplicationDocument.FilePath" class="form-control">*@
-                <input asp-for="ApplicationDocument.FilePath" class="form-control" type="file" id="uploadBox" name="file">
-@*              <input type="file" id="uploadBox" name="file" class="form-control">*@
+                <input type="file" id="uploadBox" name="file" class="form-control">
+
             </div>
         </div>
-        <button type="submit" class="btn btn-primary" style="width:150px" onclick="return ValidateInput()" >Upload</button>
-        <a asp-controller="Student" asp-action="Index" class="btn btn-secondary" style="width:150px">Back</a>
 
     </div>
 
+    @if (Model.ApplicationDocument.Id != 0)
+    {
+        <button type="submit" class="btn btn-primary" style="width:150px">Update</button>
+    }
+    else
+    {
+        <button type="submit" onclick="return ValidateInput()" class="btn btn-primary" style="width:150px">Upload</button>
+    }
+
 </form>
+
+@*<input asp-for="ApplicationDocument.FilePath" class="form-control" type="file" id="uploadBox" name="file">*@
+
+<a asp-controller="Student" asp-action="Index" class="btn btn-secondary" style="width:150px">Back</a>
 
 @section Scripts
     {
@@ -36,6 +72,8 @@
             return true;
         }
     </script>
+
+    <script src="~/js/Document.js" asp-append-version="true"></script>
 
     @{
         <partial name="_ValidationScriptsPartial" />

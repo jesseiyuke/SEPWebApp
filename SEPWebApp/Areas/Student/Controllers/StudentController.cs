@@ -8,6 +8,7 @@ using SEP.Models;
 using SEP.Models.ViewModels;
 using SEP.Utility;
 using SEPWebApp.Areas.Home.Controllers;
+using SmartBreadcrumbs.Attributes;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Security.Cryptography;
@@ -32,6 +33,7 @@ namespace SEPWebApp.Areas.Controllers
             _webHostEnvironment = webHostEnvironment;
         }
 
+        [Breadcrumb("Student", AreaName = "Student")]
         public IActionResult Index()
         {
 
@@ -373,10 +375,35 @@ namespace SEPWebApp.Areas.Controllers
 
         //File Upload
         //GET
-        public IActionResult File()
+        [Breadcrumb("Upload", AreaName = "Student")]
+        public IActionResult File(int? id)
         {
+            FileVM fileVM = new()
+            {
+                ApplicationDocument = new(),
+                ApplicationUser = new(),
 
-            return View();
+            };
+
+            var StudentId = _userManager.GetUserId(User);
+            ApplicationUser user = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == StudentId);
+            Student student = _unitOfWork.Student.GetFirstOrDefault(e => e.Id == StudentId);
+
+            //create
+            if (id == null || id == 0)
+            {
+                fileVM.ApplicationUser= _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == StudentId);
+                return View(fileVM);
+            }
+            //update
+            else
+            {
+                fileVM.ApplicationDocument = _unitOfWork.ApplicationDocument.GetFirstOrDefault(u => u.Id == id);
+                fileVM.ApplicationUser = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == StudentId);
+                return View(fileVM);
+            }
+
+
         }
         //POST
         [HttpPost]
@@ -384,31 +411,42 @@ namespace SEPWebApp.Areas.Controllers
         public IActionResult File(FileVM obj, IFormFile? file)
         {
             var StudentId = _userManager.GetUserId(User);
-            FileVM fileVM = new()
-            {
-                ApplicationDocument = new(),
-                ApplicationUser=new(),
-
-            };
-            fileVM.ApplicationDocument.ApplicationUserId = StudentId;
 
             if (ModelState.IsValid)
             {
                 string wwwRootPath = _webHostEnvironment.WebRootPath;
                 if (file != null)
                 {
-                    string fileName=Guid.NewGuid().ToString();
+                    var fileName = Path.GetFileNameWithoutExtension(file.FileName);
                     var uploads=Path.Combine(wwwRootPath, @"files\Documents");
                     var extension=Path.GetExtension(file.FileName);
+
+                    if (obj.ApplicationDocument.FilePath != null)
+                    {
+                        var oldFilePath= Path.Combine(wwwRootPath,obj.ApplicationDocument.FilePath.TrimStart('\\'));
+                        if(System.IO.File.Exists(oldFilePath))
+                        {
+                            System.IO.File.Delete(oldFilePath);
+                        }
+                    }
 
                     using(var fileStreams= new FileStream(Path.Combine(uploads,fileName+extension),FileMode.Create))
                     {
                         file.CopyTo(fileStreams);
                     }
-                    /*                    fileVM.ApplicationDocument.FilePath =Path.Combine(uploads,fileName);*/
-                    fileVM.ApplicationDocument.FilePath = @"files\Documents" + fileName + extension;
+                    obj.ApplicationDocument.FilePath = @"\files\Documents\" + fileName + extension;
+                    obj.ApplicationDocument.Name = fileName;
                 }
-                _unitOfWork.ApplicationDocument.Add(fileVM.ApplicationDocument);
+                if (obj.ApplicationDocument.Id == 0)
+                {
+                    obj.ApplicationDocument.ApplicationUserId = StudentId;
+                    _unitOfWork.ApplicationDocument.Add(obj.ApplicationDocument);
+                }
+                else
+                {
+                    _unitOfWork.ApplicationDocument.Update(obj.ApplicationDocument);
+                }
+
                 _unitOfWork.Save();
                 TempData["success"] = "Document uploaded successfully";
                 return RedirectToAction("Index");
@@ -416,5 +454,18 @@ namespace SEPWebApp.Areas.Controllers
 
             return View();
         }
+
+        #region API CALLS
+        [HttpGet]
+        public IActionResult GetAllDocuments()
+        {
+            var StudentID = _userManager.GetUserId(User);
+
+            var DocumentList = _unitOfWork.ApplicationDocument.GetAll().Where(u => u.ApplicationUserId == StudentID);
+            /*            var DocumentList = _unitOfWork.ApplicationDocument.GetAll();*/
+            return Json(new { data = DocumentList });
+        }
+        #endregion
+
     }
 }
