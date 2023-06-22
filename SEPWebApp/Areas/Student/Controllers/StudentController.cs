@@ -9,9 +9,7 @@ using SEP.Models.ViewModels;
 using SEP.Utility;
 using SEPWebApp.Areas.Home.Controllers;
 using SmartBreadcrumbs.Attributes;
-using System.ComponentModel.DataAnnotations;
 using System.Data;
-using System.Security.Cryptography;
 
 namespace SEPWebApp.Areas.Controllers
 {
@@ -25,7 +23,7 @@ namespace SEPWebApp.Areas.Controllers
         private ApplicationDbContext _db;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public StudentController(IUnitOfWork unitOfWork, ILogger<HomeController> logger, SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager,ApplicationDbContext db, IWebHostEnvironment webHostEnvironment)
+        public StudentController(IUnitOfWork unitOfWork, ILogger<HomeController> logger, SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager, ApplicationDbContext db, IWebHostEnvironment webHostEnvironment)
         {
             _unitOfWork = unitOfWork;
             _userManager = userManager;
@@ -142,11 +140,11 @@ namespace SEPWebApp.Areas.Controllers
             var studentId = _userManager.GetUserId(User);
             Student student = _unitOfWork.Student.GetFirstOrDefault(d => d.Id == studentId);
             ApplicationUser user = _unitOfWork.ApplicationUser.GetFirstOrDefault(x => x.Id == studentId);
-            StudentVM studentVM = new StudentVM();  
+            StudentVM studentVM = new StudentVM();
 
             Department department = _unitOfWork.Department.GetFirstOrDefault(d => d.Id == student.DepartmentId);
             student.ApplicationUser = user;
-           // studentVM =student;
+            // studentVM =student;
             studentVM.Address = student.Address;
             studentVM.Race = student.RaceId;
             studentVM.Gender = student.GenderId;
@@ -392,7 +390,7 @@ namespace SEPWebApp.Areas.Controllers
             //create
             if (id == null || id == 0)
             {
-                fileVM.ApplicationUser= _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == StudentId);
+                fileVM.ApplicationUser = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == StudentId);
                 return View(fileVM);
             }
             //update
@@ -418,42 +416,45 @@ namespace SEPWebApp.Areas.Controllers
                 if (file != null)
                 {
                     var fileName = Path.GetFileNameWithoutExtension(file.FileName);
-                    var uploads=Path.Combine(wwwRootPath, @"files\Documents");
-                    var extension=Path.GetExtension(file.FileName);
+                    var uploads = Path.Combine(wwwRootPath, @"files\Documents");
+                    var extension = Path.GetExtension(file.FileName);
 
                     if (obj.ApplicationDocument.FilePath != null)
                     {
-                        var oldFilePath= Path.Combine(wwwRootPath,obj.ApplicationDocument.FilePath.TrimStart('\\'));
-                        if(System.IO.File.Exists(oldFilePath))
+                        var oldFilePath = Path.Combine(wwwRootPath, obj.ApplicationDocument.FilePath.TrimStart('\\'));
+                        if (System.IO.File.Exists(oldFilePath))
                         {
                             System.IO.File.Delete(oldFilePath);
                         }
                     }
 
-                    using(var fileStreams= new FileStream(Path.Combine(uploads,fileName+extension),FileMode.Create))
+                    using (var fileStreams = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
                     {
                         file.CopyTo(fileStreams);
                     }
                     obj.ApplicationDocument.FilePath = @"\files\Documents\" + fileName + extension;
                     obj.ApplicationDocument.Name = fileName;
                 }
-                if (obj.ApplicationDocument.Id == 0)
-                {
-                    obj.ApplicationDocument.ApplicationUserId = StudentId;
-                    _unitOfWork.ApplicationDocument.Add(obj.ApplicationDocument);
-                }
-                else
-                {
-                    _unitOfWork.ApplicationDocument.Update(obj.ApplicationDocument);
-                }
+
+                obj.ApplicationDocument.ApplicationUserId = StudentId;
+                _unitOfWork.ApplicationDocument.Add(obj.ApplicationDocument);
 
                 _unitOfWork.Save();
                 TempData["success"] = "Document uploaded successfully";
-                return RedirectToAction("Index");
+                return View();
             }
 
             return View();
         }
+
+        /*        public IActionResult ViewDocument(int? id)
+                {
+                    var file= _unitOfWork.ApplicationDocument.GetFirstOrDefault(u => u.Id == id);
+                    if (file == null) return null;
+                    return File();
+                }*/
+
+
 
         #region API CALLS
         [HttpGet]
@@ -465,6 +466,28 @@ namespace SEPWebApp.Areas.Controllers
             /*            var DocumentList = _unitOfWork.ApplicationDocument.GetAll();*/
             return Json(new { data = DocumentList });
         }
+
+        [HttpDelete]
+        public IActionResult DeleteDocument(int? id)
+        {
+            var obj = _unitOfWork.ApplicationDocument.GetFirstOrDefault(u => u.Id == id);
+            if (obj == null)
+            {
+                return Json(new { success = false, message = "Error while deleting" });
+            }
+
+            var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, obj.FilePath.TrimStart('\\'));
+            if (System.IO.File.Exists(oldImagePath))
+            {
+                System.IO.File.Delete(oldImagePath);
+            }
+
+            _unitOfWork.ApplicationDocument.Remove(obj);
+            _unitOfWork.Save();
+            return Json(new { success = true, message = "Delete Successful" });
+
+        }
+
         #endregion
 
     }

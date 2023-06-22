@@ -1,11 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SEP.Models
 {
@@ -20,10 +15,11 @@ namespace SEP.Models
         public ApplicationUser ApplicationUser { get; set; }
         //public StudentApplication StudentApplication { get; set; }
         public string? Name { get; set; }
-        public string? Description { get; set; }
+        [Required]
+        public string Description { get; set; }
         [ValidateNever]
         public string FilePath { get; set; }
 
 
     }
-    }
+}
