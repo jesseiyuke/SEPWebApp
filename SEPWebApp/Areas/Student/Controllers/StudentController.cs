@@ -375,6 +375,7 @@ namespace SEPWebApp.Areas.Controllers
         //GET
         public IActionResult File()
         {
+
             return View();
         }
         //POST
@@ -382,22 +383,32 @@ namespace SEPWebApp.Areas.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult File(FileVM obj, IFormFile? file)
         {
-            if(ModelState.IsValid)
+            var StudentId = _userManager.GetUserId(User);
+            FileVM fileVM = new()
+            {
+                ApplicationDocument = new(),
+                ApplicationUser=new(),
+
+            };
+            fileVM.ApplicationDocument.ApplicationUserId = StudentId;
+
+            if (ModelState.IsValid)
             {
                 string wwwRootPath = _webHostEnvironment.WebRootPath;
                 if (file != null)
                 {
                     string fileName=Guid.NewGuid().ToString();
-                    var uploads=Path.Combine(wwwRootPath, @"\files");
+                    var uploads=Path.Combine(wwwRootPath, @"files\Documents");
                     var extension=Path.GetExtension(file.FileName);
 
                     using(var fileStreams= new FileStream(Path.Combine(uploads,fileName+extension),FileMode.Create))
                     {
                         file.CopyTo(fileStreams);
                     }
-                    obj.ApplicationDocument.FilePath=@"\files\"+fileName+extension;
+                    /*                    fileVM.ApplicationDocument.FilePath =Path.Combine(uploads,fileName);*/
+                    fileVM.ApplicationDocument.FilePath = @"files\Documents" + fileName + extension;
                 }
-                _unitOfWork.ApplicationDocument.Add(obj.ApplicationDocument);
+                _unitOfWork.ApplicationDocument.Add(fileVM.ApplicationDocument);
                 _unitOfWork.Save();
                 TempData["success"] = "Document uploaded successfully";
                 return RedirectToAction("Index");

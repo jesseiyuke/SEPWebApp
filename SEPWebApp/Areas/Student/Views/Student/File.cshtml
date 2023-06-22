@@ -1,7 +1,7 @@
 ﻿@model SEP.Models.ViewModels.FileVM
 
 <form method="post" asp-action="File" enctype="multipart/form-data">
-    <input asp-for="ApplicationDocument.Id" hidden />
+@*    <input asp-for="ApplicationDocument.Id" hidden />*@
     <div class="p-3 mt-2">
         <div class="row pb-2">
             <h2 class="text-primary">Upload Document</h2>
@@ -9,7 +9,9 @@
 
         <div class="mb-3 form-group row">
             <div class="col-5">
-                <input type="file" id="uploadBox" name="file" class="form-control">
+@*                <input asp-for="ApplicationDocument.FilePath" class="form-control">*@
+                <input asp-for="ApplicationDocument.FilePath" class="form-control" type="file" id="uploadBox" name="file">
+@*              <input type="file" id="uploadBox" name="file" class="form-control">*@
             </div>
         </div>
         <button type="submit" class="btn btn-primary" style="width:150px" onclick="return ValidateInput()" >Upload</button>
