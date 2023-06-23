@@ -44,13 +44,13 @@ namespace SEPWebApp.Controllers
             var EmployerId = _userManager.GetUserId(User);
             Employer employer = _unitOfWork.Employer.GetFirstOrDefault(e => e.ApplicationUserId == EmployerId);
 
-            EmployerVM.Employer.StatusId = employer.StatusId;
+/*            EmployerVM.Employer.StatusId = employer.StatusId;*/
 
             if (employer == null)
             {
                 return RedirectToAction("Upsert", "Employer", new { area = "Employer" });
             }
-            return View(EmployerVM);
+            return View();
         }
 
         //GET
