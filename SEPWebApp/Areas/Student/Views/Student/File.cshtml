@@ -42,14 +42,7 @@
 
     </div>
 
-    @if (Model.ApplicationDocument.Id != 0)
-    {
-        <button type="submit" class="btn btn-primary" style="width:150px">Update</button>
-    }
-    else
-    {
-        <button type="submit" onclick="return ValidateInput()" class="btn btn-primary" style="width:150px">Upload</button>
-    }
+    <button type="submit" onclick="return ValidateInput()" class="btn btn-primary" style="width:150px">Upload</button>
 
 </form>
 
