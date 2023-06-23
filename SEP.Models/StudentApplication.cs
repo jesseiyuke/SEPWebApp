@@ -18,6 +18,41 @@ namespace SEP.Models
         [ForeignKey("JobPostId")]
         [ValidateNever]
         public JobPost? jobPost { get; set; }
-        public string status { get; set; }
+
+        //From JobPost model
+
+        [Required]
+        [Display(Name = "Job title")]
+        public string JobTitle { get; set; }
+
+        [Required]
+        public int DepartmentId { get; set; }
+        [ForeignKey("DepartmentId")]
+        [ValidateNever]
+        public Department Department { get; set; }
+
+        [Required]
+        public int WeekHourId { get; set; }
+        [ForeignKey("WeekHourId")]
+        [ValidateNever]
+        public WeekHour WeekHour { get; set; }
+
+        [Required]
+        [Display(Name = "Start Date")]
+        [DataType(DataType.Date)]
+        public DateTime StartDate { get; set; }
+
+        [Required]
+        [DataType(DataType.Date)]
+        [Display(Name = "End Date")]
+        public DateTime EndDate { get; set; }
+
+
+        [Required]
+        [Display(Name = "Outcome")]
+        public int StatusId { get; set; }
+        [ForeignKey("StatusId")]
+        [ValidateNever]
+        public Status Status { get; set; }
     }
 }

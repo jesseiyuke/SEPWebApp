@@ -23,7 +23,7 @@ namespace SEP.Models.ViewModels
         public IEnumerable<SelectListItem> StatusList { get; set; }
 
         [ValidateNever]
-        public Student Student { get; set; }
+        public StudentApplication StudentApplication { get; set; }
 
     }
 }

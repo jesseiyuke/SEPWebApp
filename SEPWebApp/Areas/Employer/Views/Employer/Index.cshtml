@@ -1,4 +1,4 @@
-﻿@model SEP.Models.ViewModels.EmployerVM
+﻿@model Employer
 @{
     ViewData["Title"] = "Index";
 }
@@ -7,7 +7,7 @@
     <h3>Welcome Recruiter</h3>
     <br />
     
-@*    @if (Model.Employer.StatusId != 1)
+    @if (Model.StatusId != 1)
     {
         <a asp-controller="JobPost" asp-action="Index" class="btn btn-secondary" style="width:150px">Manage Posts</a>
     }
@@ -15,8 +15,8 @@
     {
             <h3>Wait for approval</h3>
             <br />
-    }*@
-    <a asp-controller="JobPost" asp-action="Index" class="btn btn-secondary" style="width:150px">Manage Posts</a>
+    }
+@*    <a asp-controller="JobPost" asp-action="Index" class="btn btn-secondary" style="width:150px">Manage Posts</a>*@
     <a asp-controller="Employer" asp-action="Upsert" class="btn btn-secondary" style="width:150px">Edit Profile</a>
 
 </div>

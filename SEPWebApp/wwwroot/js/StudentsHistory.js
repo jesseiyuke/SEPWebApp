@@ -10,24 +10,24 @@ function loadDataTable() {
 			"url": "/Student/Student/GetAllAppyJobPost"
 		},
 		"columns": [
-			{ "data": "jobPost.jobTitle", "width": "16%" },
-			{ "data": "jobPost.department.name", "width": "16%" },
-			{ "data": "jobPost.weekHour.name", "width": "12%" },
+			{ "data": "jobTitle", "width": "16%" },
+			{ "data": "department.name", "width": "16%" },
+			{ "data": "weekHour.name", "width": "12%" },
 			{
-				"data": "jobPost.startDate",
+				"data": "startDate",
 				"width": "12%",
 				"render": function (data) {
 					return formatDate(data);
 				}
 			},
 			{
-				"data": "jobPost.endDate",
+				"data": "endDate",
 				"width": "12%",
 				"render": function (data) {
 					return formatDate(data);
 				}
 			},
-			{ "data": "status","width":"12%"},
+			{ "data": "status.name","width":"12%"},
 
 			{
 				"data": "id",

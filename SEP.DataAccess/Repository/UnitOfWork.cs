@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using SEP.DataAccess.Repository.IRepository;
-using SEP.Models;
+﻿using SEP.DataAccess.Repository.IRepository;
 
 namespace SEP.DataAccess.Repository
 {
@@ -31,7 +29,9 @@ namespace SEP.DataAccess.Repository
             Qualification = new QualificationRepository(_db);
             Experience = new ExperienceRepository(_db);
 
-            ApplicationDocument= new ApplicationDocumentRepository(_db);
+            ApplicationDocument = new ApplicationDocumentRepository(_db);
+
+            StudentApplication = new StudentApplicationRepository(_db);
         }
 
         public IJobPostRepository JobPost { get; private set; }
@@ -55,6 +55,7 @@ namespace SEP.DataAccess.Repository
 
         public IApplicationUserRepository ApplicationUser { get; private set; }
         public IApplicationDocumentRepository ApplicationDocument { get; private set; }
+        public IStudentApplicationRepository StudentApplication { get; private set; }
 
         public void Save()
         {

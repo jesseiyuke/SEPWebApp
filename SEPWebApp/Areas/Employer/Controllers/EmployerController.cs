@@ -6,7 +6,6 @@ using SEP.DataAccess.Repository.IRepository;
 using SEP.Models;
 using SEP.Models.ViewModels;
 using SEP.Utility;
-using SEPWebApp.Areas.Home.Controllers;
 using SmartBreadcrumbs.Attributes;
 using System.Data;
 
@@ -30,27 +29,25 @@ namespace SEPWebApp.Controllers
         }
 
         //[DefaultBreadcrumb("Home",AreaName ="Employer")]
-        [Breadcrumb("Index", AreaName ="Employer")]
+        [Breadcrumb("Index", AreaName = "Employer")]
         public IActionResult Index()
         {
-
-            EmployerVM EmployerVM = new()
-            {
-                ApplicationUser = new(),
-                Employer = new()
-
-            };
 
             var EmployerId = _userManager.GetUserId(User);
             Employer employer = _unitOfWork.Employer.GetFirstOrDefault(e => e.ApplicationUserId == EmployerId);
 
-/*            EmployerVM.Employer.StatusId = employer.StatusId;*/
+            /*            EmployerVM.Employer.StatusId = employer.StatusId;*/
 
             if (employer == null)
             {
                 return RedirectToAction("Upsert", "Employer", new { area = "Employer" });
             }
-            return View();
+            else
+            {
+                return View(employer);
+
+            }
+
         }
 
         //GET
