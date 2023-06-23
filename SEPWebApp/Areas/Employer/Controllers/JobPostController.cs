@@ -214,6 +214,7 @@ namespace SEPWebApp.Areas.Employer.Controllers
         }
 
         //Applications
+        [Breadcrumb("View Applicants", AreaName = "JobPost")]
         public IActionResult ApplicationIndex(int? id)
         {
             JobPostVM JobPostVM = new()

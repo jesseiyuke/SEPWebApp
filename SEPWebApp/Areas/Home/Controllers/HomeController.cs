@@ -7,6 +7,7 @@ using SmartBreadcrumbs.Attributes;
 namespace SEPWebApp.Areas.Home.Controllers
 {
     [Area("Home")]
+    /*    [DefaultBreadcrumb("Home", FromAction = "Index")]*/
     [DefaultBreadcrumb("Home")]
     public class HomeController : Controller
     {

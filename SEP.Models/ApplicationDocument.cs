@@ -19,6 +19,7 @@ namespace SEP.Models
         public string Description { get; set; }
         [ValidateNever]
         public string FilePath { get; set; }
+        public string FileType { get; set; }
 
 
     }

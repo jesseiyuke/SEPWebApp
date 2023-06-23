@@ -33,14 +33,24 @@ namespace SEPWebApp.Controllers
         [Breadcrumb("Index", AreaName ="Employer")]
         public IActionResult Index()
         {
+
+            EmployerVM EmployerVM = new()
+            {
+                ApplicationUser = new(),
+                Employer = new()
+
+            };
+
             var EmployerId = _userManager.GetUserId(User);
             Employer employer = _unitOfWork.Employer.GetFirstOrDefault(e => e.ApplicationUserId == EmployerId);
+
+            EmployerVM.Employer.StatusId = employer.StatusId;
 
             if (employer == null)
             {
                 return RedirectToAction("Upsert", "Employer", new { area = "Employer" });
             }
-            return View();
+            return View(EmployerVM);
         }
 
         //GET

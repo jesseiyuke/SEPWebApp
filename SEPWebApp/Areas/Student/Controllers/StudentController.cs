@@ -434,8 +434,8 @@ namespace SEPWebApp.Areas.Controllers
                     }
                     obj.ApplicationDocument.FilePath = @"\files\Documents\" + fileName + extension;
                     obj.ApplicationDocument.Name = fileName;
+                    obj.ApplicationDocument.FileType = file.ContentType;                    
                 }
-
                 obj.ApplicationDocument.ApplicationUserId = StudentId;
                 _unitOfWork.ApplicationDocument.Add(obj.ApplicationDocument);
 
@@ -447,12 +447,15 @@ namespace SEPWebApp.Areas.Controllers
             return View();
         }
 
-        /*        public IActionResult ViewDocument(int? id)
-                {
-                    var file= _unitOfWork.ApplicationDocument.GetFirstOrDefault(u => u.Id == id);
-                    if (file == null) return null;
-                    return File();
-                }*/
+/*        public IActionResult ViewDocument(int? id)
+        {
+*//*            var basePath=Path.Combine(Directory.GetCurrentDirectory()+)*//*
+
+            var file = _unitOfWork.ApplicationDocument.GetFirstOrDefault(u => u.Id == id);
+            if (file == null) return null;
+            var stream = new FileStream(file.FilePath, FileMode.Open);
+            return File(stream, file.FileType);
+        }*/
 
 
 

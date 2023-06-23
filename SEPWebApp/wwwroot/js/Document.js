@@ -18,7 +18,7 @@ function loadDataTable() {
 				"render": function (data) {
 					return `
 						<div class="w-75 btn-group" role="group">
-						<a href="/Student/ViewDocument?id=${data}"
+						<a href="/Student/Student/ViewDocument?id=${data}"
 						class="btn btn-primary mx-2">View</a>
 						<a onClick=Delete('/Student/Student/DeleteDocument/${data}')
 						class="btn btn-primary mx-2">Delete</a>
