@@ -2,12 +2,14 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using SEP.DataAccess;
 using SEP.DataAccess.Repository.IRepository;
 using SEP.Models;
 using SEP.Models.ViewModels;
 using SEP.Utility;
 using SEPWebApp.Areas.Home.Controllers;
+using SmartBreadcrumbs.Attributes;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Security.Cryptography;
@@ -29,7 +31,7 @@ namespace SEPWebApp.Areas.Controllers
             _userManager = userManager;
             _db = db;
         }
-
+        [Breadcrumb("", AreaName = "Student")]
         public IActionResult Index()
         {
 
@@ -131,7 +133,7 @@ namespace SEPWebApp.Areas.Controllers
 
             return Json(departments);
         }
-
+        [Breadcrumb("Profile",AreaName ="Student")]
         public IActionResult Profile()
         {
 
@@ -296,6 +298,7 @@ namespace SEPWebApp.Areas.Controllers
             TempData["success"] = "Qualification Updated successfully";
             return RedirectToAction("Profile");
         }
+        [Breadcrumb("Qalification", AreaName = "Student")]
         public IActionResult EditQualification(int Id)
         {
             Qualifications qualifications = _unitOfWork.Qualification.GetFirstOrDefault(d => d.Id == Id);
@@ -312,7 +315,19 @@ namespace SEPWebApp.Areas.Controllers
         public IActionResult GetAllJobPost()
         {
             var JobPostList = _unitOfWork.JobPost.GetAll(includeProperties: "Faculty,Department,JobType,WeekHour");
-            //var JobPostList = _unitOfWork.JobPost.GetAll();
+            return Json(new { data = JobPostList });
+        }
+        public IActionResult GetJobPost(int Id)
+        {
+            var JobPostList = _unitOfWork.JobPost.GetFirstOrDefault(x => x.Id == Id);
+            return Json(new { data = JobPostList });
+
+        }
+        public IActionResult GetAllAppyJobPost()
+        {
+            var studentID = _userManager.GetUserId(User);
+            var JobPostList = _unitOfWork.JobPost.GetApplyJobPost(studentID);
+
             return Json(new { data = JobPostList });
         }
         public IActionResult UpdateProfile(StudentVM student)
@@ -343,27 +358,49 @@ namespace SEPWebApp.Areas.Controllers
             return RedirectToAction("Index");
 
         }
+        [Breadcrumb("Application History", AreaName = "Student")]
+        public IActionResult ReviewApplication(int Id)
+        {
+            StudentApplication studentApplication = new StudentApplication();
+            studentApplication = _db.StudentApplication.Where(x => x.Id == Id).Include(a => a.jobPost).ThenInclude(a => a.JobType).Include(a=>a.jobPost).ThenInclude(a=>a.WeekHour).FirstOrDefault();
+            return View(studentApplication);
+        }
+        public IActionResult WithdrawApplication(int Id)
+        {
+            StudentApplication studentApplication = new StudentApplication();
+            studentApplication = _db.StudentApplication.Where(x => x.Id == Id).FirstOrDefault();
+            studentApplication.status = "withdrawn";
+            _db.StudentApplication.Update(studentApplication);
+            _db.SaveChanges();
+            return RedirectToAction("History");
 
+        }
+        [Breadcrumb("Search", AreaName = "Student")]
         public IActionResult Apply(int id)
         {
-            return View();
+            return View();                                              
         }
+        [Breadcrumb("Referees", AreaName = "Student")]
         public IActionResult Referees()
         {
             return View();
         }
+        [Breadcrumb("Qualification", FromAction ="Profile")]
         public IActionResult Education()
         {
             return View();
         }
+        [Breadcrumb("Exprincense", AreaName = "Student")]
         public IActionResult Employment()
         {
             return View();
         }
+        [Breadcrumb("Application History ", AreaName = "Student")]
         public IActionResult History()
         {
             return View();
         }
+        [Breadcrumb("Search", AreaName = "Student")]
         public IActionResult Search()
         {
             return View();

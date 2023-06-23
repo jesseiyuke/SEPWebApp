@@ -3,7 +3,6 @@
     ViewData["Title"] = "Profile";
 }
 
-<h2>Student→Manage Profile</h2>
 <form method="post">
 
 
@@ -405,3 +404,23 @@
         <br />
         <button type="submit" class="btn btn-secondary" asp-action="UpdateProfile" style="width:150px">Save</button>
 </form>
+<script>
+    $(document).ready(function () {
+
+        $('#FacultyDropdown').change(function () {
+            var obid = this.value;
+            $('#DepartmentDropdown').empty();
+            $.ajax({
+                type: 'Get',
+                url: '@Url.Action("getdepartments","JobPost")',
+                datatype: 'json',
+                data: { id: obid },
+                success: function (dep) {
+                    $.each(dep, function (index, item) {
+                        $('#Department').append('<option value="' + item.id + '">' + item.name + '</option')
+                    });
+                }
+            });
+        });
+    })
+</script>

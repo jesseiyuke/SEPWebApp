@@ -7,46 +7,44 @@ $(document).ready(function () {
 function loadDataTable() {
 	dataTable = $('#tblData').DataTable({
 		"ajax": {
-			"url": "/Student/Student/GetAllJobpost"
+			"url": "/Student/Student/GetAllAppyJobPost"
 		},
 		"columns": [
-			{ "data": "jobTitle", "width": "12%" },
-			{ "data": "department.name", "width": "12%" },
-			{ "data": "weekHour.name", "width": "12%" },
+			{ "data": "jobPost.jobTitle", "width": "16%" },
+			{ "data": "jobPost.department.name", "width": "16%" },
+			{ "data": "jobPost.weekHour.name", "width": "12%" },
 			{
-				"data": "startDate",
+				"data": "jobPost.startDate",
 				"width": "12%",
 				"render": function (data) {
 					return formatDate(data);
 				}
 			},
 			{
-				"data": "endDate",
+				"data": "jobPost.endDate",
 				"width": "12%",
 				"render": function (data) {
 					return formatDate(data);
 				}
 			},
-			{ "data": "hourlyRate","width":"12%"},
-			{
-				"data": "closingDate",
-				"width": "12%",
-				"render": function (data) {
-					return formatDate(data);
-				}
-			},
+			{ "data": "status","width":"12%"},
 
 			{
 				"data": "id",
 				"render": function (data) {
 					return `
-						<div class="w-75 btn-group" role="group">
-						<a href="/Student/Apply?id=${data}"
-						class="btn btn-primary mx-2">Apply</a>
-					</div>
+						<div class="col" >
+
+							<a href="/Student/Student/ReviewApplication?Id=${data}"
+						class="btn btn-primary mx-2">Details</a>
+
+						<a href="/Student/Student/WithdrawApplication?Id=${data}"
+						class="btn btn-primary mx-2">Withdraw</a>
+						</div>
+
 						`
 				},
-				"width": "12%"
+				"width": "22%"
 			}
 
 		]
