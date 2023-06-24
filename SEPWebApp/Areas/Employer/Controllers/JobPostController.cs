@@ -170,7 +170,7 @@ namespace SEPWebApp.Areas.Employer.Controllers
             return Json(new { data = JobPostList });
         }
 
-        public IActionResult GetAllApplicant()
+        public IActionResult GetAllApplicant(int? id)
         {
             var StudentList = _unitOfWork.StudentApplication.GetAll();
             return Json(new { data = StudentList });
@@ -231,6 +231,9 @@ namespace SEPWebApp.Areas.Employer.Controllers
 
             JobPostVM.JobPost = _unitOfWork.JobPost.GetFirstOrDefault(u => u.Id == id);
             JobPostVM.ApplicationUser = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == EmployerId);
+
+            //Applicant table
+            GetAllApplicant(id);
 
             return View(JobPostVM);
         }

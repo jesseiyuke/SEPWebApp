@@ -10,8 +10,8 @@ function loadDataTable() {
 			"url": "/Employer/JobPost/GetAllApplicant"
 		},
 		"columns": [
-			{ "data": "student.applicationUser.firstName", "width": "15%" },
-			{ "data": "student.applicationUser.lastName", "width": "15%" },
+			{ "data": "id", "width": "15%" },
+/*			{ "data": "student.applicationUser.lastName", "width": "15%" },*/
 
 			{
 				"data": "id",
