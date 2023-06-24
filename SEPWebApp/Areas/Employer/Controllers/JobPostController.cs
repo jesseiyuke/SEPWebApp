@@ -172,7 +172,7 @@ namespace SEPWebApp.Areas.Employer.Controllers
 
         public IActionResult GetAllApplicant()
         {
-            var StudentList = _unitOfWork.Student.GetAll(includeProperties: "Student");
+            var StudentList = _unitOfWork.StudentApplication.GetAll();
             return Json(new { data = StudentList });
         }
         #endregion

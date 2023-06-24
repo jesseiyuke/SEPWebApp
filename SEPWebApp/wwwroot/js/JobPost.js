@@ -36,6 +36,8 @@ function loadDataTable() {
 						<div class="w-75 btn-group" role="group">
 						<a href="/Employer/JobPost/Upsert?id=${data}"
 						class="btn btn-primary mx-2">Review</a>
+						<a href="/Employer/JobPost/ApplicationIndex?id=${data}"
+						class="btn btn-primary mx-2">View Applicants</a>
 					</div>
 						`
 				},

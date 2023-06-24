@@ -54,5 +54,11 @@ namespace SEP.Models
         [ForeignKey("StatusId")]
         [ValidateNever]
         public Status Status { get; set; }
+
+        /*        [Required]
+                public int StudentId { get; set; }
+                [ForeignKey("StudentId")]
+                [ValidateNever]
+                public Student Student { get; set; }*/
     }
 }
