@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SEP.Models
 {
@@ -40,5 +35,9 @@ namespace SEP.Models
         public string? Skills { set; get; }
         public string? Achivements { set; get; }
         public string? Interests { set; get; }
+
+        [ForeignKey(nameof(FacultyId))]
+        public int FacultyId { get; set; }
+        public Faculty? Faculty { get; set; }
     }
 }

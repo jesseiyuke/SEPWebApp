@@ -85,16 +85,8 @@ namespace SEPWebApp.Areas.Controllers
                 Text = i.Name,
                 Value = i.Id.ToString()
             });
-            studentVM.FacutyList = _unitOfWork.Faculty.GetAll().Select(i => new SelectListItem
-            {
-                Text = i.Name,
-                Value = i.Id.ToString()
-            });
-            studentVM.DepartmentList = _unitOfWork.Department.GetAll().Where(d => d.FacultyId == 1).Select(i => new SelectListItem
-            {
-                Text = i.Name,
-                Value = i.Id.ToString()
-            });
+            studentVM.FacutyList = _db.Faculty;
+            studentVM.DepartmentList = _db.Department;
 
             return View(studentVM);
         }
@@ -115,6 +107,7 @@ namespace SEPWebApp.Areas.Controllers
             studentVM.CareerObjective = student.CareerObjective;
             studentVM.DriversLicenseId = (int)student.DriversLicense;
             studentVM.YearOfStudyId = (int)student.YearOfStudy;
+            studentVM.FacultyId = (int)student.Faculty;
             studentVM.DepartmentId = (int)student.Department;
             studentVM.Skills = student.Skills;
             studentVM.NationalityId = (int)student.Nationality;
@@ -128,11 +121,11 @@ namespace SEPWebApp.Areas.Controllers
 
         }
 
-        public JsonResult GetDepartments(int facultyId)
+        public JsonResult GetDepartments(int id)
         {
-            var departments = _unitOfWork.Department.GetAll().Where(d => d.FacultyId == facultyId);
+            var departments = _unitOfWork.Department.GetAll().Where(d => d.FacultyId == id);
 
-            return Json(departments);
+            return new JsonResult(departments);
         }
 
         [Breadcrumb("Profile", AreaName = "Student")]
@@ -192,16 +185,9 @@ namespace SEPWebApp.Areas.Controllers
                 Text = i.Name,
                 Value = i.Id.ToString()
             });
-            studentVM.FacutyList = _unitOfWork.Faculty.GetAll().Select(i => new SelectListItem
-            {
-                Text = i.Name,
-                Value = i.Id.ToString()
-            });
-            studentVM.DepartmentList = _unitOfWork.Department.GetAll().Where(d => d.FacultyId == 1).Select(i => new SelectListItem
-            {
-                Text = i.Name,
-                Value = i.Id.ToString()
-            });
+            studentVM.FacutyList = _db.Faculty;
+            studentVM.DepartmentList = _unitOfWork.Department.GetAll().Where(d => d.FacultyId == studentVM.Faculty);
+
             studentVM.Referees = _unitOfWork.Referees.GetByUserId(studentId);
             studentVM.Qualification = _unitOfWork.Qualification.GetByUserId(studentId);
             studentVM.Experience = _unitOfWork.Experience.GetByUserId(studentId);
@@ -350,6 +336,7 @@ namespace SEPWebApp.Areas.Controllers
             studentVM.CareerObjective = student.CareerObjective;
             studentVM.DriversLicenseId = (int)student.DriversLicense;
             studentVM.YearOfStudyId = (int)student.YearOfStudy;
+            studentVM.FacultyId = (int)student.Faculty;
             studentVM.DepartmentId = (int)student.Department;
             studentVM.Skills = student.Skills;
             studentVM.NationalityId = (int)student.Nationality;

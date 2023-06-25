@@ -223,8 +223,13 @@
                             </div>
 
                             <div class="col-md-9 pe-5">
-                        <select id="FacultyDropdown" asp-for="Faculty" asp-items="@Model.FacutyList">
+                        <select id="facultyDropdown" asp-for="Faculty">
                             <option disabled selected>Select Faculty</option>
+                            @foreach (var fac in Model.FacutyList)
+                            {
+                                <option value="@fac.Id">@fac.Name</option>
+                            }
+                            @*<option disabled selected>Select Faculty</option>*@
                         </select>
                                
                             </div>
@@ -238,8 +243,12 @@
                             </div>
 
                             <div class="col-md-9 pe-5">
-                        <select id="DepartmentDropdown" asp-for="Department" asp-items="@Model.DepartmentList">
+                        <select id="departmentDropdown" asp-for="Department">
                             <option disabled selected>Select Department</option>
+                            @foreach (var dep in Model.DepartmentList)
+                            {
+                                <option value="@dep.Id">@dep.Name</option>
+                            }
                         </select>
                                 
                             </div>
@@ -404,23 +413,32 @@
         <br />
         <button type="submit" class="btn btn-secondary" asp-action="UpdateProfile" style="width:150px">Save</button>
 </form>
-<script>
-    $(document).ready(function () {
 
-        $('#FacultyDropdown').change(function () {
-            var obid = this.value;
-            $('#DepartmentDropdown').empty();
-            $.ajax({
-                type: 'Get',
-                url: '@Url.Action("getdepartments","JobPost")',
-                datatype: 'json',
-                data: { id: obid },
-                success: function (dep) {
-                    $.each(dep, function (index, item) {
-                        $('#Department').append('<option value="' + item.id + '">' + item.name + '</option')
-                    });
-                }
+
+@section Scripts
+    {
+    <script>
+        $(document).ready(function () {
+
+            $('#facultyDropdown').change(function () {
+                var obid = this.value;
+                $('#departmentDropdown').empty();
+                $.ajax({
+                    type: 'Get',
+                    url: '@Url.Action("getdepartments","Student")',
+                    datatype: 'json',
+                    data: { id: obid },
+                    success: function (dep) {
+                        $.each(dep, function (index, item) {
+                            $('#departmentDropdown').append('<option value="' + item.id + '">' + item.name + '</option')
+                        });
+                    }
+                });
             });
-        });
-    })
-</script>
+        })
+    </script>
+
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
