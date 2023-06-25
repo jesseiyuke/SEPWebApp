@@ -18,6 +18,10 @@ namespace SEP.Models
         [ForeignKey("JobPostId")]
         [ValidateNever]
         public JobPost? jobPost { get; set; }
-        public string status { get; set; }
+
+        public int? StatusId { get; set; }
+        [ForeignKey("StatusId")]
+        [ValidateNever]
+        public ApplicationStatus? applicationStatus { get; set; }
     }
 }

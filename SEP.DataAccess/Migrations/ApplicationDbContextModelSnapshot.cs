@@ -252,9 +252,48 @@ namespace SEP.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("StudentApplicationId");
+                    b.HasIndex("ApplicationUserId");
 
                     b.ToTable("ApplicationDocument");
+                });
+
+            modelBuilder.Entity("SEP.Models.ApplicationStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ApplicationStatus", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Pending"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Approved"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Rejected"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Withdrawn"
+                        });
                 });
 
             modelBuilder.Entity("SEP.Models.BusinessType", b =>
@@ -573,6 +612,11 @@ namespace SEP.DataAccess.Migrations
                         {
                             Id = 6,
                             Name = "EB - Ligth Motor Vehicle + Trailer"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "None"
                         });
                 });
 
@@ -1202,15 +1246,16 @@ namespace SEP.DataAccess.Migrations
                     b.Property<int?>("JobPostId")
                         .HasColumnType("int");
 
-                    b.Property<string>("status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("StatusId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("JobPostId");
+
+                    b.HasIndex("StatusId");
 
                     b.ToTable("StudentApplication");
                 });
@@ -1401,13 +1446,13 @@ namespace SEP.DataAccess.Migrations
 
             modelBuilder.Entity("SEP.Models.ApplicationDocument", b =>
                 {
-                    b.HasOne("SEP.Models.StudentApplication", "StudentApplication")
+                    b.HasOne("SEP.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
-                        .HasForeignKey("StudentApplicationId")
+                        .HasForeignKey("ApplicationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("StudentApplication");
+                    b.Navigation("Application");
                 });
 
             modelBuilder.Entity("SEP.Models.Department", b =>
@@ -1603,7 +1648,13 @@ namespace SEP.DataAccess.Migrations
                         .WithMany()
                         .HasForeignKey("JobPostId");
 
+                    b.HasOne("SEP.Models.ApplicationStatus", "applicationStatus")
+                        .WithMany()
+                        .HasForeignKey("StatusId");
+
                     b.Navigation("ApplicationUser");
+
+                    b.Navigation("applicationStatus");
 
                     b.Navigation("jobPost");
                 });

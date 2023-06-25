@@ -31,7 +31,8 @@ namespace SEPWebApp.Areas.Controllers
             _userManager = userManager;
             _db = db;
         }
-        [Breadcrumb("", AreaName = "Student")]
+
+        [Breadcrumb("Home", AreaName = "Student")]
         public IActionResult Index()
         {
 
@@ -43,7 +44,7 @@ namespace SEPWebApp.Areas.Controllers
             }
             return View();
         }
-
+        
         public IActionResult AddStudent()
         {
 
@@ -84,16 +85,8 @@ namespace SEPWebApp.Areas.Controllers
                 Text = i.Name,
                 Value = i.Id.ToString()
             });
-            studentVM.FacutyList = _unitOfWork.Faculty.GetAll().Select(i => new SelectListItem
-            {
-                Text = i.Name,
-                Value = i.Id.ToString()
-            });
-            studentVM.DepartmentList = _unitOfWork.Department.GetAll().Where(d => d.FacultyId == 1).Select(i => new SelectListItem
-            {
-                Text = i.Name,
-                Value = i.Id.ToString()
-            });
+            studentVM.FacutyList = _db.Faculty;
+            studentVM.DepartmentList = _db.Department;
 
             return View(studentVM);
         }
@@ -144,7 +137,7 @@ namespace SEPWebApp.Areas.Controllers
 
             Department department = _unitOfWork.Department.GetFirstOrDefault(d => d.Id == student.DepartmentId);
             student.ApplicationUser = user;
-           // studentVM =student;
+            // studentVM =student;
             studentVM.Address = student.Address;
             studentVM.Race = student.RaceId;
             studentVM.Gender = student.GenderId;
@@ -164,7 +157,7 @@ namespace SEPWebApp.Areas.Controllers
             studentVM.Nationality = student.NationalityId;
             studentVM.Interests = student.Interests;
             studentVM.Faculty = department.FacultyId;
-
+            studentVM.Achivements = student.Achivements;
             studentVM.DriverLicenceList = _unitOfWork.DriverLicence.GetAll().Select(i => new SelectListItem
             {
                 Text = i.Name,
@@ -190,22 +183,15 @@ namespace SEPWebApp.Areas.Controllers
                 Text = i.Name,
                 Value = i.Id.ToString()
             });
-            studentVM.FacutyList = _unitOfWork.Faculty.GetAll().Select(i => new SelectListItem
-            {
-                Text = i.Name,
-                Value = i.Id.ToString()
-            });
-            studentVM.DepartmentList = _unitOfWork.Department.GetAll().Where(d => d.FacultyId == 1).Select(i => new SelectListItem
-            {
-                Text = i.Name,
-                Value = i.Id.ToString()
-            });
+            studentVM.FacutyList = _db.Faculty;
+            studentVM.DepartmentList = _unitOfWork.Department.GetAll().Where(d => d.FacultyId == studentVM.Faculty);
+
             studentVM.Referees = _unitOfWork.Referees.GetByUserId(studentId);
             studentVM.Qualification = _unitOfWork.Qualification.GetByUserId(studentId);
             studentVM.Experience = _unitOfWork.Experience.GetByUserId(studentId);
             return View(studentVM);
         }
-
+        [Breadcrumb("Referee", FromAction = "Profile")]
         public IActionResult AddReferees(Referees referees)
         {
             var studentID = _userManager.GetUserId(User);
@@ -217,6 +203,7 @@ namespace SEPWebApp.Areas.Controllers
             TempData["success"] = "Referee added successfully";
             return RedirectToAction("Profile");
         }
+
         public IActionResult UpdateReferees(Referees referees)
         {
             var studentID = _userManager.GetUserId(User);
@@ -228,6 +215,7 @@ namespace SEPWebApp.Areas.Controllers
             TempData["success"] = "Referee Updated successfully";
             return RedirectToAction("Profile");
         }
+        [Breadcrumb("Referee", FromAction = "Profile")]
         public IActionResult EditReferees(int Id)
         {
             Referees referees = _unitOfWork.Referees.GetFirstOrDefault(d => d.Id == Id);
@@ -263,6 +251,8 @@ namespace SEPWebApp.Areas.Controllers
             TempData["success"] = "Experience Updated successfully";
             return RedirectToAction("Profile");
         }
+
+        [Breadcrumb("Experience", FromAction = "Profile")]
         public IActionResult EditExperience(int Id)
         {
             Experience experience = _unitOfWork.Experience.GetFirstOrDefault(d => d.Id == Id);
@@ -298,7 +288,7 @@ namespace SEPWebApp.Areas.Controllers
             TempData["success"] = "Qualification Updated successfully";
             return RedirectToAction("Profile");
         }
-        [Breadcrumb("Qalification", AreaName = "Student")]
+        [Breadcrumb("Qualification", FromAction ="Profile")]
         public IActionResult EditQualification(int Id)
         {
             Qualifications qualifications = _unitOfWork.Qualification.GetFirstOrDefault(d => d.Id == Id);
@@ -326,10 +316,13 @@ namespace SEPWebApp.Areas.Controllers
         public IActionResult GetAllAppyJobPost()
         {
             var studentID = _userManager.GetUserId(User);
-            var JobPostList = _unitOfWork.JobPost.GetApplyJobPost(studentID);
+            var JobPostList = _unitOfWork.StudentApplication.GetAll(includeProperties: "Department,WeekHour,Status").Where(u => u.ApplicationUserId == studentID);
+            //var JobPostList = _unitOfWork.JobPost.GetApplyJobPost(studentID);
+            //var JobPostList = _unitOfWork.JobPost.GetApplyJobPost(studentID);
 
             return Json(new { data = JobPostList });
         }
+        [Breadcrumb("Profile", AreaName = "Student")]
         public IActionResult UpdateProfile(StudentVM student)
         {
             var studentID = _userManager.GetUserId(User);
@@ -337,7 +330,6 @@ namespace SEPWebApp.Areas.Controllers
             Student studentVM = _unitOfWork.Student.GetFirstOrDefault(d => d.Id == studentID);
 
             studentVM.ApplicationUser = user;
-            studentVM.Achivements = student.Achivements;
             studentVM.Address = student.Address;
             studentVM.RaceId = (int)student.Race;
             studentVM.GenderId = (int)student.Gender;
@@ -352,13 +344,15 @@ namespace SEPWebApp.Areas.Controllers
             studentVM.NationalityId = (int)student.Nationality;
             studentVM.Interests = student.Interests;
             studentVM.ApplicationUser.PhoneNumber = student.cellPhone;
+            studentVM.Achivements = student.Achivements;
             _unitOfWork.Student.Update(studentVM);
             _unitOfWork.Save();
             TempData["success"] = "Student update successfull";
             return RedirectToAction("Index");
 
         }
-        [Breadcrumb("Application History", AreaName = "Student")]
+
+        [Breadcrumb("Application History", FromAction ="Search")]
         public IActionResult ReviewApplication(int Id)
         {
             StudentApplication studentApplication = new StudentApplication();
@@ -375,12 +369,8 @@ namespace SEPWebApp.Areas.Controllers
             return RedirectToAction("History");
 
         }
-        [Breadcrumb("Search", AreaName = "Student")]
-        public IActionResult Apply(int id)
-        {
-            return View();                                              
-        }
-        [Breadcrumb("Referees", AreaName = "Student")]
+
+        [Breadcrumb("Referees", FromAction = "Profile")]
         public IActionResult Referees()
         {
             return View();
@@ -390,7 +380,7 @@ namespace SEPWebApp.Areas.Controllers
         {
             return View();
         }
-        [Breadcrumb("Exprincense", AreaName = "Student")]
+        [Breadcrumb("Experience", FromAction ="Profile")]
         public IActionResult Employment()
         {
             return View();
@@ -400,10 +390,422 @@ namespace SEPWebApp.Areas.Controllers
         {
             return View();
         }
-        [Breadcrumb("Search", AreaName = "Student")]
+        [Breadcrumb("Apply", AreaName = "Student")]
         public IActionResult Search()
         {
             return View();
         }
+
+        //File Upload
+        //GET
+        [Breadcrumb("Upload", AreaName = "Student")]
+        public IActionResult File(int ApplicationId)
+        {
+            FileVM fileVM = new()
+            {
+                ApplicationDocument = new(),
+                Application = new(),
+
+            };
+
+            fileVM.Application.Id = ApplicationId;
+            return View(fileVM);
+
+
+        }
+        //POST
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult File(FileVM obj, IFormFile? file)
+        {
+
+
+            if (ModelState.IsValid)
+            {
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+                if (file != null)
+                {
+                    var fileName = Path.GetFileNameWithoutExtension(file.FileName);
+                    var uploads = Path.Combine(wwwRootPath, @"files\Documents");
+                    var extension = Path.GetExtension(file.FileName);
+
+                    if (obj.ApplicationDocument.FilePath != null)
+                    {
+                        var oldFilePath = Path.Combine(wwwRootPath, obj.ApplicationDocument.FilePath.TrimStart('\\'));
+                        if (System.IO.File.Exists(oldFilePath))
+                        {
+                            System.IO.File.Delete(oldFilePath);
+                        }
+                    }
+
+                    using (var fileStreams = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
+                    {
+                        file.CopyTo(fileStreams);
+                    }
+                    obj.ApplicationDocument.FilePath = @"\files\Documents\" + fileName + extension;
+                    obj.ApplicationDocument.Name = fileName;
+                    obj.ApplicationDocument.FileType = file.ContentType;
+                }
+              //  obj.ApplicationDocument.ApplicationId;
+                _unitOfWork.ApplicationDocument.Add(obj.ApplicationDocument);
+
+                _unitOfWork.Save();
+                TempData["success"] = "Document uploaded successfully";
+                return View();
+            }
+
+            return View();
+        }
+
+        //GET
+        [Breadcrumb("Apply", AreaName = "Student")]
+        public IActionResult Apply(int? id)
+        {
+            JobPostVM JobPostVM = new()
+            {
+                JobPost = new(),
+                StatusList = _unitOfWork.Status.GetAll().Select(i => new SelectListItem
+                {
+                    Text = i.Name,
+                    Value = i.Id.ToString()
+                }),
+            };
+
+            var StudentID = _userManager.GetUserId(User);
+
+
+            //update JobPost
+            JobPostVM.JobPost = _unitOfWork.JobPost.GetFirstOrDefault(u => u.Id == id);
+
+            IEnumerable<Faculty> faculties = _db.Faculty;
+
+            JobPostVM.FacultyList = faculties;
+
+            IEnumerable<Department> departments = _db.Department.Where(d => d.FacultyId == JobPostVM.JobPost.FacultyId);
+
+            JobPostVM.DepartmentList = departments;
+
+            IEnumerable<JobType> jobTypes = _db.JobType;
+            JobPostVM.JobTypeList = jobTypes;
+
+            IEnumerable<WeekHour> weekHour = _db.WeekHour.Where(d => d.JobTypeId == JobPostVM.JobPost.JobTypeId);
+
+            JobPostVM.WeekHourList = weekHour;
+
+            return View(JobPostVM);
+        }
+
+        //POST
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Apply(JobPostVM obj)
+        {
+
+            var EmployerId = _userManager.GetUserId(User);
+            if (ModelState.IsValid)
+            {
+                obj.StudentApplication.ApplicationUserId = EmployerId;
+                obj.StudentApplication.JobPostId = obj.JobPost.Id;
+
+                _unitOfWork.StudentApplication.Add(obj.StudentApplication);
+
+
+                _unitOfWork.Save();
+                TempData["success"] = "Application created successfully";
+                return RedirectToAction("Search");
+            }
+            return View(obj);
+
+        }
+
+
+
+
+        #region API CALLS
+        [HttpGet]
+        public IActionResult GetAllDocuments(int ApplicationId)
+        {
+            var StudentID = _userManager.GetUserId(User);
+
+            var DocumentList = _unitOfWork.ApplicationDocument.GetAll().Where(u => u.ApplicationId == ApplicationId);
+            /*            var DocumentList = _unitOfWork.ApplicationDocument.GetAll();*/
+            return Json(new { data = DocumentList });
+        }
+
+        [HttpDelete]
+        public IActionResult DeleteDocument(int? id)
+        {
+            var obj = _unitOfWork.ApplicationDocument.GetFirstOrDefault(u => u.Id == id);
+            if (obj == null)
+            {
+                return Json(new { success = false, message = "Error while deleting" });
+            }
+
+            var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, obj.FilePath.TrimStart('\\'));
+            if (System.IO.File.Exists(oldImagePath))
+            {
+                System.IO.File.Delete(oldImagePath);
+            }
+
+            _unitOfWork.ApplicationDocument.Remove(obj);
+            _unitOfWork.Save();
+            return Json(new { success = true, message = "Delete Successful" });
+
+        }
+
+        #endregion
+
+
+
+        #region API CALLS
+        [HttpGet]
+        public IActionResult GetAllDocuments()
+        {
+            var StudentID = _userManager.GetUserId(User);
+
+            var DocumentList = _unitOfWork.ApplicationDocument.GetAll().Where(u => u.ApplicationUserId == StudentID);
+            /*            var DocumentList = _unitOfWork.ApplicationDocument.GetAll();*/
+            return Json(new { data = DocumentList });
+        }
+
+        [HttpDelete]
+        public IActionResult DeleteDocument(int? id)
+        {
+            var obj = _unitOfWork.ApplicationDocument.GetFirstOrDefault(u => u.Id == id);
+            if (obj == null)
+            {
+                return Json(new { success = false, message = "Error while deleting" });
+            }
+
+            var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, obj.FilePath.TrimStart('\\'));
+            if (System.IO.File.Exists(oldImagePath))
+            {
+                System.IO.File.Delete(oldImagePath);
+            }
+
+            _unitOfWork.ApplicationDocument.Remove(obj);
+            _unitOfWork.Save();
+            return Json(new { success = true, message = "Delete Successful" });
+
+        }
+
+        #endregion
+
+
+
+        #region API CALLS
+        [HttpGet]
+        public IActionResult GetAllDocuments()
+        {
+            var StudentID = _userManager.GetUserId(User);
+
+            var DocumentList = _unitOfWork.ApplicationDocument.GetAll().Where(u => u.ApplicationUserId == StudentID);
+            /*            var DocumentList = _unitOfWork.ApplicationDocument.GetAll();*/
+            return Json(new { data = DocumentList });
+        }
+
+        [HttpDelete]
+        public IActionResult DeleteDocument(int? id)
+        {
+            var obj = _unitOfWork.ApplicationDocument.GetFirstOrDefault(u => u.Id == id);
+            if (obj == null)
+            {
+                return Json(new { success = false, message = "Error while deleting" });
+            }
+
+            var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, obj.FilePath.TrimStart('\\'));
+            if (System.IO.File.Exists(oldImagePath))
+            {
+                System.IO.File.Delete(oldImagePath);
+            }
+
+            _unitOfWork.ApplicationDocument.Remove(obj);
+            _unitOfWork.Save();
+            return Json(new { success = true, message = "Delete Successful" });
+
+        }
+
+        #endregion
+
+
+
+        #region API CALLS
+        [HttpGet]
+        public IActionResult GetAllDocuments()
+        {
+            var StudentID = _userManager.GetUserId(User);
+
+            var DocumentList = _unitOfWork.ApplicationDocument.GetAll().Where(u => u.ApplicationUserId == StudentID);
+            /*            var DocumentList = _unitOfWork.ApplicationDocument.GetAll();*/
+            return Json(new { data = DocumentList });
+        }
+
+        [HttpDelete]
+        public IActionResult DeleteDocument(int? id)
+        {
+            var obj = _unitOfWork.ApplicationDocument.GetFirstOrDefault(u => u.Id == id);
+            if (obj == null)
+            {
+                return Json(new { success = false, message = "Error while deleting" });
+            }
+
+            var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, obj.FilePath.TrimStart('\\'));
+            if (System.IO.File.Exists(oldImagePath))
+            {
+                System.IO.File.Delete(oldImagePath);
+            }
+
+            _unitOfWork.ApplicationDocument.Remove(obj);
+            _unitOfWork.Save();
+            return Json(new { success = true, message = "Delete Successful" });
+
+        }
+
+        #endregion
+
+
+
+        #region API CALLS
+        [HttpGet]
+        public IActionResult GetAllDocuments()
+        {
+            var StudentID = _userManager.GetUserId(User);
+
+            var DocumentList = _unitOfWork.ApplicationDocument.GetAll().Where(u => u.ApplicationUserId == StudentID);
+            /*            var DocumentList = _unitOfWork.ApplicationDocument.GetAll();*/
+            return Json(new { data = DocumentList });
+        }
+
+        [HttpDelete]
+        public IActionResult DeleteDocument(int? id)
+        {
+            var obj = _unitOfWork.ApplicationDocument.GetFirstOrDefault(u => u.Id == id);
+            if (obj == null)
+            {
+                return Json(new { success = false, message = "Error while deleting" });
+            }
+
+            var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, obj.FilePath.TrimStart('\\'));
+            if (System.IO.File.Exists(oldImagePath))
+            {
+                System.IO.File.Delete(oldImagePath);
+            }
+
+            _unitOfWork.ApplicationDocument.Remove(obj);
+            _unitOfWork.Save();
+            return Json(new { success = true, message = "Delete Successful" });
+
+        }
+
+        #endregion
+
+
+
+        #region API CALLS
+        [HttpGet]
+        public IActionResult GetAllDocuments()
+        {
+            var StudentID = _userManager.GetUserId(User);
+
+            var DocumentList = _unitOfWork.ApplicationDocument.GetAll().Where(u => u.ApplicationUserId == StudentID);
+            /*            var DocumentList = _unitOfWork.ApplicationDocument.GetAll();*/
+            return Json(new { data = DocumentList });
+        }
+
+        [HttpDelete]
+        public IActionResult DeleteDocument(int? id)
+        {
+            var obj = _unitOfWork.ApplicationDocument.GetFirstOrDefault(u => u.Id == id);
+            if (obj == null)
+            {
+                return Json(new { success = false, message = "Error while deleting" });
+            }
+
+            var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, obj.FilePath.TrimStart('\\'));
+            if (System.IO.File.Exists(oldImagePath))
+            {
+                System.IO.File.Delete(oldImagePath);
+            }
+
+            _unitOfWork.ApplicationDocument.Remove(obj);
+            _unitOfWork.Save();
+            return Json(new { success = true, message = "Delete Successful" });
+
+        }
+
+        #endregion
+
+
+
+        #region API CALLS
+        [HttpGet]
+        public IActionResult GetAllDocuments()
+        {
+            var StudentID = _userManager.GetUserId(User);
+
+            var DocumentList = _unitOfWork.ApplicationDocument.GetAll().Where(u => u.ApplicationUserId == StudentID);
+            /*            var DocumentList = _unitOfWork.ApplicationDocument.GetAll();*/
+            return Json(new { data = DocumentList });
+        }
+
+        [HttpDelete]
+        public IActionResult DeleteDocument(int? id)
+        {
+            var obj = _unitOfWork.ApplicationDocument.GetFirstOrDefault(u => u.Id == id);
+            if (obj == null)
+            {
+                return Json(new { success = false, message = "Error while deleting" });
+            }
+
+            var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, obj.FilePath.TrimStart('\\'));
+            if (System.IO.File.Exists(oldImagePath))
+            {
+                System.IO.File.Delete(oldImagePath);
+            }
+
+            _unitOfWork.ApplicationDocument.Remove(obj);
+            _unitOfWork.Save();
+            return Json(new { success = true, message = "Delete Successful" });
+
+        }
+
+        #endregion
+
+
+
+        #region API CALLS
+        [HttpGet]
+        public IActionResult GetAllDocuments()
+        {
+            var StudentID = _userManager.GetUserId(User);
+
+            var DocumentList = _unitOfWork.ApplicationDocument.GetAll().Where(u => u.ApplicationUserId == StudentID);
+            /*            var DocumentList = _unitOfWork.ApplicationDocument.GetAll();*/
+            return Json(new { data = DocumentList });
+        }
+
+        [HttpDelete]
+        public IActionResult DeleteDocument(int? id)
+        {
+            var obj = _unitOfWork.ApplicationDocument.GetFirstOrDefault(u => u.Id == id);
+            if (obj == null)
+            {
+                return Json(new { success = false, message = "Error while deleting" });
+            }
+
+            var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, obj.FilePath.TrimStart('\\'));
+            if (System.IO.File.Exists(oldImagePath))
+            {
+                System.IO.File.Delete(oldImagePath);
+            }
+
+            _unitOfWork.ApplicationDocument.Remove(obj);
+            _unitOfWork.Save();
+            return Json(new { success = true, message = "Delete Successful" });
+
+        }
+
+        #endregion
+
     }
 }

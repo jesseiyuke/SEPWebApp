@@ -12,10 +12,16 @@ namespace SEP.Models
     {
         [Key]
         public int Id { get; set; }
-        [ForeignKey("ApplicationId")]
+        [Required]
         public int ApplicationId { get; set; }
-        public StudentApplication StudentApplication { get; set; }
-        public string Name { get; set; }
+        [ForeignKey("ApplicationId")]
+        [ValidateNever]
+        public StudentApplication Application { get; set; }
+        //public StudentApplication StudentApplication { get; set; }
+        public string? Name { get; set; }
+        [Required]
+        public string Description { get; set; }
+        [ValidateNever]
         public string FilePath { get; set; }
 
 

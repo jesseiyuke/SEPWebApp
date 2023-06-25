@@ -36,7 +36,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Student\Controllers\" />
+    <Folder Include="wwwroot\files\Documents\" />
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
