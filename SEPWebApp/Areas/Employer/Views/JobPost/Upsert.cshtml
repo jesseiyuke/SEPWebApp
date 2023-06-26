@@ -325,25 +325,9 @@
     @{
         <partial name="_ValidationScriptsPartial" />
     }
-    <script>
-        $(function () {
-            // Get the current date
-            var currentDate = new Date();
-
-            // Set the date format for display
-            $("#datepicker").datepicker({
-                dateFormat: "yy-mm-dd",
-                // Set the default date to the current date
-                defaultDate: currentDate,
-                // Only allow selection of dates in the future
-                minDate: currentDate
-            });
-        });
-    </script>
 
     <script>
         $(document).ready(function (){
-            //$('#weekhour').attr('disabled', true);
             $('#jobtype').change(function () {
                 var obid = this.value;
                 $('#weekhour').empty();
@@ -363,11 +347,31 @@
                         }
                         else {
                             $('#weekhour').hide();
+                            $.each(week, function (index, item) {
+                                $('#weekhour').append('<option value="' + item.id + '">' + item.name + '</option')
+                            });
                         }
                     }
                 });
             });
         })
+    </script>
+
+
+    <script>
+        $(function () {
+            // Get the current date
+            var currentDate = new Date();
+
+            // Set the date format for display
+            $("#datepicker").datepicker({
+                dateFormat: "yy-mm-dd",
+                // Set the default date to the current date
+                defaultDate: currentDate,
+                // Only allow selection of dates in the future
+                minDate: currentDate
+            });
+        });
     </script>
     }
 

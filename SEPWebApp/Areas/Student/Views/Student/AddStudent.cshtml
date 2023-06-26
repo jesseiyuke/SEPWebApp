@@ -216,15 +216,15 @@
                             </div>
                         </div>
 
-                        <div class="row align-items-center py-3">
-                            <div class="col-md-3 ps-5">
+                <div class="row align-items-center py-3">
+                    <div class="col-md-3 ps-5">
 
-                            <label asp-for="Faculty" class="mb-0">Faculty</label>
+                        <label asp-for="Faculty" class="mb-0">Faculty</label>
 
-                            </div>
+                    </div>
 
-                            <div class="col-md-9 pe-5">
-                        <select id="FacultyDropdown" asp-for="Faculty">
+                    <div class="col-md-9 pe-5">
+                        <select id="facultyDropdown" asp-for="Faculty">
                             <option disabled selected>Select Faculty</option>
                             @foreach (var fac in Model.FacutyList)
                             {
@@ -233,28 +233,27 @@
                             @*<option disabled selected>Select Faculty</option>*@
                         </select>
 
-                            </div>
-                        </div>
+                    </div>
+                </div>
 
-                        <div class="row align-items-center py-3">
-                            <div class="col-md-3 ps-5">
+                <div class="row align-items-center py-3">
+                    <div class="col-md-3 ps-5">
 
-                            <label asp-for="Department" class="mb-0">Department</label>
+                        <label asp-for="Department" class="mb-0">Department</label>
 
-                            </div>
+                    </div>
 
-                            <div class="col-md-9 pe-5">
-                        <select id="DepartmentDropdown" asp-for="Department">
+                    <div class="col-md-9 pe-5">
+                        <select id="departmentDropdown" asp-for="Department">
                             <option disabled selected>Select Department</option>
                             @foreach (var dep in Model.DepartmentList)
                             {
                                 <option value="@dep.Id">@dep.Name</option>
                             }
-                            @*<option disabled selected>Select Department</option>*@
                         </select>
 
-                            </div>
-                        </div>
+                    </div>
+                </div>
 
 
                     </div>

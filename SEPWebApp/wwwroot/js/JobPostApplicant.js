@@ -1,18 +1,21 @@
 ﻿var dataTable;
 
 $(document).ready(function () {
-	loadDataTable();
+	var url = window.location.search;
+	var urlParams = new URLSearchParams(url);
+	var param = urlParams.get('id');
+	loadDataTable(param);
 });
 
-function loadDataTable() {
+function loadDataTable(id) {
 	dataTable = $('#tblData').DataTable({
 		"ajax": {
-			"url": "/Employer/JobPost/GetAllApplicant"
+			"url": "/Employer/JobPost/GetAllApplicant?id=" + id
 		},
 		"columns": [
-			{ "data": "id", "width": "15%" },
-/*			{ "data": "applicationUser.firstName", "width": "15%" },
-			{ "data": "applicationUser.lastName", "width": "15%" },*/
+			{ "data": "applicationUser.firstName", "width": "15%" },
+			{ "data": "applicationUser.lastName", "width": "15%" },
+			{ "data": "department.name", "width": "15%" },
 
 			{
 				"data": "id",
