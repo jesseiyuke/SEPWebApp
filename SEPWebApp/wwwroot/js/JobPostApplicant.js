@@ -15,7 +15,7 @@ function loadDataTable(id) {
 		"columns": [
 			{ "data": "applicationUser.firstName", "width": "15%" },
 			{ "data": "applicationUser.lastName", "width": "15%" },
-			{ "data": "department.name", "width": "15%" },
+			{ "data": "studentDepartment.name", "width": "15%" },
 
 			{
 				"data": "id",

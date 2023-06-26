@@ -172,7 +172,7 @@ namespace SEPWebApp.Areas.Employer.Controllers
         public IActionResult GetAllApplicant(int? id)
         {
             /*            var StudentList = _unitOfWork.StudentApplication.GetAll();*/
-            var StudentList = _unitOfWork.StudentApplication.GetAll(includeProperties: "ApplicationUser,Faculty,Department,YearOfStudy,Gender,Nationality").Where(u => u.JobPostId == id);
+            var StudentList = _unitOfWork.StudentApplication.GetAll(includeProperties: "ApplicationUser,Faculty,Department,YearOfStudy,Gender,Nationality,StudentDepartment").Where(u => u.JobPostId == id);
             /*            var StudentList = _unitOfWork.StudentApplication.GetAll(includeProperties: "ApplicationUser,Student");*/
             return Json(new { data = StudentList });
         }

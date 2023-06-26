@@ -476,7 +476,7 @@ namespace SEPWebApp.Areas.Controllers
             JobPostVM JobPostVM = new()
             {
                 JobPost = new(),
-                Student=new(),
+                Student = new(),
                 StatusList = _unitOfWork.Status.GetAll().Select(i => new SelectListItem
                 {
                     Text = i.Name,
@@ -532,7 +532,7 @@ namespace SEPWebApp.Areas.Controllers
                 obj.StudentApplication.EndDate = obj.JobPost.EndDate;
 
                 obj.StudentApplication.FacultyId = obj.Student.FacultyId;
-/*                obj.StudentApplication.DepartmentId = obj.Student.DepartmentId;*/
+                obj.StudentApplication.StudentDepartmentId = obj.Student.DepartmentId;
                 obj.StudentApplication.YearOfStudyId = obj.Student.YearOfStudyId;
                 obj.StudentApplication.GenderId = obj.Student.GenderId;
                 obj.StudentApplication.NationalityId = obj.Student.NationalityId;

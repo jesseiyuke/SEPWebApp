@@ -25,11 +25,11 @@ namespace SEP.Models
         [Display(Name = "Job title")]
         public string JobTitle { get; set; }
 
-/*        [Required]
+        [Required]
         public int DepartmentId { get; set; }
         [ForeignKey("DepartmentId")]
         [ValidateNever]
-        public Department Department { get; set; }*/
+        public Department Department { get; set; }
 
         [Required]
         public int WeekHourId { get; set; }
@@ -60,9 +60,9 @@ namespace SEP.Models
         public int FacultyId { get; set; }
         public Faculty? Faculty { get; set; }
 
-        [ForeignKey(nameof(DepartmentId))]
-        public int DepartmentId { get; set; }
-        public Department? Department { set; get; }
+        [ForeignKey(nameof(StudentDepartmentId))]
+        public int? StudentDepartmentId { get; set; }
+        public Department? StudentDepartment { set; get; }
 
         [ForeignKey(nameof(YearOfStudyId))]
         public int YearOfStudyId { get; set; }
