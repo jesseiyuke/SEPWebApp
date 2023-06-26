@@ -172,7 +172,7 @@ namespace SEPWebApp.Areas.Employer.Controllers
         public IActionResult GetAllApplicant(int? id)
         {
             /*            var StudentList = _unitOfWork.StudentApplication.GetAll();*/
-            var StudentList = _unitOfWork.StudentApplication.GetAll(includeProperties: "ApplicationUser,Faculty,Department,YearOfStudy,Gender,Nationality,StudentDepartment").Where(u => u.JobPostId == id);
+            var StudentList = _unitOfWork.StudentApplication.GetAll(includeProperties: "ApplicationUser,Faculty,Department,YearOfStudy,Gender,StudentDepartment,Status").Where(u => u.JobPostId == id);
             /*            var StudentList = _unitOfWork.StudentApplication.GetAll(includeProperties: "ApplicationUser,Student");*/
             return Json(new { data = StudentList });
         }
@@ -237,6 +237,57 @@ namespace SEPWebApp.Areas.Employer.Controllers
             //GetAllApplicant(id);
 
             return View(JobPostVM);
+        }
+
+        //GET
+        public IActionResult Detail(int? id)
+        {
+            JobPostVM JobPostVM = new()
+            {
+                JobPost = new(),
+                ApplicationUser = new(),
+                StatusList = _unitOfWork.Status.GetAll().Select(i => new SelectListItem
+                {
+                    Text = i.Name,
+                    Value = i.Id.ToString()
+                }),
+            };
+
+            JobPostVM.StudentApplication = _unitOfWork.StudentApplication.GetFirstOrDefault(u => u.Id == id);
+            JobPostVM.JobPost = _unitOfWork.JobPost.GetFirstOrDefault(u => u.Id == JobPostVM.StudentApplication.JobPostId);
+            JobPostVM.ApplicationUser = _unitOfWork.ApplicationUser.GetFirstOrDefault(a => a.Id == JobPostVM.StudentApplication.ApplicationUserId);
+
+            IEnumerable<Faculty> faculties = _db.Faculty;
+
+            JobPostVM.FacultyList = faculties;
+
+            IEnumerable<Department> departments = _db.Department.Where(d => d.FacultyId == JobPostVM.StudentApplication.FacultyId);
+
+            JobPostVM.DepartmentList = departments;
+
+
+            /*            JobPostVM.ApplicationUser = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == EmployerId);*/
+
+            return View(JobPostVM);
+        }
+
+        //POST
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Detail(JobPostVM obj)
+        {
+
+            var EmployerId = _userManager.GetUserId(User);
+            if (ModelState.IsValid)
+            {
+                _unitOfWork.StudentApplication.Update(obj.StudentApplication);
+
+                _unitOfWork.Save();
+                TempData["success"] = "Decision Made";
+                return RedirectToAction("Index");
+            }
+            return View(obj);
+
         }
 
 

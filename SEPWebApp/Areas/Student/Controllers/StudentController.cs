@@ -302,7 +302,8 @@ namespace SEPWebApp.Areas.Controllers
         }
         public IActionResult GetAllJobPost()
         {
-            var JobPostList = _unitOfWork.JobPost.GetAll(includeProperties: "Faculty,Department,JobType,WeekHour");
+            /*            var JobPostList = _unitOfWork.JobPost.GetAll(includeProperties: "Faculty,Department,JobType,WeekHour");*/
+            var JobPostList = _unitOfWork.JobPost.GetAll(includeProperties: "Faculty,Department,JobType,WeekHour").Where(s => s.StatusId != 1);
             return Json(new { data = JobPostList });
         }
         public IActionResult GetJobPost(int Id)

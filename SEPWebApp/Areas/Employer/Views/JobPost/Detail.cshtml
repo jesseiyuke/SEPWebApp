@@ -1,0 +1,200 @@
+﻿@model SEP.Models.ViewModels.JobPostVM
+
+
+<form method="post" asp-action="Detail">
+    <input asp-for="JobPost.Id" hidden />
+    <input asp-for="JobPost.ApplicationUserId" hidden />
+
+    <div class="border p-3 mt-2">
+        <div class="row pb-2">
+            <h2 class="text-primary">Details</h2>
+        </div>
+
+        <div class="mb-3 form-group row">
+            <label asp-for="JobPost.JobTitle" class="col-2"></label>
+            <div class="col-10">
+                <input asp-for="JobPost.JobTitle" class="form-control" readonly="readonly">
+                <span asp-validation-for="JobPost.JobTitle" class="text-danger"></span>
+            </div>
+        </div>
+
+
+        <div class="mb-3 form-group row">
+            <label asp-for="JobPost.JobDescription" class="col-2"></label>
+            <div class="col-10">
+                <input asp-for="JobPost.JobDescription" class="form-control" readonly="readonly">
+                <span asp-validation-for="JobPost.JobDescription" class="text-danger"></span>
+            </div>
+        </div>
+
+        <h3 class="text-primary">Profile:</h3>
+
+        <div class="mb-3 form-group row">
+            <label asp-for="StudentApplication.ApplicationUser.FirstName" class="col-2"></label>
+            <div class="col-10">
+                <input asp-for="StudentApplication.ApplicationUser.FirstName" class="form-control" readonly="readonly">
+                <span asp-validation-for="StudentApplication.ApplicationUser.FirstName" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="mb-3 form-group row">
+            <label asp-for="StudentApplication.ApplicationUser.LastName" class="col-2"></label>
+            <div class="col-10">
+                <input asp-for="StudentApplication.ApplicationUser.LastName" class="form-control" readonly="readonly">
+                <span asp-validation-for="StudentApplication.ApplicationUser.LastName" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="mb-3 form-group row">
+            <label asp-for="StudentApplication.ApplicationUser.Email" class="col-2"></label>
+            <div class="col-10">
+                <input asp-for="StudentApplication.ApplicationUser.Email" class="form-control" readonly="readonly">
+                <span asp-validation-for="StudentApplication.ApplicationUser.Email" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="mb-3 form-group row">
+            <label asp-for="StudentApplication.ApplicationUser.Telephone" class="col-2"></label>
+            <div class="col-10">
+                <input asp-for="StudentApplication.ApplicationUser.Telephone" class="form-control" readonly="readonly">
+                <span asp-validation-for="StudentApplication.ApplicationUser.Telephone" class="text-danger"></span>
+            </div>
+        </div>
+
+
+        <div class="mb-3 form-group row">
+            <div class="col-10">
+                <label asp-for="StudentApplication.Faculty" class="col-2"></label>
+                <select disabled asp-for="StudentApplication.FacultyId" id="faculty" class="form-select">
+                    @foreach (var fac in Model.FacultyList)
+                    {
+                        <option disabled value="@fac.Id">@fac.Name</option>
+                    }
+                </select>
+                <select hidden asp-for="StudentApplication.FacultyId" id="faculty" class="form-select">
+                    @foreach (var fac in Model.FacultyList)
+                    {
+                        <option hidden value="@fac.Id">@fac.Name</option>
+                    }
+                </select>
+                <br />
+                <span asp-validation-for="StudentApplication.FacultyId" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="mb-3 form-group row">
+            <div class="col-10">
+                <label asp-for="StudentApplication.Department" class="col-2"></label>
+                <select disabled asp-for="StudentApplication.StudentDepartmentId" id="department" class="form-select">
+                    @foreach (var dep in Model.DepartmentList)
+                    {
+                        <option value="@dep.Id">@dep.Name</option>
+                    }
+                </select>
+                <select hidden asp-for="StudentApplication.StudentDepartmentId" id="department" class="form-select">
+                    @foreach (var dep in Model.DepartmentList)
+                    {
+                        <option hidden value="@dep.Id">@dep.Name</option>
+                    }
+                </select>
+                <br />
+                <span asp-validation-for="StudentApplication.StudentDepartmentId" class="text-danger"></span>
+            </div>
+        </div>
+
+        @*<div class="mb-3 form-group row">
+            <div class="col-10">
+                <select disabled asp-for="StudentApplication.YearOfStudy" class="form-select">
+                    @foreach (var dep in Model.DepartmentList)
+                    {
+                        <option value="@dep.Id">@dep.Name</option>
+                    }
+                </select>
+
+                <input asp-for="StudentApplication.YearOfStudy" class="form-control" readonly="readonly">
+
+
+                <select hidden asp-for="StudentApplication.StudentDepartmentId" id="department" class="form-select">
+                    @foreach (var dep in Model.DepartmentList)
+                    {
+                        <option hidden value="@dep.Id">@dep.Name</option>
+                    }
+                </select>
+                <br />
+                <span asp-validation-for="StudentApplication.StudentDepartmentId" class="text-danger"></span>
+            </div>
+        </div>*@
+
+
+        <div class="mb-3 form-group row">
+            <label asp-for="StudentApplication.StatusId" class="col-2"></label>
+            <div class="col-6">
+                <select asp-for="StudentApplication.StatusId" asp-items=@Model.StatusList class="form-select">
+                </select>
+                <br />
+                <span asp-validation-for="StudentApplication.StatusId" class="text-danger"></span>
+            </div>
+
+        </div>
+
+
+        <button type="submit" class="btn btn-primary" style="width:150px">Save</button>
+        <a asp-controller="JobPost" asp-action="Index" class="btn btn-secondary" style="width:150px">Back</a>
+    </div>
+
+
+</form>
+
+@section Scripts
+    {
+    <script>
+        $(function () {
+            $('.datepicker').datepicker();
+        });
+    </script>
+
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+    <script>
+        $(document).ready(function () {
+
+            $('#faculty').change(function () {
+                var obid = this.value;
+                $('#department').empty();
+                $.ajax({
+                    type: 'Get',
+                    url: '@Url.Action("getdepartments","JobPost")',
+                    datatype: 'json',
+                    data: { id: obid },
+                    success: function (dep) {
+                        $.each(dep, function (index, item) {
+                            $('#department').append('<option value="' + item.id + '">' + item.name + '</option')
+                        });
+                    }
+                });
+            });
+        })
+    </script>
+
+    <script>
+        $(document).ready(function () {
+
+            $('#jobtype').change(function () {
+                var obid = this.value;
+                $('#weekhour').empty();
+                $.ajax({
+                    type: 'Get',
+                    url: '@Url.Action("getjobtype","JobPost")',
+                    datatype: 'json',
+                    data: { id: obid },
+                    success: function (dep) {
+                        $.each(dep, function (index, item) {
+                            $('#jobtype').append('<option value="' + item.id + '">' + item.name + '</option')
+                        });
+                    }
+                });
+            });
+        })
+    </script>
+}
