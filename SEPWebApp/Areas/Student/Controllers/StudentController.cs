@@ -10,9 +10,7 @@ using SEP.Models.ViewModels;
 using SEP.Utility;
 using SEPWebApp.Areas.Home.Controllers;
 using SmartBreadcrumbs.Attributes;
-using System.ComponentModel.DataAnnotations;
 using System.Data;
-using System.Security.Cryptography;
 
 namespace SEPWebApp.Areas.Controllers
 {
@@ -24,12 +22,14 @@ namespace SEPWebApp.Areas.Controllers
 
         private readonly UserManager<IdentityUser> _userManager;
         private ApplicationDbContext _db;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public StudentController(IUnitOfWork unitOfWork, ILogger<HomeController> logger, SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager,ApplicationDbContext db)
+        public StudentController(IUnitOfWork unitOfWork, ILogger<HomeController> logger, SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager, ApplicationDbContext db, IWebHostEnvironment webHostEnvironment)
         {
             _unitOfWork = unitOfWork;
             _userManager = userManager;
             _db = db;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         [Breadcrumb("Home", AreaName = "Student")]
@@ -44,7 +44,7 @@ namespace SEPWebApp.Areas.Controllers
             }
             return View();
         }
-        
+        [Breadcrumb("Profile", AreaName = "Student")]
         public IActionResult AddStudent()
         {
 
@@ -120,24 +120,25 @@ namespace SEPWebApp.Areas.Controllers
 
         }
 
-        public JsonResult GetDepartments(int facultyId)
+        public JsonResult GetDepartments(int id)
         {
-            var departments = _unitOfWork.Department.GetAll().Where(d => d.FacultyId == facultyId);
+            var departments = _unitOfWork.Department.GetAll().Where(d => d.FacultyId == id);
 
-            return Json(departments);
+            return new JsonResult(departments);
         }
-        [Breadcrumb("Profile",AreaName ="Student")]
+
+        [Breadcrumb("Profile", AreaName = "Student")]
         public IActionResult Profile()
         {
 
             var studentId = _userManager.GetUserId(User);
             Student student = _unitOfWork.Student.GetFirstOrDefault(d => d.Id == studentId);
             ApplicationUser user = _unitOfWork.ApplicationUser.GetFirstOrDefault(x => x.Id == studentId);
-            StudentVM studentVM = new StudentVM();  
+            StudentVM studentVM = new StudentVM();
 
             Department department = _unitOfWork.Department.GetFirstOrDefault(d => d.Id == student.DepartmentId);
             student.ApplicationUser = user;
-            // studentVM =student;
+            studentVM.Achivements =student.Achivements;
             studentVM.Address = student.Address;
             studentVM.Race = student.RaceId;
             studentVM.Gender = student.GenderId;
@@ -157,7 +158,7 @@ namespace SEPWebApp.Areas.Controllers
             studentVM.Nationality = student.NationalityId;
             studentVM.Interests = student.Interests;
             studentVM.Faculty = department.FacultyId;
-            studentVM.Achivements = student.Achivements;
+
             studentVM.DriverLicenceList = _unitOfWork.DriverLicence.GetAll().Select(i => new SelectListItem
             {
                 Text = i.Name,
@@ -191,7 +192,7 @@ namespace SEPWebApp.Areas.Controllers
             studentVM.Experience = _unitOfWork.Experience.GetByUserId(studentId);
             return View(studentVM);
         }
-        [Breadcrumb("Referee", FromAction = "Profile")]
+
         public IActionResult AddReferees(Referees referees)
         {
             var studentID = _userManager.GetUserId(User);
@@ -203,7 +204,6 @@ namespace SEPWebApp.Areas.Controllers
             TempData["success"] = "Referee added successfully";
             return RedirectToAction("Profile");
         }
-
         public IActionResult UpdateReferees(Referees referees)
         {
             var studentID = _userManager.GetUserId(User);
@@ -215,7 +215,7 @@ namespace SEPWebApp.Areas.Controllers
             TempData["success"] = "Referee Updated successfully";
             return RedirectToAction("Profile");
         }
-        [Breadcrumb("Referee", FromAction = "Profile")]
+        [Breadcrumb("Referees", FromAction ="Profile")]
         public IActionResult EditReferees(int Id)
         {
             Referees referees = _unitOfWork.Referees.GetFirstOrDefault(d => d.Id == Id);
@@ -251,8 +251,7 @@ namespace SEPWebApp.Areas.Controllers
             TempData["success"] = "Experience Updated successfully";
             return RedirectToAction("Profile");
         }
-
-        [Breadcrumb("Experience", FromAction = "Profile")]
+        [Breadcrumb("Experience", FromAction ="Profile")]
         public IActionResult EditExperience(int Id)
         {
             Experience experience = _unitOfWork.Experience.GetFirstOrDefault(d => d.Id == Id);
@@ -304,7 +303,9 @@ namespace SEPWebApp.Areas.Controllers
         }
         public IActionResult GetAllJobPost()
         {
-            var JobPostList = _unitOfWork.JobPost.GetAll(includeProperties: "Faculty,Department,JobType,WeekHour");
+            var studentID = _userManager.GetUserId(User);
+            Student student = _unitOfWork.Student.GetFirstOrDefault(d => d.Id == studentID);
+            var JobPostList = _unitOfWork.JobPost.GetJobPosts(student);
             return Json(new { data = JobPostList });
         }
         public IActionResult GetJobPost(int Id)
@@ -316,13 +317,11 @@ namespace SEPWebApp.Areas.Controllers
         public IActionResult GetAllAppyJobPost()
         {
             var studentID = _userManager.GetUserId(User);
-            var JobPostList = _unitOfWork.StudentApplication.GetAll(includeProperties: "Department,WeekHour,Status").Where(u => u.ApplicationUserId == studentID);
-            //var JobPostList = _unitOfWork.JobPost.GetApplyJobPost(studentID);
-            //var JobPostList = _unitOfWork.JobPost.GetApplyJobPost(studentID);
+            var JobPostList = _unitOfWork.JobPost.GetApplyJobPost(studentID);
+            var json = Json(new { data = JobPostList });
 
             return Json(new { data = JobPostList });
         }
-        [Breadcrumb("Profile", AreaName = "Student")]
         public IActionResult UpdateProfile(StudentVM student)
         {
             var studentID = _userManager.GetUserId(User);
@@ -330,6 +329,7 @@ namespace SEPWebApp.Areas.Controllers
             Student studentVM = _unitOfWork.Student.GetFirstOrDefault(d => d.Id == studentID);
 
             studentVM.ApplicationUser = user;
+            studentVM.Achivements = student.Achivements;
             studentVM.Address = student.Address;
             studentVM.RaceId = (int)student.Race;
             studentVM.GenderId = (int)student.Gender;
@@ -344,7 +344,6 @@ namespace SEPWebApp.Areas.Controllers
             studentVM.NationalityId = (int)student.Nationality;
             studentVM.Interests = student.Interests;
             studentVM.ApplicationUser.PhoneNumber = student.cellPhone;
-            studentVM.Achivements = student.Achivements;
             _unitOfWork.Student.Update(studentVM);
             _unitOfWork.Save();
             TempData["success"] = "Student update successfull";
@@ -352,54 +351,73 @@ namespace SEPWebApp.Areas.Controllers
 
         }
 
-        [Breadcrumb("Application History", FromAction ="Search")]
+        [Breadcrumb("Application", FromAction = "History")]
         public IActionResult ReviewApplication(int Id)
         {
             StudentApplication studentApplication = new StudentApplication();
-            studentApplication = _db.StudentApplication.Where(x => x.Id == Id).Include(a => a.jobPost).ThenInclude(a => a.JobType).Include(a=>a.jobPost).ThenInclude(a=>a.WeekHour).FirstOrDefault();
+            studentApplication = _unitOfWork.StudentApplication.Get(Id);
+            studentApplication.Documents = (ICollection<ApplicationDocument>)_unitOfWork.ApplicationDocument.GetApplicationDocument(Id);
             return View(studentApplication);
         }
         public IActionResult WithdrawApplication(int Id)
         {
             StudentApplication studentApplication = new StudentApplication();
-            studentApplication = _db.StudentApplication.Where(x => x.Id == Id).FirstOrDefault();
-            studentApplication.status = "withdrawn";
+            studentApplication = _unitOfWork.StudentApplication.Get(Id);
+            studentApplication.StatusId = 4;
             _db.StudentApplication.Update(studentApplication);
             _db.SaveChanges();
             return RedirectToAction("History");
 
         }
 
-        [Breadcrumb("Referees", FromAction = "Profile")]
+        [Breadcrumb("Referees", FromAction ="Profile")]
         public IActionResult Referees()
         {
             return View();
         }
-        [Breadcrumb("Qualification", FromAction ="Profile")]
+        [Breadcrumb("Qualification", FromAction = "Profile")]
         public IActionResult Education()
         {
             return View();
         }
-        [Breadcrumb("Experience", FromAction ="Profile")]
+        [Breadcrumb("Exprincense", FromAction ="Profile")]
         public IActionResult Employment()
         {
             return View();
         }
-        [Breadcrumb("Application History ", AreaName = "Student")]
+        [Breadcrumb("History", AreaName = "Student")]
         public IActionResult History()
         {
             return View();
         }
-        [Breadcrumb("Apply", AreaName = "Student")]
+        [Breadcrumb("Search", AreaName = "Student")]
         public IActionResult Search()
         {
             return View();
         }
+        [Breadcrumb("Apply", FromAction = "Search")]
+        public IActionResult Apply(int? id)
+        {
+            JobPost jobPost = _unitOfWork.JobPost.GetJobPost(id);
+            return View(jobPost);
+        }
+        public IActionResult MakeApplication(int id)
+        {
+            var studentID = _userManager.GetUserId(User);
+            StudentApplication studentApplication = new StudentApplication();
+            studentApplication.StudentId = studentID;
+            studentApplication.StatusId = 1;
+            studentApplication.JobPostId = id;
+            _unitOfWork.StudentApplication.Add(studentApplication);
+            _unitOfWork.Save();
 
+            int applicationId = studentApplication.Id;
+            return RedirectToAction("File", "Student", new { id = applicationId });
+        }
         //File Upload
         //GET
-        [Breadcrumb("Upload", AreaName = "Student")]
-        public IActionResult File(int ApplicationId)
+        [Breadcrumb("Upload", FromAction ="Search")]
+        public IActionResult File(int? id)
         {
             FileVM fileVM = new()
             {
@@ -408,9 +426,8 @@ namespace SEPWebApp.Areas.Controllers
 
             };
 
-            fileVM.Application.Id = ApplicationId;
+            fileVM.Application = _unitOfWork.StudentApplication.Get((int)id);
             return View(fileVM);
-
 
         }
         //POST
@@ -418,8 +435,7 @@ namespace SEPWebApp.Areas.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult File(FileVM obj, IFormFile? file)
         {
-
-
+            int ApplicationId = obj.Application.Id;
             if (ModelState.IsValid)
             {
                 string wwwRootPath = _webHostEnvironment.WebRootPath;
@@ -446,79 +462,32 @@ namespace SEPWebApp.Areas.Controllers
                     obj.ApplicationDocument.Name = fileName;
                     obj.ApplicationDocument.FileType = file.ContentType;
                 }
-              //  obj.ApplicationDocument.ApplicationId;
+                obj.ApplicationDocument.ApplicationId = obj.Application.Id;
                 _unitOfWork.ApplicationDocument.Add(obj.ApplicationDocument);
 
                 _unitOfWork.Save();
                 TempData["success"] = "Document uploaded successfully";
-                return View();
-            }
 
-            return View();
-        }
-
-        //GET
-        [Breadcrumb("Apply", AreaName = "Student")]
-        public IActionResult Apply(int? id)
-        {
-            JobPostVM JobPostVM = new()
-            {
-                JobPost = new(),
-                StatusList = _unitOfWork.Status.GetAll().Select(i => new SelectListItem
+                FileVM FileVM = new()
                 {
-                    Text = i.Name,
-                    Value = i.Id.ToString()
-                }),
+                    ApplicationDocument = new(),
+                    Application = new(),
+
+                };
+
+                FileVM.Application = _unitOfWork.StudentApplication.GetFirstOrDefault(u => u.Id == ApplicationId);
+                return View(FileVM);
+            }
+            FileVM fileVM = new()
+            {
+                ApplicationDocument = new(),
+                Application = new(),
+
             };
 
-            var StudentID = _userManager.GetUserId(User);
-
-
-            //update JobPost
-            JobPostVM.JobPost = _unitOfWork.JobPost.GetFirstOrDefault(u => u.Id == id);
-
-            IEnumerable<Faculty> faculties = _db.Faculty;
-
-            JobPostVM.FacultyList = faculties;
-
-            IEnumerable<Department> departments = _db.Department.Where(d => d.FacultyId == JobPostVM.JobPost.FacultyId);
-
-            JobPostVM.DepartmentList = departments;
-
-            IEnumerable<JobType> jobTypes = _db.JobType;
-            JobPostVM.JobTypeList = jobTypes;
-
-            IEnumerable<WeekHour> weekHour = _db.WeekHour.Where(d => d.JobTypeId == JobPostVM.JobPost.JobTypeId);
-
-            JobPostVM.WeekHourList = weekHour;
-
-            return View(JobPostVM);
+            fileVM.Application = _unitOfWork.StudentApplication.GetFirstOrDefault(u => u.Id == ApplicationId);
+            return View(fileVM);
         }
-
-        //POST
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Apply(JobPostVM obj)
-        {
-
-            var EmployerId = _userManager.GetUserId(User);
-            if (ModelState.IsValid)
-            {
-                obj.StudentApplication.ApplicationUserId = EmployerId;
-                obj.StudentApplication.JobPostId = obj.JobPost.Id;
-
-                _unitOfWork.StudentApplication.Add(obj.StudentApplication);
-
-
-                _unitOfWork.Save();
-                TempData["success"] = "Application created successfully";
-                return RedirectToAction("Search");
-            }
-            return View(obj);
-
-        }
-
-
 
 
         #region API CALLS
@@ -555,257 +524,6 @@ namespace SEPWebApp.Areas.Controllers
 
         #endregion
 
-
-
-        #region API CALLS
-        [HttpGet]
-        public IActionResult GetAllDocuments()
-        {
-            var StudentID = _userManager.GetUserId(User);
-
-            var DocumentList = _unitOfWork.ApplicationDocument.GetAll().Where(u => u.ApplicationUserId == StudentID);
-            /*            var DocumentList = _unitOfWork.ApplicationDocument.GetAll();*/
-            return Json(new { data = DocumentList });
-        }
-
-        [HttpDelete]
-        public IActionResult DeleteDocument(int? id)
-        {
-            var obj = _unitOfWork.ApplicationDocument.GetFirstOrDefault(u => u.Id == id);
-            if (obj == null)
-            {
-                return Json(new { success = false, message = "Error while deleting" });
-            }
-
-            var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, obj.FilePath.TrimStart('\\'));
-            if (System.IO.File.Exists(oldImagePath))
-            {
-                System.IO.File.Delete(oldImagePath);
-            }
-
-            _unitOfWork.ApplicationDocument.Remove(obj);
-            _unitOfWork.Save();
-            return Json(new { success = true, message = "Delete Successful" });
-
-        }
-
-        #endregion
-
-
-
-        #region API CALLS
-        [HttpGet]
-        public IActionResult GetAllDocuments()
-        {
-            var StudentID = _userManager.GetUserId(User);
-
-            var DocumentList = _unitOfWork.ApplicationDocument.GetAll().Where(u => u.ApplicationUserId == StudentID);
-            /*            var DocumentList = _unitOfWork.ApplicationDocument.GetAll();*/
-            return Json(new { data = DocumentList });
-        }
-
-        [HttpDelete]
-        public IActionResult DeleteDocument(int? id)
-        {
-            var obj = _unitOfWork.ApplicationDocument.GetFirstOrDefault(u => u.Id == id);
-            if (obj == null)
-            {
-                return Json(new { success = false, message = "Error while deleting" });
-            }
-
-            var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, obj.FilePath.TrimStart('\\'));
-            if (System.IO.File.Exists(oldImagePath))
-            {
-                System.IO.File.Delete(oldImagePath);
-            }
-
-            _unitOfWork.ApplicationDocument.Remove(obj);
-            _unitOfWork.Save();
-            return Json(new { success = true, message = "Delete Successful" });
-
-        }
-
-        #endregion
-
-
-
-        #region API CALLS
-        [HttpGet]
-        public IActionResult GetAllDocuments()
-        {
-            var StudentID = _userManager.GetUserId(User);
-
-            var DocumentList = _unitOfWork.ApplicationDocument.GetAll().Where(u => u.ApplicationUserId == StudentID);
-            /*            var DocumentList = _unitOfWork.ApplicationDocument.GetAll();*/
-            return Json(new { data = DocumentList });
-        }
-
-        [HttpDelete]
-        public IActionResult DeleteDocument(int? id)
-        {
-            var obj = _unitOfWork.ApplicationDocument.GetFirstOrDefault(u => u.Id == id);
-            if (obj == null)
-            {
-                return Json(new { success = false, message = "Error while deleting" });
-            }
-
-            var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, obj.FilePath.TrimStart('\\'));
-            if (System.IO.File.Exists(oldImagePath))
-            {
-                System.IO.File.Delete(oldImagePath);
-            }
-
-            _unitOfWork.ApplicationDocument.Remove(obj);
-            _unitOfWork.Save();
-            return Json(new { success = true, message = "Delete Successful" });
-
-        }
-
-        #endregion
-
-
-
-        #region API CALLS
-        [HttpGet]
-        public IActionResult GetAllDocuments()
-        {
-            var StudentID = _userManager.GetUserId(User);
-
-            var DocumentList = _unitOfWork.ApplicationDocument.GetAll().Where(u => u.ApplicationUserId == StudentID);
-            /*            var DocumentList = _unitOfWork.ApplicationDocument.GetAll();*/
-            return Json(new { data = DocumentList });
-        }
-
-        [HttpDelete]
-        public IActionResult DeleteDocument(int? id)
-        {
-            var obj = _unitOfWork.ApplicationDocument.GetFirstOrDefault(u => u.Id == id);
-            if (obj == null)
-            {
-                return Json(new { success = false, message = "Error while deleting" });
-            }
-
-            var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, obj.FilePath.TrimStart('\\'));
-            if (System.IO.File.Exists(oldImagePath))
-            {
-                System.IO.File.Delete(oldImagePath);
-            }
-
-            _unitOfWork.ApplicationDocument.Remove(obj);
-            _unitOfWork.Save();
-            return Json(new { success = true, message = "Delete Successful" });
-
-        }
-
-        #endregion
-
-
-
-        #region API CALLS
-        [HttpGet]
-        public IActionResult GetAllDocuments()
-        {
-            var StudentID = _userManager.GetUserId(User);
-
-            var DocumentList = _unitOfWork.ApplicationDocument.GetAll().Where(u => u.ApplicationUserId == StudentID);
-            /*            var DocumentList = _unitOfWork.ApplicationDocument.GetAll();*/
-            return Json(new { data = DocumentList });
-        }
-
-        [HttpDelete]
-        public IActionResult DeleteDocument(int? id)
-        {
-            var obj = _unitOfWork.ApplicationDocument.GetFirstOrDefault(u => u.Id == id);
-            if (obj == null)
-            {
-                return Json(new { success = false, message = "Error while deleting" });
-            }
-
-            var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, obj.FilePath.TrimStart('\\'));
-            if (System.IO.File.Exists(oldImagePath))
-            {
-                System.IO.File.Delete(oldImagePath);
-            }
-
-            _unitOfWork.ApplicationDocument.Remove(obj);
-            _unitOfWork.Save();
-            return Json(new { success = true, message = "Delete Successful" });
-
-        }
-
-        #endregion
-
-
-
-        #region API CALLS
-        [HttpGet]
-        public IActionResult GetAllDocuments()
-        {
-            var StudentID = _userManager.GetUserId(User);
-
-            var DocumentList = _unitOfWork.ApplicationDocument.GetAll().Where(u => u.ApplicationUserId == StudentID);
-            /*            var DocumentList = _unitOfWork.ApplicationDocument.GetAll();*/
-            return Json(new { data = DocumentList });
-        }
-
-        [HttpDelete]
-        public IActionResult DeleteDocument(int? id)
-        {
-            var obj = _unitOfWork.ApplicationDocument.GetFirstOrDefault(u => u.Id == id);
-            if (obj == null)
-            {
-                return Json(new { success = false, message = "Error while deleting" });
-            }
-
-            var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, obj.FilePath.TrimStart('\\'));
-            if (System.IO.File.Exists(oldImagePath))
-            {
-                System.IO.File.Delete(oldImagePath);
-            }
-
-            _unitOfWork.ApplicationDocument.Remove(obj);
-            _unitOfWork.Save();
-            return Json(new { success = true, message = "Delete Successful" });
-
-        }
-
-        #endregion
-
-
-
-        #region API CALLS
-        [HttpGet]
-        public IActionResult GetAllDocuments()
-        {
-            var StudentID = _userManager.GetUserId(User);
-
-            var DocumentList = _unitOfWork.ApplicationDocument.GetAll().Where(u => u.ApplicationUserId == StudentID);
-            /*            var DocumentList = _unitOfWork.ApplicationDocument.GetAll();*/
-            return Json(new { data = DocumentList });
-        }
-
-        [HttpDelete]
-        public IActionResult DeleteDocument(int? id)
-        {
-            var obj = _unitOfWork.ApplicationDocument.GetFirstOrDefault(u => u.Id == id);
-            if (obj == null)
-            {
-                return Json(new { success = false, message = "Error while deleting" });
-            }
-
-            var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, obj.FilePath.TrimStart('\\'));
-            if (System.IO.File.Exists(oldImagePath))
-            {
-                System.IO.File.Delete(oldImagePath);
-            }
-
-            _unitOfWork.ApplicationDocument.Remove(obj);
-            _unitOfWork.Save();
-            return Json(new { success = true, message = "Delete Successful" });
-
-        }
-
-        #endregion
 
     }
 }

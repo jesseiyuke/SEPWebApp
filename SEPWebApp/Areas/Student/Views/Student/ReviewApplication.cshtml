@@ -1,51 +1,69 @@
 ﻿@model StudentApplication
 <div>
     <div class="col pb-2">
-        <label>Status</label>
-        <b>@Model.applicationStatus.Name</b>
+        <label class="col-sm-2 col-form-label">Status :</label>
+        <label><b>@Model.applicationStatus.Name</b></label>
     </div>
     <div class="col pb-2">
-        <label>Job Title :</label> 
+        <label class="col-sm-2 col-form-label">Job Title :</label>
         <input disabled asp-for="@Model.jobPost.JobTitle" />
     </div>
     <div class="col pb-2">
-        <label>Location : </label>
-        <input disabled asp-for="@Model.jobPost.Location" />
+        <label class="col-sm-2 col-form-label">Location : </label>
+        <input disabled asp-for="@Model.jobPost.Location" />    
     </div>
     <div class="col pb-2">
-        <label>Description of job : </label>
+        <label class="col-sm-2 col-form-label">Description of job : </label>
         <input disabled asp-for="@Model.jobPost.JobDescription" />
     </div>
-        <div class="col pb-2">
-        <label>Key responsiblities : </label>
-        <input disabled asp-for="@Model.jobPost.KeyResponsibilities" />
+    <div class="col pb-2">
+        <label class="col-sm-2 col-form-label">Key responsiblities : </label>
+        <textArea disabled asp-for="@Model.jobPost.KeyResponsibilities" ></textArea>
     </div>
     <div class="col pb-2">
-        <label>Fulltime or Part-time : </label>
+        <label class="col-sm-2 col-form-label">Fulltime or Part-time : </label>
         <input disabled asp-for="@Model.jobPost.JobType.Name" />
     </div>
     <div class="col pb-2">
-        <label>Number of hours in a week : </label>
+        <label class="col-sm-2 col-form-label">Number of hours in a week : </label>
         <input disabled asp-for="@Model.jobPost.WeekHour.Name" />
     </div>
     <div class="col pb-2">
-        <label>Rate</label>
+        <label class="col-sm-2 col-form-label">Rate</label>
         <input disabled asp-for="@Model.jobPost.HourlyRate" />
     </div>
     <div class="col pb-2">
-        <p>Start date : @Model.jobPost.StartDate.ToString("D")</p>
+         <label class="col-sm-2 col-form-label" asp-for="jobPost.StartDate">Start Date</label>
+        <input asp-for="jobPost.StartDate" type="date" disabled/>
     </div>
     <div class="col pb-2">
-        <p>End date : @Model.jobPost.EndDate.ToString("D")</p>
+        <label class="col-sm-2 col-form-label" asp-for="jobPost.EndDate">End Date</label>
+        <input asp-for="jobPost.EndDate" type="date" disabled/>
     </div>
     <div class="col pb-2">
-        <label>Minimum Requirements</label>
-        <input asp-for="@Model.jobPost.MinimumRequirements" disabled/>
+        <label class="col-sm-2 col-form-label">Minimum Requirements : </label >
+        <input asp-for="@Model.jobPost.MinimumRequirements" disabled />
     </div>
     <div class="col pb-2">
-        <label >Application instruction</label>
-        <input asp-for="@Model.jobPost.ApplicationInstruction" disabled/>
+        <label class="col-sm-2 col-form-label">Application instruction : </label class="col-sm-2 col-form-label">
+        <textarea asp-for="@Model.jobPost.ApplicationInstruction" disabled></textarea>
     </div>
+    <div class="col pb-2">
+         <label class="col-sm-2 col-form-label" asp-for="jobPost.ClosingDate" >Closing Date</label>
+        <input asp-for="jobPost.ClosingDate" type="date" disabled/>
+    </div>
+    <h3>Documents</h3>
+    @foreach (ApplicationDocument document in Model.Documents)
+    {
+        <div class="col pb-2">
+            <label class="col-sm-2 col-form-label" asp-for="jobPost.ClosingDate" >@document.Description</label>
+            <a href="@document.FilePath" target="_blank">@document.Name</a>
+        </div>
+    }
+    @if (Model.StatusId==1)
+    {
+        <a href="/Student/Student/File?id=@Model.Id" class="btn btn-primary mx-2">Add documents</a>
+    }
     <a asp-area="Student" asp-action="History" class="btn btn-secondary" style="width:150px">Back</a>
 
 </div>

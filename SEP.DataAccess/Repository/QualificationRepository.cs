@@ -10,6 +10,8 @@ namespace SEP.DataAccess.Repository
         {
             _db = db;
         }
+
+
         public void Update(Qualifications obj)
         {
             _db.Qualifications.Update(obj);

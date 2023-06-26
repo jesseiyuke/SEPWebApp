@@ -239,20 +239,24 @@ namespace SEP.DataAccess.Migrations
                     b.Property<int>("ApplicationId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("FilePath")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("FileType")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("StudentApplicationId")
-                        .HasColumnType("int");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("ApplicationId");
 
                     b.ToTable("ApplicationDocument");
                 });
@@ -1239,23 +1243,23 @@ namespace SEP.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ApplicationUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int?>("JobPostId")
                         .HasColumnType("int");
 
                     b.Property<int?>("StatusId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.Property<string>("StudentId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasKey("Id");
 
                     b.HasIndex("JobPostId");
 
                     b.HasIndex("StatusId");
+
+                    b.HasIndex("StudentId");
 
                     b.ToTable("StudentApplication");
                 });
@@ -1446,7 +1450,7 @@ namespace SEP.DataAccess.Migrations
 
             modelBuilder.Entity("SEP.Models.ApplicationDocument", b =>
                 {
-                    b.HasOne("SEP.Models.ApplicationUser", "ApplicationUser")
+                    b.HasOne("SEP.Models.StudentApplication", "Application")
                         .WithMany()
                         .HasForeignKey("ApplicationId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1638,12 +1642,6 @@ namespace SEP.DataAccess.Migrations
 
             modelBuilder.Entity("SEP.Models.StudentApplication", b =>
                 {
-                    b.HasOne("SEP.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("ApplicationUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("SEP.Models.JobPost", "jobPost")
                         .WithMany()
                         .HasForeignKey("JobPostId");
@@ -1652,7 +1650,13 @@ namespace SEP.DataAccess.Migrations
                         .WithMany()
                         .HasForeignKey("StatusId");
 
-                    b.Navigation("ApplicationUser");
+                    b.HasOne("SEP.Models.Student", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Student");
 
                     b.Navigation("applicationStatus");
 

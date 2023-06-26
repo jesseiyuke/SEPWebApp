@@ -6,5 +6,8 @@ namespace SEP.DataAccess.Repository.IRepository
     {
         void Update(JobPost obj);
         IEnumerable<StudentApplication> GetApplyJobPost(string userId);
+        IEnumerable<JobPost> GetJobPosts(Student student);
+        JobPost GetJobPost(int? id);
     }
+
 }

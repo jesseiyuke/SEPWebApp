@@ -41,7 +41,7 @@ function loadDataTable() {
 				"render": function (data) {
 					return `
 						<div class="w-75 btn-group" role="group">
-						<a href="/Student/Apply?id=${data}"
+						<a href="/Student/Student/Apply?id=${data}"
 						class="btn btn-primary mx-2">Apply</a>
 					</div>
 						`

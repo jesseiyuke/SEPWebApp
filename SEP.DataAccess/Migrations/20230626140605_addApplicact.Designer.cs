@@ -12,8 +12,8 @@ using SEP.DataAccess;
 namespace SEP.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230616164903_AddedEmployerPrimaryKey")]
-    partial class AddedEmployerPrimaryKey
+    [Migration("20230626140605_addApplicact")]
+    partial class addApplicact
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -229,6 +229,78 @@ namespace SEP.DataAccess.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("SEP.Models.ApplicationDocument", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ApplicationId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FilePath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationId");
+
+                    b.ToTable("ApplicationDocument");
+                });
+
+            modelBuilder.Entity("SEP.Models.ApplicationStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ApplicationStatus", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Pending"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Approved"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Rejected"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Withdrawn"
+                        });
                 });
 
             modelBuilder.Entity("SEP.Models.BusinessType", b =>
@@ -547,6 +619,11 @@ namespace SEP.DataAccess.Migrations
                         {
                             Id = 6,
                             Name = "EB - Ligth Motor Vehicle + Trailer"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "None"
                         });
                 });
 
@@ -726,6 +803,10 @@ namespace SEP.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ApplicationUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<DateTime>("ClosingDate")
                         .HasColumnType("datetime2");
 
@@ -828,6 +909,8 @@ namespace SEP.DataAccess.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("DepartmentId");
 
@@ -1155,6 +1238,35 @@ namespace SEP.DataAccess.Migrations
                     b.ToTable("Student");
                 });
 
+            modelBuilder.Entity("SEP.Models.StudentApplication", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("JobPostId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("StatusId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("StudentId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("JobPostId");
+
+                    b.HasIndex("StatusId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("StudentApplication");
+                });
+
             modelBuilder.Entity("SEP.Models.WeekHour", b =>
                 {
                     b.Property<int>("Id")
@@ -1192,20 +1304,26 @@ namespace SEP.DataAccess.Migrations
                         new
                         {
                             Id = 3,
-                            JobTypeId = 2,
+                            JobTypeId = 1,
                             Name = "6 to 8"
                         },
                         new
                         {
                             Id = 4,
-                            JobTypeId = 2,
+                            JobTypeId = 1,
                             Name = "8 to 12"
                         },
                         new
                         {
                             Id = 5,
-                            JobTypeId = 2,
+                            JobTypeId = 1,
                             Name = ">12"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            JobTypeId = 2,
+                            Name = "Fulltime"
                         });
                 });
 
@@ -1333,6 +1451,17 @@ namespace SEP.DataAccess.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("SEP.Models.ApplicationDocument", b =>
+                {
+                    b.HasOne("SEP.Models.StudentApplication", "Application")
+                        .WithMany()
+                        .HasForeignKey("ApplicationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Application");
+                });
+
             modelBuilder.Entity("SEP.Models.Department", b =>
                 {
                     b.HasOne("SEP.Models.Faculty", "Faculty")
@@ -1384,6 +1513,12 @@ namespace SEP.DataAccess.Migrations
 
             modelBuilder.Entity("SEP.Models.JobPost", b =>
                 {
+                    b.HasOne("SEP.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("SEP.Models.Department", "Department")
                         .WithMany()
                         .HasForeignKey("DepartmentId")
@@ -1413,6 +1548,8 @@ namespace SEP.DataAccess.Migrations
                         .HasForeignKey("WeekHourId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("ApplicationUser");
 
                     b.Navigation("Department");
 
@@ -1504,6 +1641,29 @@ namespace SEP.DataAccess.Migrations
                     b.Navigation("Race");
 
                     b.Navigation("YearOfStudy");
+                });
+
+            modelBuilder.Entity("SEP.Models.StudentApplication", b =>
+                {
+                    b.HasOne("SEP.Models.JobPost", "jobPost")
+                        .WithMany()
+                        .HasForeignKey("JobPostId");
+
+                    b.HasOne("SEP.Models.ApplicationStatus", "applicationStatus")
+                        .WithMany()
+                        .HasForeignKey("StatusId");
+
+                    b.HasOne("SEP.Models.Student", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Student");
+
+                    b.Navigation("applicationStatus");
+
+                    b.Navigation("jobPost");
                 });
 
             modelBuilder.Entity("SEP.Models.WeekHour", b =>

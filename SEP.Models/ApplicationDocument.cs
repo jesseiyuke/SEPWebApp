@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -23,7 +24,7 @@ namespace SEP.Models
         public string Description { get; set; }
         [ValidateNever]
         public string FilePath { get; set; }
-
+        public string FileType { get; set; }
 
     }
     }

@@ -9,10 +9,10 @@ namespace SEP.Models
         [Key]
         public int Id { get; set; }
         [Required]
-        public string ApplicationUserId { get; set; }
-        [ForeignKey("ApplicationUserId")]
+        public string StudentId { get; set; }
+        [ForeignKey("StudentId")]
         [ValidateNever]
-        public ApplicationUser ApplicationUser { get; set; }
+        public Student Student { get; set; }
 
         public int? JobPostId { get; set; }
         [ForeignKey("JobPostId")]
@@ -23,5 +23,6 @@ namespace SEP.Models
         [ForeignKey("StatusId")]
         [ValidateNever]
         public ApplicationStatus? applicationStatus { get; set; }
+        public virtual ICollection<ApplicationDocument> Documents { get; set; }
     }
 }

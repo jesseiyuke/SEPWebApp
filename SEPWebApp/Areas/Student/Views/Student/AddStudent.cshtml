@@ -5,7 +5,6 @@
 
 <form method="post">
 
-
     <h3>Personal details</h3>
 
     <div class="from-group row">
@@ -195,7 +194,7 @@
 
 
         <div class="col pb-2">
-            <select id="FacultyDropdown" asp-for="Faculty">
+            <select id="facultyDropdown" asp-for="Faculty">
                 <option disabled selected>Select Faculty</option>
                 @foreach (var fac in Model.FacutyList)
                 {
@@ -213,14 +212,16 @@
         <label asp-for="Department" class="col-sm-2 col-form-label">Department</label>
 
 
-        <select id="DepartmentDropdown" asp-for="Department">
-            <option disabled selected>Select Department</option>
-            @foreach (var dep in Model.DepartmentList)
-            {
-                <option value="@dep.Id">@dep.Name</option>
-            }
-            @*<option disabled selected>Select Department</option>*@
-        </select>
+        <div class="col pb-2">
+            <select id="departmentDropdown" asp-for="Department">
+                <option disabled selected>Select Department</option>
+                @foreach (var dep in Model.DepartmentList)
+                {
+                    <option value="@dep.Id">@dep.Name</option>
+                }
+            </select>
+
+        </div>
     </div>
 
     <div class="from-group row">
@@ -254,7 +255,6 @@
         </div>
     </div>
     <button type="submit" class="btn btn-success" asp-action="EditStudent" style="width:150px"><i class="bi bi-save"></i></button>
-
 </form>
 
 @section Scripts

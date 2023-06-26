@@ -27,7 +27,7 @@ function loadDataTable() {
 					return formatDate(data);
 				}
 			},
-			{ "data": "status","width":"12%"},
+			{ "data": "applicationStatus.name","width":"12%"},
 
 			{
 				"data": "id",

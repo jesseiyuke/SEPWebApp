@@ -1,2 +1,54 @@
-﻿
-<h2>Student→Search→Details</h2>
+﻿@model JobPost
+<div>   
+    <div class="col pb-2">
+        <label class="col-sm-2 col-form-label">Job Title :</label>
+        <input disabled asp-for="@Model.JobTitle" />
+    </div>
+    <div class="col pb-2">
+        <label class="col-sm-2 col-form-label">Location : </label>
+        <input disabled asp-for="@Model.Location" />    
+    </div>
+    <div class="col pb-2">
+        <label class="col-sm-2 col-form-label">Description of job : </label>
+        <input disabled asp-for="@Model.JobDescription" />
+    </div>
+    <div class="col pb-2">
+        <label class="col-sm-2 col-form-label">Key responsiblities : </label>
+        <textArea disabled asp-for="@Model.KeyResponsibilities" ></textArea>
+    </div>
+    <div class="col pb-2">
+        <label class="col-sm-2 col-form-label">Fulltime or Part-time : </label>
+        <input disabled asp-for="@Model.JobType.Name" />
+    </div>
+    <div class="col pb-2">
+        <label class="col-sm-2 col-form-label">Number of hours in a week : </label>
+        <input disabled asp-for="@Model.WeekHour.Name" />
+    </div>
+    <div class="col pb-2">
+        <label class="col-sm-2 col-form-label">Rate</label>
+        <input disabled asp-for="@Model.HourlyRate" />
+    </div>
+    <div class="col pb-2">
+         <label class="col-sm-2 col-form-label" asp-for="StartDate">Start Date</label>
+        <input asp-for="StartDate" type="date" disabled/>
+    </div>
+    <div class="col pb-2">
+        <label class="col-sm-2 col-form-label" asp-for="EndDate">End Date</label>
+        <input asp-for="EndDate" type="date" disabled/>
+    </div>
+    <div class="col pb-2">
+        <label class="col-sm-2 col-form-label">Minimum Requirements : </label >
+        <input asp-for="@Model.MinimumRequirements" disabled />
+    </div>
+    <div class="col pb-2">
+        <label class="col-sm-2 col-form-label">Application instruction : </label class="col-sm-2 col-form-label">
+        <textarea asp-for="@Model.ApplicationInstruction" disabled></textarea>
+    </div>
+    <div class="col pb-2">
+         <label class="col-sm-2 col-form-label" asp-for="ClosingDate" >Closing Date</label>
+        <input asp-for="ClosingDate" type="date" disabled/>
+    </div>
+    <a href="/Student/Student/MakeApplication?id=@Model.Id" class="btn btn-primary mx-2">Apply</a>
+    <a asp-area="Student" asp-action="Search" class="btn btn-secondary" style="width:150px">Back</a>
+
+</div>

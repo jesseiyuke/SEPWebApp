@@ -8,11 +8,24 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SEP.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class AddedEmployerPrimaryKey : Migration
+    public partial class addApplicaction : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "ApplicationStatus",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ApplicationStatus", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -429,6 +442,7 @@ namespace SEP.DataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     EmoloyerType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FacultyId = table.Column<int>(type: "int", nullable: false),
                     DepartmentId = table.Column<int>(type: "int", nullable: false),
@@ -464,6 +478,12 @@ namespace SEP.DataAccess.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_JobPost", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_JobPost_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_JobPost_Department_DepartmentId",
                         column: x => x.DepartmentId,
@@ -571,6 +591,71 @@ namespace SEP.DataAccess.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "StudentApplication",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    StudentId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    JobPostId = table.Column<int>(type: "int", nullable: true),
+                    StatusId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StudentApplication", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_StudentApplication_ApplicationStatus_StatusId",
+                        column: x => x.StatusId,
+                        principalTable: "ApplicationStatus",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_StudentApplication_JobPost_JobPostId",
+                        column: x => x.JobPostId,
+                        principalTable: "JobPost",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_StudentApplication_Student_StudentId",
+                        column: x => x.StudentId,
+                        principalTable: "Student",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ApplicationDocument",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ApplicationId = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FilePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FileType = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ApplicationDocument", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ApplicationDocument_StudentApplication_ApplicationId",
+                        column: x => x.ApplicationId,
+                        principalTable: "StudentApplication",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "ApplicationStatus",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Pending" },
+                    { 2, "Approved" },
+                    { 3, "Rejected" },
+                    { 4, "Withdrawn" }
+                });
+
             migrationBuilder.InsertData(
                 table: "BusinessType",
                 columns: new[] { "Id", "Name" },
@@ -595,7 +680,8 @@ namespace SEP.DataAccess.Migrations
                     { 3, "B - Light Motor Vehicle" },
                     { 4, "C - Heavy Motor Vehicle" },
                     { 5, "C1 - Light Heavy Motor Vehicle" },
-                    { 6, "EB - Ligth Motor Vehicle + Trailer" }
+                    { 6, "EB - Ligth Motor Vehicle + Trailer" },
+                    { 7, "None" }
                 });
 
             migrationBuilder.InsertData(
@@ -726,10 +812,16 @@ namespace SEP.DataAccess.Migrations
                 {
                     { 1, 1, "<2" },
                     { 2, 1, "4 to 6" },
-                    { 3, 2, "6 to 8" },
-                    { 4, 2, "8 to 12" },
-                    { 5, 2, ">12" }
+                    { 3, 1, "6 to 8" },
+                    { 4, 1, "8 to 12" },
+                    { 5, 1, ">12" },
+                    { 6, 2, "Fulltime" }
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ApplicationDocument_ApplicationId",
+                table: "ApplicationDocument",
+                column: "ApplicationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -794,6 +886,11 @@ namespace SEP.DataAccess.Migrations
                 name: "IX_Experience_StudentId",
                 table: "Experience",
                 column: "StudentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_JobPost_ApplicationUserId",
+                table: "JobPost",
+                column: "ApplicationUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_JobPost_DepartmentId",
@@ -861,6 +958,21 @@ namespace SEP.DataAccess.Migrations
                 column: "YearOfStudyId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_StudentApplication_JobPostId",
+                table: "StudentApplication",
+                column: "JobPostId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StudentApplication_StatusId",
+                table: "StudentApplication",
+                column: "StatusId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StudentApplication_StudentId",
+                table: "StudentApplication",
+                column: "StudentId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_WeekHour_JobTypeId",
                 table: "WeekHour",
                 column: "JobTypeId");
@@ -869,6 +981,9 @@ namespace SEP.DataAccess.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "ApplicationDocument");
+
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -891,13 +1006,13 @@ namespace SEP.DataAccess.Migrations
                 name: "Experience");
 
             migrationBuilder.DropTable(
-                name: "JobPost");
-
-            migrationBuilder.DropTable(
                 name: "Qualifications");
 
             migrationBuilder.DropTable(
                 name: "Referees");
+
+            migrationBuilder.DropTable(
+                name: "StudentApplication");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -906,16 +1021,19 @@ namespace SEP.DataAccess.Migrations
                 name: "BusinessType");
 
             migrationBuilder.DropTable(
-                name: "Status");
+                name: "ApplicationStatus");
 
             migrationBuilder.DropTable(
-                name: "WeekHour");
+                name: "JobPost");
 
             migrationBuilder.DropTable(
                 name: "Student");
 
             migrationBuilder.DropTable(
-                name: "JobType");
+                name: "Status");
+
+            migrationBuilder.DropTable(
+                name: "WeekHour");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
@@ -937,6 +1055,9 @@ namespace SEP.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "YearOfStudy");
+
+            migrationBuilder.DropTable(
+                name: "JobType");
 
             migrationBuilder.DropTable(
                 name: "Faculty");
