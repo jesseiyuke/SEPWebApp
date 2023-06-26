@@ -476,6 +476,7 @@ namespace SEPWebApp.Areas.Controllers
             JobPostVM JobPostVM = new()
             {
                 JobPost = new(),
+                Student=new(),
                 StatusList = _unitOfWork.Status.GetAll().Select(i => new SelectListItem
                 {
                     Text = i.Name,
@@ -488,6 +489,9 @@ namespace SEPWebApp.Areas.Controllers
 
             //update JobPost
             JobPostVM.JobPost = _unitOfWork.JobPost.GetFirstOrDefault(u => u.Id == id);
+
+            //Include Student details
+            JobPostVM.Student = _unitOfWork.Student.GetFirstOrDefault(u => u.Id == StudentID);
 
             IEnumerable<Faculty> faculties = _db.Faculty;
 
@@ -526,6 +530,12 @@ namespace SEPWebApp.Areas.Controllers
 
                 obj.StudentApplication.StartDate = obj.JobPost.StartDate;
                 obj.StudentApplication.EndDate = obj.JobPost.EndDate;
+
+                obj.StudentApplication.FacultyId = obj.Student.FacultyId;
+/*                obj.StudentApplication.DepartmentId = obj.Student.DepartmentId;*/
+                obj.StudentApplication.YearOfStudyId = obj.Student.YearOfStudyId;
+                obj.StudentApplication.GenderId = obj.Student.GenderId;
+                obj.StudentApplication.NationalityId = obj.Student.NationalityId;
 
 
                 _unitOfWork.StudentApplication.Add(obj.StudentApplication);

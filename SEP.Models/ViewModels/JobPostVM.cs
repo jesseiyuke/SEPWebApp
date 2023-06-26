@@ -25,5 +25,8 @@ namespace SEP.Models.ViewModels
         [ValidateNever]
         public StudentApplication StudentApplication { get; set; }
 
+        [ValidateNever]
+        public Student Student { get; set; }
+
     }
 }
