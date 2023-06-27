@@ -10,5 +10,6 @@ namespace SEP.DataAccess.Repository.IRepository
     public interface IApplicationDocumentRepository : IRepository<ApplicationDocument>
     {
         void Update(ApplicationDocument obj);
+        IEnumerable<ApplicationDocument> GetApplicationDocument(int id);
     }
 }

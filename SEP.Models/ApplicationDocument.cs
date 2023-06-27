@@ -9,10 +9,10 @@ namespace SEP.Models
         [Key]
         public int Id { get; set; }
         [Required]
-        public string ApplicationUserId { get; set; }
-        [ForeignKey("ApplicationUserId")]
+        public int ApplicationId { get; set; }
+        [ForeignKey("ApplicationId")]
         [ValidateNever]
-        public ApplicationUser ApplicationUser { get; set; }
+        public StudentApplication Application { get; set; }
         //public StudentApplication StudentApplication { get; set; }
         public string? Name { get; set; }
         [Required]

@@ -1,5 +1,7 @@
 ﻿using SEP.DataAccess.Repository.IRepository;
 using SEP.Models;
+using System.Reflection.Metadata.Ecma335;
+
 namespace SEP.DataAccess.Repository
 {
     public class ApplicationDocumentRepository : Repository<ApplicationDocument>, IApplicationDocumentRepository
@@ -14,6 +16,10 @@ namespace SEP.DataAccess.Repository
         public void Update(ApplicationDocument obj)
         {
             _db.ApplicationDocument.Update(obj);
+        }
+        public IEnumerable<ApplicationDocument> GetApplicationDocument(int id) {
+            IEnumerable<ApplicationDocument> documents = _db.ApplicationDocument.Where(a => a.ApplicationId == id).ToList();
+            return documents;
         }
     }
 }

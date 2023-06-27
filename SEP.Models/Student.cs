@@ -36,8 +36,8 @@ namespace SEP.Models
         public string? Achivements { set; get; }
         public string? Interests { set; get; }
 
-        [ForeignKey(nameof(FacultyId))]
+/*        [ForeignKey(nameof(FacultyId))]
         public int FacultyId { get; set; }
-        public Faculty? Faculty { get; set; }
+        public Faculty? Faculty { get; set; }*/
     }
 }

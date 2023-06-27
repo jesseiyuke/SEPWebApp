@@ -25,13 +25,13 @@ namespace SEP.DataAccess
         public DbSet<Referees> Referees { get; set; }
         public DbSet<Experience> Experience { get; set; }
 
-
         public DbSet<JobType> JobType { get; set; }
         public DbSet<WeekHour> WeekHour { get; set; }
         public DbSet<Status> Status { get; set; }
         public DbSet<BusinessType> BusinessType { get; set; }
         public DbSet<StudentApplication> StudentApplication { get; set; }
         public DbSet<ApplicationDocument> ApplicationDocument { get; set; }
+        public DbSet<ApplicationStatus> ApplicationStatus { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -117,10 +117,23 @@ namespace SEP.DataAccess
             modelBuilder.Entity<DriverLicense>().Property(x => x.Id).ValueGeneratedOnAdd();
             modelBuilder.Entity<DriverLicense>().Property(x => x.Name).IsRequired();
 
+            modelBuilder.Entity<ApplicationStatus>().ToTable("ApplicationStatus");
+            modelBuilder.Entity<ApplicationStatus>().HasKey(f => f.Id);
+            modelBuilder.Entity<ApplicationStatus>().Property(f => f.Id).ValueGeneratedOnAdd();
+            modelBuilder.Entity<ApplicationStatus>().Property(f => f.Name).IsRequired();
+
             // Seed data for JobType
             modelBuilder.Entity<JobType>().HasData(
                 new JobType { Id = 1, Name = "Part-time" },
                 new JobType { Id = 2, Name = "Fulltime" }
+
+            );
+
+            modelBuilder.Entity<ApplicationStatus>().HasData(
+                new ApplicationStatus { Id = 1, Name = "Pending" },
+                new ApplicationStatus { Id = 2, Name = "Approved" },
+                new ApplicationStatus { Id = 3, Name = "Rejected" },
+                new ApplicationStatus { Id = 4, Name = "Withdrawn" }
 
             );
 
@@ -255,7 +268,8 @@ namespace SEP.DataAccess
                 new DriverLicense { Id = 3, Name = "B - Light Motor Vehicle" },
                 new DriverLicense { Id = 4, Name = "C - Heavy Motor Vehicle" },
                 new DriverLicense { Id = 5, Name = "C1 - Light Heavy Motor Vehicle" },
-                new DriverLicense { Id = 6, Name = "EB - Ligth Motor Vehicle + Trailer" }
+                new DriverLicense { Id = 6, Name = "EB - Ligth Motor Vehicle + Trailer" },
+                new DriverLicense { Id = 7, Name = "None"}
                 );
         }
 

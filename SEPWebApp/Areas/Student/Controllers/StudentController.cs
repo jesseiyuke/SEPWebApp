@@ -32,7 +32,7 @@ namespace SEPWebApp.Areas.Controllers
             _webHostEnvironment = webHostEnvironment;
         }
 
-        [Breadcrumb("", AreaName = "Student")]
+        [Breadcrumb("Home", AreaName = "Student")]
         public IActionResult Index()
         {
 
@@ -45,6 +45,7 @@ namespace SEPWebApp.Areas.Controllers
             return View();
         }
 
+        [Breadcrumb("Profile", AreaName = "Student")]
         public IActionResult AddStudent()
         {
 
@@ -107,7 +108,6 @@ namespace SEPWebApp.Areas.Controllers
             studentVM.CareerObjective = student.CareerObjective;
             studentVM.DriversLicenseId = (int)student.DriversLicense;
             studentVM.YearOfStudyId = (int)student.YearOfStudy;
-            studentVM.FacultyId = (int)student.Faculty;
             studentVM.DepartmentId = (int)student.Department;
             studentVM.Skills = student.Skills;
             studentVM.NationalityId = (int)student.Nationality;
@@ -139,7 +139,7 @@ namespace SEPWebApp.Areas.Controllers
 
             Department department = _unitOfWork.Department.GetFirstOrDefault(d => d.Id == student.DepartmentId);
             student.ApplicationUser = user;
-            // studentVM =student;
+            studentVM.Achivements = student.Achivements;
             studentVM.Address = student.Address;
             studentVM.Race = student.RaceId;
             studentVM.Gender = student.GenderId;
@@ -216,6 +216,7 @@ namespace SEPWebApp.Areas.Controllers
             TempData["success"] = "Referee Updated successfully";
             return RedirectToAction("Profile");
         }
+        [Breadcrumb("Referees", FromAction = "Profile")]
         public IActionResult EditReferees(int Id)
         {
             Referees referees = _unitOfWork.Referees.GetFirstOrDefault(d => d.Id == Id);
@@ -251,6 +252,7 @@ namespace SEPWebApp.Areas.Controllers
             TempData["success"] = "Experience Updated successfully";
             return RedirectToAction("Profile");
         }
+        [Breadcrumb("Experience", FromAction = "Profile")]
         public IActionResult EditExperience(int Id)
         {
             Experience experience = _unitOfWork.Experience.GetFirstOrDefault(d => d.Id == Id);
@@ -286,7 +288,7 @@ namespace SEPWebApp.Areas.Controllers
             TempData["success"] = "Qualification Updated successfully";
             return RedirectToAction("Profile");
         }
-        [Breadcrumb("Qalification", AreaName = "Student")]
+        [Breadcrumb("Qualification", AreaName = "Student")]
         public IActionResult EditQualification(int Id)
         {
             Qualifications qualifications = _unitOfWork.Qualification.GetFirstOrDefault(d => d.Id == Id);
@@ -302,8 +304,9 @@ namespace SEPWebApp.Areas.Controllers
         }
         public IActionResult GetAllJobPost()
         {
-            /*            var JobPostList = _unitOfWork.JobPost.GetAll(includeProperties: "Faculty,Department,JobType,WeekHour");*/
-            var JobPostList = _unitOfWork.JobPost.GetAll(includeProperties: "Faculty,Department,JobType,WeekHour").Where(s => s.StatusId != 1);
+            var studentID = _userManager.GetUserId(User);
+            Student student = _unitOfWork.Student.GetFirstOrDefault(d => d.Id == studentID);
+            var JobPostList = _unitOfWork.JobPost.GetJobPosts(student);
             return Json(new { data = JobPostList });
         }
         public IActionResult GetJobPost(int Id)
@@ -315,8 +318,8 @@ namespace SEPWebApp.Areas.Controllers
         public IActionResult GetAllAppyJobPost()
         {
             var studentID = _userManager.GetUserId(User);
-            var JobPostList = _unitOfWork.StudentApplication.GetAll(includeProperties: "Department,WeekHour,Status").Where(u => u.ApplicationUserId == studentID);
-            //var JobPostList = _unitOfWork.JobPost.GetApplyJobPost(studentID);
+            var JobPostList = _unitOfWork.JobPost.GetApplyJobPost(studentID);
+            var json = Json(new { data = JobPostList });
 
             return Json(new { data = JobPostList });
         }
@@ -337,7 +340,6 @@ namespace SEPWebApp.Areas.Controllers
             studentVM.CareerObjective = student.CareerObjective;
             studentVM.DriversLicenseId = (int)student.DriversLicense;
             studentVM.YearOfStudyId = (int)student.YearOfStudy;
-            studentVM.FacultyId = (int)student.Faculty;
             studentVM.DepartmentId = (int)student.Department;
             studentVM.Skills = student.Skills;
             studentVM.NationalityId = (int)student.Nationality;
@@ -350,25 +352,26 @@ namespace SEPWebApp.Areas.Controllers
 
         }
 
-        [Breadcrumb("Application History", AreaName = "Student")]
+        [Breadcrumb("Application", FromAction = "History")]
         public IActionResult ReviewApplication(int Id)
         {
             StudentApplication studentApplication = new StudentApplication();
-            studentApplication = _db.StudentApplication.Where(x => x.Id == Id).Include(a => a.jobPost).ThenInclude(a => a.JobType).Include(a => a.jobPost).ThenInclude(a => a.WeekHour).FirstOrDefault();
+            studentApplication = _unitOfWork.StudentApplication.Get(Id);
+            studentApplication.Documents = (ICollection<ApplicationDocument>)_unitOfWork.ApplicationDocument.GetApplicationDocument(Id);
             return View(studentApplication);
         }
         public IActionResult WithdrawApplication(int Id)
         {
             StudentApplication studentApplication = new StudentApplication();
-            studentApplication = _db.StudentApplication.Where(x => x.Id == Id).FirstOrDefault();
-            studentApplication.StatusId = 5;
+            studentApplication = _unitOfWork.StudentApplication.Get(Id);
+            studentApplication.StatusId = 4;
             _db.StudentApplication.Update(studentApplication);
             _db.SaveChanges();
             return RedirectToAction("History");
 
         }
 
-        [Breadcrumb("Referees", AreaName = "Student")]
+        [Breadcrumb("Referees", FromAction = "Profile")]
         public IActionResult Referees()
         {
             return View();
@@ -383,7 +386,7 @@ namespace SEPWebApp.Areas.Controllers
         {
             return View();
         }
-        [Breadcrumb("Application History ", AreaName = "Student")]
+        [Breadcrumb("History", AreaName = "Student")]
         public IActionResult History()
         {
             return View();
