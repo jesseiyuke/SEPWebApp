@@ -172,7 +172,7 @@ namespace SEPWebApp.Areas.Employer.Controllers
         public IActionResult GetAllApplicant(int? id)
         {
             /*            var StudentList = _unitOfWork.StudentApplication.GetAll();*/
-            var StudentList = _unitOfWork.StudentApplication.GetAll(includeProperties: "ApplicationUser,Faculty,Department,YearOfStudy,Gender,StudentDepartment,Status").Where(u => u.JobPostId == id);
+            var StudentList = _unitOfWork.StudentApplication.GetAll(includeProperties: "ApplicationUser,Faculty,Department,YearOfStudy,Gender,Student,Department,Status").Where(u => u.JobPostId == id);
             /*            var StudentList = _unitOfWork.StudentApplication.GetAll(includeProperties: "ApplicationUser,Student");*/
             return Json(new { data = StudentList });
         }
@@ -218,25 +218,8 @@ namespace SEPWebApp.Areas.Employer.Controllers
         [Breadcrumb("View Applicants", AreaName = "JobPost")]
         public IActionResult ApplicationIndex(int? id)
         {
-            JobPostVM JobPostVM = new()
-            {
-                JobPost = new(),
-                StatusList = _unitOfWork.Status.GetAll().Select(i => new SelectListItem
-                {
-                    Text = i.Name,
-                    Value = i.Id.ToString()
-                }),
-            };
-
-            var EmployerId = _userManager.GetUserId(User);
-
-            JobPostVM.JobPost = _unitOfWork.JobPost.GetFirstOrDefault(u => u.Id == id);
-            JobPostVM.ApplicationUser = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == EmployerId);
-
-            //Applicant table
-            //GetAllApplicant(id);
-
-            return View(JobPostVM);
+            JobPost jobPost = _unitOfWork.JobPost.GetJobPost(id);
+            return View(jobPost);
         }
 
         //GET

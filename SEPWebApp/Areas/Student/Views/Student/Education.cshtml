@@ -5,86 +5,85 @@
 
 <h4>Please enter your Qualification</h4>
 <form>
-
-    <div class="row align-items-center">
-        <div class="col-md-3 ps-5">
-
-            <label asp-for="Institution" class="mb-0">Institution</label>
-
-        </div>
-        <div class="col-md-9 pe-5">
-
-            <input type="text" asp-for="Institution" class="form-control form-control-lg" />
-
-        </div>
-    </div>
-
-    <div class="mb-3 form-group row">
-        <div class="col-md-3 ps-5">
-            <label asp-for="StartDate" class="mb-0">Start Date</label>
-        </div>
-        <div class="col-6">
-            <input asp-for="StartDate" type="text" class="datepicker form-control" />
-        </div>
-    </div>
+    <div class="form-group row">
 
 
-    <div class="mb-3 form-group row">
-        <div class="col-md-3 ps-5">
-            <label asp-for="EndDate" class="mb-0">End Date</label>
-        </div>
-        <div class="col-6">
-            <input asp-for="EndDate" type="text" class="datepicker form-control" />
-        </div>
-    </div>
-    <div class="row align-items-center py-3">
-        <div class="col-md-3 ps-5">
+        <label asp-for="Institution" class="col-sm-2 col-form-label">Institution</label>
 
-            <label asp-for="Qalificatiion" class="mb-0">Qualifition</label>
 
-        </div>
-        <div class="col-md-9 pe-5">
+        <div class="col pb-2">
 
-            <input type="text" asp-for="Qalificatiion" class="form-control form-control-lg" />
-
-        </div>
-    </div>
-    <div class="row align-items-center py-3">
-        <div class="col-md-9 ps-5">
-            <label asp-for="Subjects" class="mb-0">Subjects</label>
-        </div>
-    </div>
-    <div class="form-group">
-        <textarea asp-for="Subjects" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-    </div>
-    <div class="row align-items-center py-3">
-        <div class="col-md-9 ps-5">
-            <label asp-for="Majors" class="mb-0">Majors</label>
-        </div>
-    </div>
-    <div class="form-group">
-        <textarea asp-for="Majors" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-    </div>
-    <div class="row align-items-center py-3">
-        <div class="col-md-9 ps-5">
-            <label asp-for="SubMajors" class="mb-0">Sub-majors</label>
-        </div>
-    </div>
-    <div class="form-group">
-        <textarea asp-for="SubMajors" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-    </div>
-    <div class="row align-items-center py-3">
-        <div class="col-md-3 ps-5">
-
-            <label asp-for="Research" class="mb-0">Research</label>
-
-        </div>
-        <div class="col-md-9 pe-5">
-
-            <input type="text" asp-for="Research" class="form-control form-control-lg" />
+            <input type="text" asp-for="Institution" />
 
         </div>
     </div>
 
-    <button type="submit" class="btn btn-secondary" asp-controller="Student" asp-action="AddQualification" style="width:150px">Save</button>
+    <div class="form-group row">
+
+        <label asp-for="StartDate" class="col-sm-2 col-form-label">Start Date</label>
+
+        <div class="col pb-2">
+            <input asp-for="StartDate" type="month" />
+        </div>
+    </div>
+
+
+    <div class="form-group row">
+
+        <label asp-for="EndDate" class="col-sm-2 col-form-label">End Date</label>
+
+        <div class="col pb-2">
+            <input asp-for="EndDate" type="month" />
+        </div>
+    </div>
+    <div class="form-group row">
+
+        <label asp-for="Qalificatiion" class="col-sm-2 col-form-label">Qualifition</label>
+        <div class="col pb-2">
+
+            <input type="text" asp-for="Qalificatiion" />
+
+        </div>
+    </div>
+    <div class="form-group row">
+
+        <label asp-for="Subjects" class="col-sm-2 col-form-label">Subjects</label>
+
+
+        <div class="col pb-2">
+            <textarea asp-for="Subjects" rows="3"></textarea>
+        </div>
+    </div>
+    <div class="form-group row">
+
+        <label asp-for="Majors" class="col-sm-2 col-form-label">Majors</label>
+
+
+        <div class="col pb-2">
+            <textarea asp-for="Majors" rows="3"></textarea>
+        </div>
+    </div>
+    <div class="form-group row">
+
+        <label asp-for="SubMajors" class="col-sm-2 col-form-label">Sub-majors</label>
+
+
+        <div class="col pb-2">
+            <textarea asp-for="SubMajors" rows="3"></textarea>
+        </div>
+    </div>
+    <div class="form-group row">
+
+
+        <label asp-for="Research" class="col-sm-2 col-form-label">Research</label>
+
+
+        <div class="col pb-2">
+
+            <input type="text" asp-for="Research" />
+
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-success" asp-controller="Student" asp-action="AddQualification" style="width:150px"><i class="bi bi-save"></i></button>
 </form>

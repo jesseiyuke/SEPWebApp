@@ -6,7 +6,7 @@ namespace SEP.Models.ViewModels
     public class FileVM
     {
         [ValidateNever]
-        public ApplicationUser ApplicationUser { get; set; }
+        public StudentApplication Application { get; set; }
         [ValidateNever]
         public ApplicationDocument ApplicationDocument { get; set; }
 

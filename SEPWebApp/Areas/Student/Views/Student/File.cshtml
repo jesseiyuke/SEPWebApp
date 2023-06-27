@@ -1,28 +1,10 @@
 ﻿@model SEP.Models.ViewModels.FileVM
-
-<div class="row pb-2">
-    <h2 class="text-primary">Upload Document</h2>
-</div>
-
-<table id="tblData" class="table table-bordered table-striped" style="width:100%">
-    <thead>
-        <tr>
-            <th>
-                Name
-            </th>
-            <th>
-                Description
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-</table>
-
-
+<h3>Upload all needed documents</h3>
 <form method="post" asp-action="File" enctype="multipart/form-data">
     <input asp-for="ApplicationDocument.Id" hidden />
-    <input asp-for="ApplicationDocument.ApplicationUserId" hidden />
+    <input asp-for="ApplicationDocument.ApplicationId" hidden/>
     <input asp-for="ApplicationDocument.FilePath" hidden />
+    <input asp-for="Application.Id" hidden />
     <div class="p-3 mt-2">
 
         <div class="mb-3 form-group row">
@@ -36,19 +18,17 @@
         <div class="mb-3 form-group row">
             <div class="col-5">
                 <input type="file" id="uploadBox" name="file" class="form-control">
-
             </div>
         </div>
 
     </div>
 
     <button type="submit" onclick="return ValidateInput()" class="btn btn-primary" style="width:150px">Upload</button>
-
+    <a asp-controller="Student" asp-action="Index" class="btn btn-secondary" style="width:150px">Done</a>
 </form>
 
-@*<input asp-for="ApplicationDocument.FilePath" class="form-control" type="file" id="uploadBox" name="file">*@
 
-<a asp-controller="Student" asp-action="Index" class="btn btn-secondary" style="width:150px">Back</a>
+
 
 @section Scripts
     {
@@ -65,8 +45,6 @@
             return true;
         }
     </script>
-
-    <script src="~/js/Document.js" asp-append-version="true"></script>
 
     @{
         <partial name="_ValidationScriptsPartial" />

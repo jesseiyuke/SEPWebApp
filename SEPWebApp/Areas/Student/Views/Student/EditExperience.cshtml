@@ -1,65 +1,43 @@
 ﻿@model Experience
 @{
-    ViewData["Title"] = "Referees";
+    ViewData["Title"] = "Experience";
 }
-<h2>Student→ManageProfile→Referees</h2>
 
-<h3>Please enter your referees</h3>
+<h3>Please enter your Work Experience</h3>
 <form>
-
+    
     <input type="text" asp-for="Id" hidden class="form-control form-control-lg" />
-    <div class="row align-items-center py-3">
-        <div class="col-md-3 ps-5">
-
-            <label asp-for="EmployerName" class="mb-0">Employer Name</label>
-
-        </div>
-        <div class="col-md-9 pe-5">
-
-            <input type="text" asp-for="EmployerName" class="form-control form-control-lg" />
-
+    <div class="form-group row">
+        <label asp-for="EmployerName" class="col-sm-2 col-form-label">Employer Name</label>
+        <div class="col pb-2">
+            <input type="text" asp-for="EmployerName"  />
         </div>
     </div>
-
-    <div class="mb-3 form-group row">
-        <div class="col-md-3 ps-5">
-            <label asp-for="StartDate" class="mb-0">Start Date</label>
-        </div>
-        <div class="col-6">
-            <input asp-for="StartDate" type="text" class="datepicker form-control" />
+    <div class="from-group row">
+        <label asp-for="StartDate" class="col-sm-2 col-form-label">Start Date</label>
+        <div class="col pb-2">
+            <input asp-for="StartDate" type="month" />
         </div>
     </div>
-
-
-    <div class="mb-3 form-group row">
-        <div class="col-md-3 ps-5">
-            <label asp-for="EndDate" class="mb-0">End Date</label>
-        </div>
-        <div class="col-6">
-            <input asp-for="EndDate" type="text" class="datepicker form-control" />
+    <div class="from-group row">
+        <label asp-for="EndDate" class="col-sm-2 col-form-label">End Date</label>
+        <div class="col pb-2">
+            <input asp-for="EndDate" type="month" />
         </div>
     </div>
-    <div class="row align-items-center py-3">
-        <div class="col-md-3 ps-5">
+    <div class="from-group row">
 
-            <label asp-for="JobTitle" class="mb-0">Job title</label>
-
-        </div>
-        <div class="col-md-9 pe-5">
-
-            <input type="text" asp-for="JobTitle" class="form-control form-control-lg" />
-
+        <label asp-for="JobTitle" class="col-sm-2 col-form-label">Job title</label>
+        <div class="col pb-2">
+            <input type="text" asp-for="JobTitle"  />
         </div>
     </div>
-    <div class="row align-items-center py-3">
-        <div class="col-md-9 ps-5">
-            <label asp-for="TasksAndResponsilities" class="mb-0">Tasks and Responsibilies</label>
+    <div class="from-group row">
+
+        <label asp-for="TasksAndResponsilities" class="col-sm-2 col-form-label">Tasks and Responsibilies</label>
+        <div class="col pb-2">
+            <textarea asp-for="TasksAndResponsilities" rows="3"></textarea>
         </div>
     </div>
-    <div class="form-group">
-        <textarea asp-for="TasksAndResponsilities" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-    </div>
-
-
-    <button asp-controller="Student" type="submit" class="btn btn-secondary" asp-action="UpdateExperience" style="width:150px">Save</button>
+    <button asp-controller="Student" type="submit" class="btn btn-success" asp-action="UpdateExperience" style="width:150px"><i class="bi bi-save"></i></button>
 </form>

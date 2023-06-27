@@ -3,9 +3,6 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Search</h2>
-
-
 <table id="tblData" class="table table-bordered table-striped" style="width:100%">
     <thead>
         <tr>
@@ -42,7 +39,7 @@
 </div>
 
 @section Scripts{
-    <script src="~/js/StudentsPost.js" asp-append-version="true"></script>
+    <script src="~/js/StudentsPost.js?v=<%= DateTime.Now.Ticks %>"></script>
 }
 
 

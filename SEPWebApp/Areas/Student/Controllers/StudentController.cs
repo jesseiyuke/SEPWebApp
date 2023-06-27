@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using SEP.DataAccess;
 using SEP.DataAccess.Repository.IRepository;
 using SEP.Models;
@@ -44,7 +43,6 @@ namespace SEPWebApp.Areas.Controllers
             }
             return View();
         }
-
         [Breadcrumb("Profile", AreaName = "Student")]
         public IActionResult AddStudent()
         {
@@ -288,7 +286,7 @@ namespace SEPWebApp.Areas.Controllers
             TempData["success"] = "Qualification Updated successfully";
             return RedirectToAction("Profile");
         }
-        [Breadcrumb("Qualification", AreaName = "Student")]
+        [Breadcrumb("Qualification", FromAction = "Profile")]
         public IActionResult EditQualification(int Id)
         {
             Qualifications qualifications = _unitOfWork.Qualification.GetFirstOrDefault(d => d.Id == Id);
@@ -381,7 +379,7 @@ namespace SEPWebApp.Areas.Controllers
         {
             return View();
         }
-        [Breadcrumb("Exprincense", AreaName = "Student")]
+        [Breadcrumb("Exprincense", FromAction = "Profile")]
         public IActionResult Employment()
         {
             return View();
@@ -396,37 +394,39 @@ namespace SEPWebApp.Areas.Controllers
         {
             return View();
         }
+        [Breadcrumb("Apply", FromAction = "Search")]
+        public IActionResult Apply(int? id)
+        {
+            JobPost jobPost = _unitOfWork.JobPost.GetJobPost(id);
+            return View(jobPost);
+        }
+        public IActionResult MakeApplication(int id)
+        {
+            var studentID = _userManager.GetUserId(User);
+            StudentApplication studentApplication = new StudentApplication();
+            studentApplication.StudentId = studentID;
+            studentApplication.StatusId = 1;
+            studentApplication.JobPostId = id;
+            _unitOfWork.StudentApplication.Add(studentApplication);
+            _unitOfWork.Save();
 
+            int applicationId = studentApplication.Id;
+            return RedirectToAction("File", "Student", new { id = applicationId });
+        }
         //File Upload
         //GET
-        [Breadcrumb("Upload", AreaName = "Student")]
+        [Breadcrumb("Upload", FromAction = "Search")]
         public IActionResult File(int? id)
         {
             FileVM fileVM = new()
             {
                 ApplicationDocument = new(),
-                ApplicationUser = new(),
+                Application = new(),
 
             };
 
-            var StudentId = _userManager.GetUserId(User);
-            ApplicationUser user = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == StudentId);
-            Student student = _unitOfWork.Student.GetFirstOrDefault(e => e.Id == StudentId);
-
-            //create
-            if (id == null || id == 0)
-            {
-                fileVM.ApplicationUser = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == StudentId);
-                return View(fileVM);
-            }
-            //update
-            else
-            {
-                fileVM.ApplicationDocument = _unitOfWork.ApplicationDocument.GetFirstOrDefault(u => u.Id == id);
-                fileVM.ApplicationUser = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == StudentId);
-                return View(fileVM);
-            }
-
+            fileVM.Application = _unitOfWork.StudentApplication.Get((int)id);
+            return View(fileVM);
 
         }
         //POST
@@ -434,8 +434,7 @@ namespace SEPWebApp.Areas.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult File(FileVM obj, IFormFile? file)
         {
-            var StudentId = _userManager.GetUserId(User);
-
+            int ApplicationId = obj.Application.Id;
             if (ModelState.IsValid)
             {
                 string wwwRootPath = _webHostEnvironment.WebRootPath;
@@ -462,119 +461,41 @@ namespace SEPWebApp.Areas.Controllers
                     obj.ApplicationDocument.Name = fileName;
                     obj.ApplicationDocument.FileType = file.ContentType;
                 }
-                obj.ApplicationDocument.ApplicationUserId = StudentId;
+                obj.ApplicationDocument.ApplicationId = obj.Application.Id;
                 _unitOfWork.ApplicationDocument.Add(obj.ApplicationDocument);
 
                 _unitOfWork.Save();
                 TempData["success"] = "Document uploaded successfully";
-                return View();
-            }
 
-            return View();
-        }
-
-        //GET
-        [Breadcrumb("Apply", AreaName = "Student")]
-        public IActionResult Apply(int? id)
-        {
-            JobPostVM JobPostVM = new()
-            {
-                JobPost = new(),
-                Student = new(),
-                StatusList = _unitOfWork.Status.GetAll().Select(i => new SelectListItem
+                FileVM FileVM = new()
                 {
-                    Text = i.Name,
-                    Value = i.Id.ToString()
-                }),
+                    ApplicationDocument = new(),
+                    Application = new(),
+
+                };
+
+                FileVM.Application = _unitOfWork.StudentApplication.GetFirstOrDefault(u => u.Id == ApplicationId);
+                return View(FileVM);
+            }
+            FileVM fileVM = new()
+            {
+                ApplicationDocument = new(),
+                Application = new(),
+
             };
 
-            var StudentID = _userManager.GetUserId(User);
-
-
-            //update JobPost
-            JobPostVM.JobPost = _unitOfWork.JobPost.GetFirstOrDefault(u => u.Id == id);
-
-            //Include Student details
-            JobPostVM.Student = _unitOfWork.Student.GetFirstOrDefault(u => u.Id == StudentID);
-
-            IEnumerable<Faculty> faculties = _db.Faculty;
-
-            JobPostVM.FacultyList = faculties;
-
-            IEnumerable<Department> departments = _db.Department.Where(d => d.FacultyId == JobPostVM.JobPost.FacultyId);
-
-            JobPostVM.DepartmentList = departments;
-
-            IEnumerable<JobType> jobTypes = _db.JobType;
-            JobPostVM.JobTypeList = jobTypes;
-
-            IEnumerable<WeekHour> weekHour = _db.WeekHour.Where(d => d.JobTypeId == JobPostVM.JobPost.JobTypeId);
-
-            JobPostVM.WeekHourList = weekHour;
-
-            return View(JobPostVM);
+            fileVM.Application = _unitOfWork.StudentApplication.GetFirstOrDefault(u => u.Id == ApplicationId);
+            return View(fileVM);
         }
-
-        //POST
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Apply(JobPostVM obj)
-        {
-
-            var EmployerId = _userManager.GetUserId(User);
-            if (ModelState.IsValid)
-            {
-                obj.StudentApplication.ApplicationUserId = EmployerId;
-                obj.StudentApplication.JobPostId = obj.JobPost.Id;
-
-                obj.StudentApplication.JobTitle = obj.JobPost.JobTitle;
-                obj.StudentApplication.DepartmentId = obj.JobPost.DepartmentId;
-
-                obj.StudentApplication.WeekHourId = obj.JobPost.WeekHourId;
-
-                obj.StudentApplication.StartDate = obj.JobPost.StartDate;
-                obj.StudentApplication.EndDate = obj.JobPost.EndDate;
-
-                obj.StudentApplication.FacultyId = obj.Student.FacultyId;
-                obj.StudentApplication.StudentDepartmentId = obj.Student.DepartmentId;
-                obj.StudentApplication.YearOfStudyId = obj.Student.YearOfStudyId;
-                obj.StudentApplication.GenderId = obj.Student.GenderId;
-                obj.StudentApplication.NationalityId = obj.Student.NationalityId;
-
-
-                _unitOfWork.StudentApplication.Add(obj.StudentApplication);
-
-
-                _unitOfWork.Save();
-                TempData["success"] = "Application created successfully";
-                return RedirectToAction("Search");
-            }
-            return View(obj);
-
-        }
-
-
-
-        /*        public IActionResult ViewDocument(int? id)
-                {
-
-                    var file = _unitOfWork.ApplicationDocument.GetFirstOrDefault(u => u.Id == id);
-
-
-                    if (file == null) return null;
-                    var stream = new FileStream(file.FilePath, FileMode.Open);
-                    return File(stream, file.FileType);
-                }*/
-
 
 
         #region API CALLS
         [HttpGet]
-        public IActionResult GetAllDocuments()
+        public IActionResult GetAllDocuments(int ApplicationId)
         {
             var StudentID = _userManager.GetUserId(User);
 
-            var DocumentList = _unitOfWork.ApplicationDocument.GetAll().Where(u => u.ApplicationUserId == StudentID);
+            var DocumentList = _unitOfWork.ApplicationDocument.GetAll().Where(u => u.ApplicationId == ApplicationId);
             /*            var DocumentList = _unitOfWork.ApplicationDocument.GetAll();*/
             return Json(new { data = DocumentList });
         }
@@ -601,6 +522,7 @@ namespace SEPWebApp.Areas.Controllers
         }
 
         #endregion
+
 
     }
 }
