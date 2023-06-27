@@ -5,6 +5,11 @@
     <input asp-for="JobPost.Id" hidden />
     <input asp-for="JobPost.ApplicationUserId" hidden />
 
+    <input asp-for="StudentApplication.Id" hidden />
+    <input asp-for="StudentApplication.ApplicationUserId" hidden />
+@*    <input asp-for="StudentApplication.JobPostId" hidden />*@
+@*    <input asp-for="StudentApplication.Id" hidden />*@
+
     <div class="border p-3 mt-2">
         <div class="row pb-2">
             <h2 class="text-primary">Details</h2>
@@ -63,8 +68,8 @@
 
 
         <div class="mb-3 form-group row">
+            <label asp-for="StudentApplication.Faculty" class="col-2"></label>
             <div class="col-10">
-                <label asp-for="StudentApplication.Faculty" class="col-2"></label>
                 <select disabled asp-for="StudentApplication.FacultyId" id="faculty" class="form-select">
                     @foreach (var fac in Model.FacultyList)
                     {
@@ -83,8 +88,8 @@
         </div>
 
         <div class="mb-3 form-group row">
+            <label asp-for="StudentApplication.Department" class="col-2"></label>
             <div class="col-10">
-                <label asp-for="StudentApplication.Department" class="col-2"></label>
                 <select disabled asp-for="StudentApplication.StudentDepartmentId" id="department" class="form-select">
                     @foreach (var dep in Model.DepartmentList)
                     {
@@ -102,28 +107,65 @@
             </div>
         </div>
 
-        @*<div class="mb-3 form-group row">
+        <div class="mb-3 form-group row">
+            <label asp-for="StudentApplication.YearOfStudy" class="col-2"></label>
             <div class="col-10">
-                <select disabled asp-for="StudentApplication.YearOfStudy" class="form-select">
-                    @foreach (var dep in Model.DepartmentList)
+                <select disabled asp-for="StudentApplication.YearOfStudyId" class="form-select">
+                    @foreach (var dep in Model.YearOfStudyList)
                     {
                         <option value="@dep.Id">@dep.Name</option>
                     }
                 </select>
-
-                <input asp-for="StudentApplication.YearOfStudy" class="form-control" readonly="readonly">
-
-
-                <select hidden asp-for="StudentApplication.StudentDepartmentId" id="department" class="form-select">
-                    @foreach (var dep in Model.DepartmentList)
+                <select hidden asp-for="StudentApplication.YearOfStudyId" class="form-select">
+                    @foreach (var dep in Model.YearOfStudyList)
                     {
                         <option hidden value="@dep.Id">@dep.Name</option>
                     }
                 </select>
                 <br />
-                <span asp-validation-for="StudentApplication.StudentDepartmentId" class="text-danger"></span>
+                <span asp-validation-for="StudentApplication.YearOfStudyId" class="text-danger"></span>
             </div>
-        </div>*@
+        </div>
+
+        <div class="mb-3 form-group row">
+            <label asp-for="StudentApplication.Gender" class="col-2"></label>
+            <div class="col-10">
+                <select disabled asp-for="StudentApplication.GenderId" class="form-select">
+                    @foreach (var dep in Model.GenderList)
+                    {
+                        <option value="@dep.Id">@dep.Name</option>
+                    }
+                </select>
+                <select hidden asp-for="StudentApplication.GenderId" class="form-select">
+                    @foreach (var dep in Model.GenderList)
+                    {
+                        <option hidden value="@dep.Id">@dep.Name</option>
+                    }
+                </select>
+                <br />
+                <span asp-validation-for="StudentApplication.GenderId" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="mb-3 form-group row">
+            <label asp-for="StudentApplication.Nationality" class="col-2"></label>
+            <div class="col-10">
+                <select disabled asp-for="StudentApplication.NationalityId" class="form-select">
+                    @foreach (var dep in Model.NationalityList)
+                    {
+                        <option value="@dep.Id">@dep.Name</option>
+                    }
+                </select>
+                <select hidden asp-for="StudentApplication.NationalityId" class="form-select">
+                    @foreach (var dep in Model.NationalityList)
+                    {
+                        <option hidden value="@dep.Id">@dep.Name</option>
+                    }
+                </select>
+                <br />
+                <span asp-validation-for="StudentApplication.NationalityId" class="text-danger"></span>
+            </div>
+        </div>
 
 
         <div class="mb-3 form-group row">

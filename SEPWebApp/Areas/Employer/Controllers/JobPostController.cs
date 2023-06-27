@@ -265,6 +265,18 @@ namespace SEPWebApp.Areas.Employer.Controllers
 
             JobPostVM.DepartmentList = departments;
 
+            IEnumerable<YearOfStudy> yearOfStudies = _db.YearOfStudy;
+
+            JobPostVM.YearOfStudyList = yearOfStudies;
+
+            IEnumerable<Gender> genders = _db.Gender;
+
+            JobPostVM.GenderList = genders;
+
+            IEnumerable<Nationality> nationalities = _db.Nationality;
+
+            JobPostVM.NationalityList = nationalities;
+
 
             /*            JobPostVM.ApplicationUser = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == EmployerId);*/
 
@@ -276,11 +288,12 @@ namespace SEPWebApp.Areas.Employer.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Detail(JobPostVM obj)
         {
+            StudentApplication studentApplication = _unitOfWork.StudentApplication.GetFirstOrDefault(s => s.ApplicationUserId == obj.StudentApplication.ApplicationUserId);
 
-            var EmployerId = _userManager.GetUserId(User);
             if (ModelState.IsValid)
             {
-                _unitOfWork.StudentApplication.Update(obj.StudentApplication);
+                studentApplication.StatusId = obj.StudentApplication.StatusId;
+                _unitOfWork.StudentApplication.Update(studentApplication);
 
                 _unitOfWork.Save();
                 TempData["success"] = "Decision Made";
