@@ -13,11 +13,10 @@ using Microsoft.AspNetCore.WebUtilities;
 using SEP.DataAccess.Repository.IRepository;
 using SEP.Models;
 using SEP.Utility;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Text.Encodings.Web;
-
-using SEP.Models.ViewModels;
 
 namespace SEPWebApp.Areas.Identity.Pages.Account
 {
@@ -103,31 +102,40 @@ namespace SEPWebApp.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
-
-            public string? Title { get; set; }
-            public string? FirstName { get; set; }
-            public string? LastName { get; set; }
+            [Required]
+            [DisplayName("Title")]
+            [StringLength(60, MinimumLength = 2, ErrorMessage = "Title must be at least 2 characters long")]
+            public string Title { get; set; }
+            [Required]
+            [DisplayName("First Name")]
+            [StringLength(60, MinimumLength = 1, ErrorMessage = "First Name must be at least 1 character long")]
+            public string FirstName { get; set; }
+            [Required]
+            [DisplayName("Last Name")]
+            [StringLength(60, MinimumLength = 1, ErrorMessage = "Last Name must be at least 1 character long")]
+            public string LastName { get; set; }
+            [Required]
+            [DisplayName("Telephone")]
+            [StringLength(60, MinimumLength = 10, ErrorMessage = "Telephone must be at least 10 digits long")]
             public string? Telephone { get; set; }
-            public string? Cellphone { get; set; }
+            [Required]
+            [DisplayName("Cellphone")]
+            [StringLength(60, MinimumLength = 10, ErrorMessage = "Telephone must be at least 10 digits long")]
+            public string? Cellphone { get; set; } //Cellphone property in database
 
-            public string? Role { get; set; }
+            [Required]
+            [DisplayName("Role")]
+            public string Role { get; set; }
 
             [ValidateNever]
             public IEnumerable<SelectListItem> RoleList { get; set; }
 
-            //public EmployerVM Employer { get; set; }
-            //public string? JobTitle { get; set; }
         }
 
 
         public async Task OnGetAsync(string returnUrl = null)
         {
-            /*            var roles = new[] { "Student", "Approver", "Employer" };
-                        foreach (var role in roles)
-                        {
-                            if(!await _roleManager.RoleExistsAsync(role))
-                                await _roleManager.CreateAsync(new IdentityRole(role)); 
-                        }*/
+
             if (!_roleManager.RoleExistsAsync(SD.Role_Approver).GetAwaiter().GetResult())
             {
                 _roleManager.CreateAsync(new IdentityRole(SD.Role_Approver)).GetAwaiter().GetResult();
@@ -155,7 +163,8 @@ namespace SEPWebApp.Areas.Identity.Pages.Account
                 //JobTitle=_unitOfWork.Employer.GetFirstOrDefault(u => u.JobTitle== )
 
             };
-
+            int numberOfRolesToShow = 2;
+            Input.RoleList = Input.RoleList.Take(numberOfRolesToShow);
         }
 
         public async Task<IActionResult> OnPostAsync(string? returnUrl = null)
@@ -230,6 +239,8 @@ namespace SEPWebApp.Areas.Identity.Pages.Account
                 }),
 
             };
+            int numberOfRolesToShow = 2;
+            Input.RoleList = Input.RoleList.Take(numberOfRolesToShow);
 
             // If we got this far, something failed, redisplay form
             return Page();
