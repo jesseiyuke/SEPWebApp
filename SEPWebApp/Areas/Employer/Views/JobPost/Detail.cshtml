@@ -1,242 +1,93 @@
 ﻿@model SEP.Models.ViewModels.JobPostVM
 
-
 <form method="post" asp-action="Detail">
-    <input asp-for="JobPost.Id" hidden />
-    <input asp-for="JobPost.ApplicationUserId" hidden />
-
     <input asp-for="StudentApplication.Id" hidden />
-    <input asp-for="StudentApplication.ApplicationUserId" hidden />
-@*    <input asp-for="StudentApplication.JobPostId" hidden />*@
-@*    <input asp-for="StudentApplication.Id" hidden />*@
+@*    <input asp-for="JobPost.ApplicationUserId" hidden />*@
 
-    <div class="border p-3 mt-2">
-        <div class="row pb-2">
-            <h2 class="text-primary">Details</h2>
-        </div>
+    <h3>Details:</h3>
+    <div class="col pb-2">
+        <label class="col-sm-2 col-form-label">Job Title :</label>
+        <input disabled asp-for="StudentApplication.jobPost.JobTitle" class="col-4"/>
+    </div>
 
-        <div class="mb-3 form-group row">
-            <label asp-for="JobPost.JobTitle" class="col-2"></label>
-            <div class="col-10">
-                <input asp-for="JobPost.JobTitle" class="form-control" readonly="readonly">
-                <span asp-validation-for="JobPost.JobTitle" class="text-danger"></span>
-            </div>
-        </div>
+    <div class="col pb-2">
+        <label class="col-sm-2 col-form-label">Description of job : </label>
+        <input disabled asp-for="StudentApplication.jobPost.JobDescription" class="col-4" />
+    </div>
+    <br />
 
+ <h3>Profile:</h3>
 
-        <div class="mb-3 form-group row">
-            <label asp-for="JobPost.JobDescription" class="col-2"></label>
-            <div class="col-10">
-                <input asp-for="JobPost.JobDescription" class="form-control" readonly="readonly">
-                <span asp-validation-for="JobPost.JobDescription" class="text-danger"></span>
-            </div>
-        </div>
+    <div class="col pb-2">
+        <label class="col-sm-2 col-form-label">First Name : </label>
+        <input disabled asp-for="StudentApplication.Student.ApplicationUser.FirstName" class="col-4">
+    </div>
 
-        <h3 class="text-primary">Profile:</h3>
+    <div class="col pb-2">
+        <label class="col-sm-2 col-form-label" asp-for="StudentApplication.Student.ApplicationUser.LastName"></label>
+        <input asp-for="StudentApplication.Student.ApplicationUser.LastName" disabled class="col-4">
+    </div>
 
-        <div class="mb-3 form-group row">
-            <label asp-for="StudentApplication.ApplicationUser.FirstName" class="col-2"></label>
-            <div class="col-10">
-                <input asp-for="StudentApplication.ApplicationUser.FirstName" class="form-control" readonly="readonly">
-                <span asp-validation-for="StudentApplication.ApplicationUser.FirstName" class="text-danger"></span>
-            </div>
-        </div>
+    <div class="col pb-2">
+        <label class="col-sm-2 col-form-label" asp-for="StudentApplication.Student.ApplicationUser.Email"></label>
+        <input asp-for="StudentApplication.Student.ApplicationUser.Email" disabled class="col-4">
+    </div>
 
-        <div class="mb-3 form-group row">
-            <label asp-for="StudentApplication.ApplicationUser.LastName" class="col-2"></label>
-            <div class="col-10">
-                <input asp-for="StudentApplication.ApplicationUser.LastName" class="form-control" readonly="readonly">
-                <span asp-validation-for="StudentApplication.ApplicationUser.LastName" class="text-danger"></span>
-            </div>
-        </div>
-
-        <div class="mb-3 form-group row">
-            <label asp-for="StudentApplication.ApplicationUser.Email" class="col-2"></label>
-            <div class="col-10">
-                <input asp-for="StudentApplication.ApplicationUser.Email" class="form-control" readonly="readonly">
-                <span asp-validation-for="StudentApplication.ApplicationUser.Email" class="text-danger"></span>
-            </div>
-        </div>
-
-        <div class="mb-3 form-group row">
-            <label asp-for="StudentApplication.ApplicationUser.Telephone" class="col-2"></label>
-            <div class="col-10">
-                <input asp-for="StudentApplication.ApplicationUser.Telephone" class="form-control" readonly="readonly">
-                <span asp-validation-for="StudentApplication.ApplicationUser.Telephone" class="text-danger"></span>
-            </div>
-        </div>
-
-
-        <div class="mb-3 form-group row">
-            <label asp-for="StudentApplication.Faculty" class="col-2"></label>
-            <div class="col-10">
-                <select disabled asp-for="StudentApplication.FacultyId" id="faculty" class="form-select">
-                    @foreach (var fac in Model.FacultyList)
-                    {
-                        <option disabled value="@fac.Id">@fac.Name</option>
-                    }
-                </select>
-                <select hidden asp-for="StudentApplication.FacultyId" id="faculty" class="form-select">
-                    @foreach (var fac in Model.FacultyList)
-                    {
-                        <option hidden value="@fac.Id">@fac.Name</option>
-                    }
-                </select>
-                <br />
-                <span asp-validation-for="StudentApplication.FacultyId" class="text-danger"></span>
-            </div>
-        </div>
-
-        <div class="mb-3 form-group row">
-            <label asp-for="StudentApplication.Department" class="col-2"></label>
-            <div class="col-10">
-                <select disabled asp-for="StudentApplication.StudentDepartmentId" id="department" class="form-select">
-                    @foreach (var dep in Model.DepartmentList)
-                    {
-                        <option value="@dep.Id">@dep.Name</option>
-                    }
-                </select>
-                <select hidden asp-for="StudentApplication.StudentDepartmentId" id="department" class="form-select">
-                    @foreach (var dep in Model.DepartmentList)
-                    {
-                        <option hidden value="@dep.Id">@dep.Name</option>
-                    }
-                </select>
-                <br />
-                <span asp-validation-for="StudentApplication.StudentDepartmentId" class="text-danger"></span>
-            </div>
-        </div>
-
-        <div class="mb-3 form-group row">
-            <label asp-for="StudentApplication.YearOfStudy" class="col-2"></label>
-            <div class="col-10">
-                <select disabled asp-for="StudentApplication.YearOfStudyId" class="form-select">
-                    @foreach (var dep in Model.YearOfStudyList)
-                    {
-                        <option value="@dep.Id">@dep.Name</option>
-                    }
-                </select>
-                <select hidden asp-for="StudentApplication.YearOfStudyId" class="form-select">
-                    @foreach (var dep in Model.YearOfStudyList)
-                    {
-                        <option hidden value="@dep.Id">@dep.Name</option>
-                    }
-                </select>
-                <br />
-                <span asp-validation-for="StudentApplication.YearOfStudyId" class="text-danger"></span>
-            </div>
-        </div>
-
-        <div class="mb-3 form-group row">
-            <label asp-for="StudentApplication.Gender" class="col-2"></label>
-            <div class="col-10">
-                <select disabled asp-for="StudentApplication.GenderId" class="form-select">
-                    @foreach (var dep in Model.GenderList)
-                    {
-                        <option value="@dep.Id">@dep.Name</option>
-                    }
-                </select>
-                <select hidden asp-for="StudentApplication.GenderId" class="form-select">
-                    @foreach (var dep in Model.GenderList)
-                    {
-                        <option hidden value="@dep.Id">@dep.Name</option>
-                    }
-                </select>
-                <br />
-                <span asp-validation-for="StudentApplication.GenderId" class="text-danger"></span>
-            </div>
-        </div>
-
-        <div class="mb-3 form-group row">
-            <label asp-for="StudentApplication.Nationality" class="col-2"></label>
-            <div class="col-10">
-                <select disabled asp-for="StudentApplication.NationalityId" class="form-select">
-                    @foreach (var dep in Model.NationalityList)
-                    {
-                        <option value="@dep.Id">@dep.Name</option>
-                    }
-                </select>
-                <select hidden asp-for="StudentApplication.NationalityId" class="form-select">
-                    @foreach (var dep in Model.NationalityList)
-                    {
-                        <option hidden value="@dep.Id">@dep.Name</option>
-                    }
-                </select>
-                <br />
-                <span asp-validation-for="StudentApplication.NationalityId" class="text-danger"></span>
-            </div>
-        </div>
-
-
-        <div class="mb-3 form-group row">
-            <label asp-for="StudentApplication.StatusId" class="col-2"></label>
-            <div class="col-6">
-                <select asp-for="StudentApplication.StatusId" asp-items=@Model.StatusList class="form-select">
-                </select>
-                <br />
-                <span asp-validation-for="StudentApplication.StatusId" class="text-danger"></span>
-            </div>
-
-        </div>
-
-
-        <button type="submit" class="btn btn-primary" style="width:150px">Save</button>
-        <a asp-controller="JobPost" asp-action="Index" class="btn btn-secondary" style="width:150px">Back</a>
+    <div class="col pb-2">
+        <label class="col-sm-2 col-form-label" asp-for="StudentApplication.Student.ApplicationUser.Telephone"></label>
+        <input asp-for="StudentApplication.Student.ApplicationUser.Telephone" disabled class="col-4">
     </div>
 
 
-</form>
+    <div class="col pb-2">
+        <label class="col-sm-2 col-form-label">Faculty : </label>
+        <input asp-for="StudentApplication.Student.Department.Faculty.Name" disabled class="col-4">
+    </div>
+    <div class="col pb-2">
+        <label class="col-sm-2 col-form-label">Faculty : </label>
+        <input asp-for="StudentApplication.Student.Department.Name" disabled class="col-4">
+    </div>
+    <div class="col pb-2">
+        <label class="col-sm-2 col-form-label">Faculty : </label>
+        <input asp-for="StudentApplication.Student.YearOfStudy.Name" disabled class="col-4">
+    </div>
+    <div class="col pb-2">
+        <label class="col-sm-2 col-form-label">Faculty : </label>
+        <input asp-for="StudentApplication.Student.Gender.Name" disabled class="col-4">
+    </div>
+    <div class="col pb-2">
+        <label class="col-sm-2 col-form-label">Faculty : </label>
+        <input asp-for="StudentApplication.Student.Nationality.Name" disabled class="col-4">
+    </div>
+    <br />
 
-@section Scripts
+    <h3>Documents:</h3>
+    @foreach (ApplicationDocument document in Model.StudentApplication.Documents)
     {
-    <script>
-        $(function () {
-            $('.datepicker').datepicker();
-        });
-    </script>
-
-    @{
-        <partial name="_ValidationScriptsPartial" />
+        <div class="col pb-2">
+            <label class="col-sm-2 col-form-label" >@document.Description</label>
+            <a href="@document.FilePath" target="_blank">@document.Name</a>
+        </div>
     }
-    <script>
-        $(document).ready(function () {
 
-            $('#faculty').change(function () {
-                var obid = this.value;
-                $('#department').empty();
-                $.ajax({
-                    type: 'Get',
-                    url: '@Url.Action("getdepartments","JobPost")',
-                    datatype: 'json',
-                    data: { id: obid },
-                    success: function (dep) {
-                        $.each(dep, function (index, item) {
-                            $('#department').append('<option value="' + item.id + '">' + item.name + '</option')
-                        });
-                    }
-                });
-            });
-        })
-    </script>
+    <div class="mb-3 form-group row col-5">
+        <div>
+            <label class="col-sm-2 col-form-label">Status :</label>
+            <select asp-for="StudentApplication.applicationStatus.Id">
+                <option disabled selected>Select Outcome</option>
+                @foreach (var fac in Model.ApplicationStatusList)
+                {
+                    <option value="@fac.Id">@fac.Name</option>
+                }
+            </select>
+            <br />
+        </div>
 
-    <script>
-        $(document).ready(function () {
 
-            $('#jobtype').change(function () {
-                var obid = this.value;
-                $('#weekhour').empty();
-                $.ajax({
-                    type: 'Get',
-                    url: '@Url.Action("getjobtype","JobPost")',
-                    datatype: 'json',
-                    data: { id: obid },
-                    success: function (dep) {
-                        $.each(dep, function (index, item) {
-                            $('#jobtype').append('<option value="' + item.id + '">' + item.name + '</option')
-                        });
-                    }
-                });
-            });
-        })
-    </script>
-}
+        <button type="submit" class="btn btn-primary" style="width:150px">Update</button>
+        <a href="/Employer/JobPost/ApplicationIndex?id=@Model.StudentApplication.JobPostId" class="btn btn-secondary" style="width:150px">Back</a>
+@*        <a asp-area="JobPost" asp-action="Index" class="btn btn-secondary" style="width:150px">Back</a>*@
+
+    </div>
+
+</form>

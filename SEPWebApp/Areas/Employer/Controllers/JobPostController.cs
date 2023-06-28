@@ -172,8 +172,8 @@ namespace SEPWebApp.Areas.Employer.Controllers
         public IActionResult GetAllApplicant(int? id)
         {
             /*            var StudentList = _unitOfWork.StudentApplication.GetAll();*/
-            var StudentList = _unitOfWork.StudentApplication.GetAll(includeProperties: "ApplicationUser,Faculty,Department,YearOfStudy,Gender,Student,Department,Status").Where(u => u.JobPostId == id);
-            /*            var StudentList = _unitOfWork.StudentApplication.GetAll(includeProperties: "ApplicationUser,Student");*/
+            //var StudentList = _unitOfWork.StudentApplication.GetAll(includeProperties: "ApplicationUser,Faculty,Department,YearOfStudy,Gender,Student,Department,Status").Where(u => u.JobPostId == id);
+            var StudentList = _unitOfWork.StudentApplication.GetAll(includeProperties: "Student.ApplicationUser,Student.Department.Faculty,Student.Department,Student.YearOfStudy,Student.Gender,applicationStatus").Where(u => u.JobPostId == id);
             return Json(new { data = StudentList });
         }
         #endregion
@@ -222,48 +222,23 @@ namespace SEPWebApp.Areas.Employer.Controllers
             return View(jobPost);
         }
 
-        //GET
-        public IActionResult Detail(int? id)
+        public IActionResult Detail(int id)
         {
-            JobPostVM JobPostVM = new()
-            {
-                JobPost = new(),
-                ApplicationUser = new(),
-                StatusList = _unitOfWork.Status.GetAll().Select(i => new SelectListItem
-                {
-                    Text = i.Name,
-                    Value = i.Id.ToString()
-                }),
-            };
+            StudentApplication studentApplication = new StudentApplication();
+            //studentApplication = _unitOfWork.StudentApplication.GetFirstOrDefault(u => u.Id == id);
+            studentApplication = _unitOfWork.StudentApplication.Get(id);
+            studentApplication.Documents = (ICollection<ApplicationDocument>)_unitOfWork.ApplicationDocument.GetApplicationDocument(id);
 
-            JobPostVM.StudentApplication = _unitOfWork.StudentApplication.GetFirstOrDefault(u => u.Id == id);
-            JobPostVM.JobPost = _unitOfWork.JobPost.GetFirstOrDefault(u => u.Id == JobPostVM.StudentApplication.JobPostId);
-            JobPostVM.ApplicationUser = _unitOfWork.ApplicationUser.GetFirstOrDefault(a => a.Id == JobPostVM.StudentApplication.ApplicationUserId);
+            JobPostVM jobPostVM = new JobPostVM();
 
-            IEnumerable<Faculty> faculties = _db.Faculty;
+            jobPostVM.StudentApplication= studentApplication;
 
-            JobPostVM.FacultyList = faculties;
+            IEnumerable<ApplicationStatus> applicationStatuses = _db.ApplicationStatus;
 
-            IEnumerable<Department> departments = _db.Department.Where(d => d.FacultyId == JobPostVM.StudentApplication.FacultyId);
+            jobPostVM.ApplicationStatusList = applicationStatuses;
 
-            JobPostVM.DepartmentList = departments;
-
-            IEnumerable<YearOfStudy> yearOfStudies = _db.YearOfStudy;
-
-            JobPostVM.YearOfStudyList = yearOfStudies;
-
-            IEnumerable<Gender> genders = _db.Gender;
-
-            JobPostVM.GenderList = genders;
-
-            IEnumerable<Nationality> nationalities = _db.Nationality;
-
-            JobPostVM.NationalityList = nationalities;
-
-
-            /*            JobPostVM.ApplicationUser = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == EmployerId);*/
-
-            return View(JobPostVM);
+            
+            return View(jobPostVM);
         }
 
         //POST
@@ -271,11 +246,11 @@ namespace SEPWebApp.Areas.Employer.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Detail(JobPostVM obj)
         {
-            StudentApplication studentApplication = _unitOfWork.StudentApplication.GetFirstOrDefault(s => s.ApplicationUserId == obj.StudentApplication.ApplicationUserId);
+            StudentApplication studentApplication = _unitOfWork.StudentApplication.GetFirstOrDefault(s => s.Id == obj.StudentApplication.Id);
 
             if (ModelState.IsValid)
             {
-                studentApplication.StatusId = obj.StudentApplication.StatusId;
+                studentApplication.StatusId = obj.StudentApplication.applicationStatus.Id;
                 _unitOfWork.StudentApplication.Update(studentApplication);
 
                 _unitOfWork.Save();

@@ -27,6 +27,7 @@ namespace SEP.DataAccess.Repository.IRepository
         IApplicationDocumentRepository ApplicationDocument { get; }
 
         IStudentApplicationRepository StudentApplication { get; }
+        IApplicationStatusRepository ApplicationStatus { get; }
 
 
         void Save();

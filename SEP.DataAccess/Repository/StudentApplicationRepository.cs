@@ -19,6 +19,12 @@ namespace SEP.DataAccess.Repository
         public StudentApplication Get(int id)
         {
             StudentApplication studentApplication= _db.StudentApplication.Where(x => x.Id == id)
+                .Include(a => a.Student).ThenInclude(a => a.ApplicationUser)
+                .Include(a => a.Student).ThenInclude(a => a.Department.Faculty)
+                .Include(a => a.Student).ThenInclude(a => a.Department)
+                .Include(a => a.Student).ThenInclude(a => a.YearOfStudy)
+                .Include(a => a.Student).ThenInclude(a => a.Gender)
+                .Include(a => a.Student).ThenInclude(a => a.Nationality)
                 .Include(a => a.jobPost).ThenInclude(a => a.JobType)
                 .Include(a => a.jobPost).ThenInclude(a => a.WeekHour)
                 .Include(a => a.applicationStatus)

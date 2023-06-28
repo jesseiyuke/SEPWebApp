@@ -1,4 +1,5 @@
 ﻿using SEP.DataAccess.Repository.IRepository;
+using SEP.Models;
 
 namespace SEP.DataAccess.Repository
 {
@@ -32,6 +33,7 @@ namespace SEP.DataAccess.Repository
             ApplicationDocument = new ApplicationDocumentRepository(_db);
 
             StudentApplication = new StudentApplicationRepository(_db);
+            ApplicationStatus = new ApplicationStatusRepository(_db);
         }
 
         public IJobPostRepository JobPost { get; private set; }
@@ -56,6 +58,7 @@ namespace SEP.DataAccess.Repository
         public IApplicationUserRepository ApplicationUser { get; private set; }
         public IApplicationDocumentRepository ApplicationDocument { get; private set; }
         public IStudentApplicationRepository StudentApplication { get; private set; }
+        public IApplicationStatusRepository ApplicationStatus { get; private set; }
 
         public void Save()
         {

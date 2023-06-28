@@ -24,16 +24,12 @@ namespace SEP.Models.ViewModels
 
         [ValidateNever]
         public StudentApplication StudentApplication { get; set; }
+        [ValidateNever]
+        public IEnumerable<ApplicationStatus> ApplicationStatusList { get; set; }
 
         [ValidateNever]
         public Student Student { get; set; }
 
-        [ValidateNever]
-        public IEnumerable<YearOfStudy> YearOfStudyList { get; set; }
-        [ValidateNever]
-        public IEnumerable<Gender> GenderList { get; set; }
-        [ValidateNever]
-        public IEnumerable<Nationality> NationalityList { get; set; }
 
 
     }

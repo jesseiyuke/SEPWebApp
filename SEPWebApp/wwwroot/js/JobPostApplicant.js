@@ -13,14 +13,14 @@ function loadDataTable(id) {
 			"url": "/Employer/JobPost/GetAllApplicant?id=" + id
 		},
 		"columns": [
-			{ "data": "applicationUser.firstName", "width": "10%" },
-			{ "data": "applicationUser.lastName", "width": "10%" },
-			{ "data": "faculty.name", "width": "10%" },
-			{ "data": "studentDepartment.name", "width": "10%" },
-			{ "data": "yearOfStudy.name", "width": "10%" },
-			{ "data": "gender.name", "width": "10%" },
-			{ "data": "status.name", "width": "10%" },
+			{ "data": "student.applicationUser.firstName", "width": "15%" },
+			{ "data": "student.applicationUser.lastName", "width": "15%" },
+			{ "data": "student.department.faculty.name", "width": "15%" },
+			{ "data": "student.department.name", "width": "15%" },
 
+			{ "data": "student.yearOfStudy.name", "width": "15%" },
+			{ "data": "student.gender.name", "width": "15%" },
+			{ "data": "applicationStatus.name", "width": "15%" },
 
 			{
 				"data": "id",
