@@ -67,7 +67,7 @@ namespace SEPWebApp.Areas.Approver.Controllers
             JobPostVM JobPostVM = new()
             {
                 JobPost = new(),
-                StatusList = _unitOfWork.Status.GetAll().Select(i => new SelectListItem
+                StatusList = _unitOfWork.ApplicationStatus.GetAll().Select(i => new SelectListItem
                 {
                     Text = i.Name,
                     Value = i.Id.ToString()
@@ -148,7 +148,7 @@ namespace SEPWebApp.Areas.Approver.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var JobPostList = _unitOfWork.JobPost.GetAll(includeProperties: "Department,JobType,WeekHour,Status");
+            var JobPostList = _unitOfWork.JobPost.GetAll(includeProperties: "Department,JobType,WeekHour,ApplicationStatus");
             //var JobPostList = _unitOfWork.JobPost.GetAll(includeProperties: "Status");
             //var JobPostList = _unitOfWork.JobPost.GetAll();
             return Json(new { data = JobPostList });

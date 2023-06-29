@@ -112,9 +112,11 @@ namespace SEP.Models
         [Display(Name = "Contact person (for internal use and not visible to students)")]
         public string ContactPerson { get; set; }
         [Required]
+        [EmailAddress]
         public string Email { get; set; }
         [Required]
         [Display(Name = "Contact No")]
+        [StringLength(60, MinimumLength = 10, ErrorMessage = "Contact Number must be at least 10 digits long")]
         public string ContactNo { get; set; }
 
         [Display(Name = "Reviewer’s comment")]
@@ -125,7 +127,7 @@ namespace SEP.Models
         public int StatusId { get; set; }
         [ForeignKey("StatusId")]
         [ValidateNever]
-        public Status Status { get; set; }
+        public ApplicationStatus ApplicationStatus { get; set; }
 
 
     }
