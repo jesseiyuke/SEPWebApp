@@ -72,7 +72,10 @@ namespace SEP.DataAccess.Repository
             //filter out job posts that have already been applied to
             var postsAppliedToIds = _db.StudentApplication.Where(a => a.StudentId == student.Id).Select(a => a.JobPostId);
 
-            var posts = _db.JobPost.Where(predicate).ToList();
+            var posts = _db.JobPost.Where(predicate)
+                .Include(a => a.JobType)
+                .Include(a => a.WeekHour)
+                .Include(a => a.Department).ToList();
             posts = posts.Where(p => !postsAppliedToIds.Contains(p.Id)).ToList();
             return posts;
         }
