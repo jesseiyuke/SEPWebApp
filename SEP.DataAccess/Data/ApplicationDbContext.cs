@@ -248,7 +248,7 @@ namespace SEP.DataAccess
             // Seed data for Nationalities
             modelBuilder.Entity<Nationality>().HasData(
                 new Nationality { Id = 1, Name = "South African" },
-                new Nationality { Id = 2, Name = "non South African" }
+                new Nationality { Id = 2, Name = "None South African" }
             ); ;
 
             // Seed data for YearsOfStudy
@@ -256,10 +256,11 @@ namespace SEP.DataAccess
                 new YearOfStudy { Id = 1, Name = "Year 1" },
                 new YearOfStudy { Id = 2, Name = "Year 2" },
                 new YearOfStudy { Id = 3, Name = "Year 3" },
-                new YearOfStudy { Id = 4, Name = "Year 4" },
-                new YearOfStudy { Id = 5, Name = "Honors" },
+                new YearOfStudy { Id = 4, Name = "Honours" },
+                new YearOfStudy { Id = 5, Name = "Graduate" },
                 new YearOfStudy { Id = 6, Name = "Master's" },
-                new YearOfStudy { Id = 7, Name = "PhD" }
+                new YearOfStudy { Id = 7, Name = "PhD" },
+                new YearOfStudy { Id = 8, Name = "Postdoc"}
             );
             // seed data for DriverLicense
             modelBuilder.Entity<DriverLicense>().HasData(
