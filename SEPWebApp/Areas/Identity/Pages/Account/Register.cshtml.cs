@@ -120,7 +120,7 @@ namespace SEPWebApp.Areas.Identity.Pages.Account
             public string? Telephone { get; set; }
             [Required]
             [DisplayName("Cellphone")]
-            [StringLength(60, MinimumLength = 10, ErrorMessage = "Telephone must be at least 10 digits long")]
+            [StringLength(60, MinimumLength = 10, ErrorMessage = "Cellphone must be at least 10 digits long")]
             public string? Cellphone { get; set; } //Cellphone property in database
 
             [Required]

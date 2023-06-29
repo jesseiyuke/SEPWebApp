@@ -173,7 +173,7 @@ namespace SEPWebApp.Areas.Employer.Controllers
         {
             /*            var StudentList = _unitOfWork.StudentApplication.GetAll();*/
             //var StudentList = _unitOfWork.StudentApplication.GetAll(includeProperties: "ApplicationUser,Faculty,Department,YearOfStudy,Gender,Student,Department,Status").Where(u => u.JobPostId == id);
-            var StudentList = _unitOfWork.StudentApplication.GetAll(includeProperties: "Student.ApplicationUser,Student.Department.Faculty,Student.Department,Student.YearOfStudy,Student.Gender,applicationStatus").Where(u => u.JobPostId == id);
+            var StudentList = _unitOfWork.StudentApplication.GetAll(includeProperties: "Student.ApplicationUser,Student.Department.Faculty,Student.Department,Student.YearOfStudy,Student.Gender,applicationStatus").Where(u => u.JobPostId == id).Where(s=>s.applicationStatus.Name!= "Withdrawn");
             return Json(new { data = StudentList });
         }
         #endregion
@@ -237,7 +237,10 @@ namespace SEPWebApp.Areas.Employer.Controllers
 
             jobPostVM.ApplicationStatusList = applicationStatuses;
 
-            
+            int numberOfStatusToShow = 3;
+            jobPostVM.ApplicationStatusList = jobPostVM.ApplicationStatusList.Take(numberOfStatusToShow);
+
+
             return View(jobPostVM);
         }
 

@@ -74,7 +74,7 @@
         <div class="mb-3 form-group row">
             <label asp-for="JobPost.JobDescription" class="col-sm-2 col-form-label"></label>
             <div class="col-5">
-                <input asp-for="JobPost.JobDescription" class="form-control">
+                <textarea asp-for="JobPost.JobDescription" class="form-control"></textarea>
                 <span asp-validation-for="JobPost.JobDescription" class="text-danger"></span>
             </div>
         </div>
@@ -82,7 +82,7 @@
         <div class="mb-3 form-group row">
             <label asp-for="JobPost.KeyResponsibilities" class="col-sm-2 col-form-label"></label>
             <div class="col-5">
-                <input asp-for="JobPost.KeyResponsibilities" class="form-control">
+                <textarea asp-for="JobPost.KeyResponsibilities" class="form-control"></textarea>
                 <span asp-validation-for="JobPost.KeyResponsibilities" class="text-danger"></span>
             </div>
         </div>
@@ -217,7 +217,7 @@
         <div class="mb-3 form-group row">
             <label asp-for="JobPost.MinimumRequirements" class="col-sm-2 col-form-label"></label>
             <div class="col-5">
-                <input asp-for="JobPost.MinimumRequirements" class="form-control">
+                <textarea asp-for="JobPost.MinimumRequirements" class="form-control"></textarea>
                 <span asp-validation-for="JobPost.MinimumRequirements" class="text-danger"></span>
             </div>
         </div>
@@ -225,7 +225,7 @@
         <div class="mb-3 form-group row">
             <label asp-for="JobPost.ApplicationInstruction" class="col-sm-2 col-form-label"></label>
             <div class="col-5">
-                <input asp-for="JobPost.ApplicationInstruction" class="form-control">
+                <textarea asp-for="JobPost.ApplicationInstruction" class="form-control"></textarea>
                 <span asp-validation-for="JobPost.ApplicationInstruction" class="text-danger"></span>
             </div>
         </div>
@@ -265,7 +265,7 @@
         <div class="mb-3 form-group row">
             <label asp-for="JobPost.ReviewerComment" class="col-sm-2 col-form-label"></label>
             <div class="col-5">
-                <input asp-for="JobPost.ReviewerComment" class="form-control" readonly="readonly">
+                <textarea asp-for="JobPost.ReviewerComment" class="form-control" readonly="readonly"></textarea>
                 <span asp-validation-for="JobPost.ReviewerComment" class="text-danger"></span>
             </div>
         </div>
@@ -369,7 +369,7 @@
             var currentDate = new Date();
 
             // Set the date format for display
-            $("#datepicker1").datepicker({
+            $("#datepicker").datepicker({
                 dateFormat: "yy-mm-dd",
                 // Set the default date to the current date
                 defaultDate: currentDate,
