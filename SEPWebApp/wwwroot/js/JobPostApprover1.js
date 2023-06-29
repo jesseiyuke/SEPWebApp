@@ -28,7 +28,7 @@ function loadDataTable() {
 				}
 			},
 			{ "data": "emoloyerType", "width": "10%" },
-			{ "data": "status.name", "width": "10%" },
+			{ "data": "applicationStatus.name", "width": "10%" },
 
 			{
 				"data": "id",

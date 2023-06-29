@@ -125,7 +125,7 @@ namespace SEP.Models
         public int StatusId { get; set; }
         [ForeignKey("StatusId")]
         [ValidateNever]
-        public Status Status { get; set; }
+        public ApplicationStatus ApplicationStatus { get; set; }
 
 
     }

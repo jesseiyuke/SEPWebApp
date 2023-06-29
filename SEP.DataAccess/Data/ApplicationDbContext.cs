@@ -133,7 +133,8 @@ namespace SEP.DataAccess
                 new ApplicationStatus { Id = 1, Name = "Pending" },
                 new ApplicationStatus { Id = 2, Name = "Approved" },
                 new ApplicationStatus { Id = 3, Name = "Rejected" },
-                new ApplicationStatus { Id = 4, Name = "Withdrawn" }
+                new ApplicationStatus { Id = 4, Name = "Withdrawn" },
+                new ApplicationStatus { Id = 5, Name = "Closed" }
 
             );
 
@@ -152,13 +153,7 @@ namespace SEP.DataAccess
             modelBuilder.Entity<Status>().HasData(
                 new Status { Id = 1, Name = "Pending" },
                 new Status { Id = 2, Name = "Rejected" },
-                new Status { Id = 3, Name = "Queried" },
-                new Status { Id = 4, Name = "Closed" },
-                new Status { Id = 5, Name = "Withdrawn" },
-                new Status { Id = 6, Name = "Approved" },
-                new Status { Id = 7, Name = "Unsuccessful" },
-                new Status { Id = 8, Name = "Successful" },
-                new Status { Id = 9, Name = "Cancelled" }
+                new Status { Id = 3, Name = "Approved" }
 
             );
 
