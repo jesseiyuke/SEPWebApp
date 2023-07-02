@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SEP.Models;
-using System.Diagnostics;
 using SmartBreadcrumbs.Attributes;
+using System.Diagnostics;
 
 namespace SEPWebApp.Areas.Home.Controllers
 {
@@ -29,7 +29,7 @@ namespace SEPWebApp.Areas.Home.Controllers
             {
                 if (User.IsInRole("Approver"))
                 {
-                    return RedirectToAction("Index","Approver",new {area ="Approver"});
+                    return RedirectToAction("Index", "Approver", new { area = "Approver" });
                 }
 
                 else if (User.IsInRole("Employer"))
@@ -41,10 +41,12 @@ namespace SEPWebApp.Areas.Home.Controllers
                     return RedirectToAction("Index", "Student", new { area = "Student" });
 
                 }
-                
-            }
 
-            return RedirectToAction("Login", "Account", new { area = "Identity" });
+            }
+            return View();
+
+            /*            return RedirectToAction("Login", "Account", new { area = "Identity" });*/
+
         }
 
 

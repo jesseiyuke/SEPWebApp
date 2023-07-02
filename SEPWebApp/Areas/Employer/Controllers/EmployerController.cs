@@ -29,7 +29,7 @@ namespace SEPWebApp.Controllers
         }
 
         //[DefaultBreadcrumb("Home",AreaName ="Employer")]
-        [Breadcrumb("Index", AreaName = "Employer")]
+        [Breadcrumb("Employer", AreaName = "Employer")]
         public IActionResult Index()
         {
 

@@ -9,11 +9,26 @@
         </div>
 
         @*        Register section*@
-        <div class="form-floating mb-3 col-5">
-            <input asp-for="ApplicationUser.Title" disabled class="form-control" />
-            <label asp-for="ApplicationUser.Title">Title</label>
+
+@*        <div>
+            <label>Title</label>
+            <input asp-for="ApplicationUser.Title"  disabled style="width:10%">
             <span asp-validation-for="ApplicationUser.Title" class="text-danger"></span>
         </div>
+
+        <div class="form-floating py-2 col-6">
+            <label asp-for="ApplicationUser.FirstName" class="col-sm-1 col-form-label"></label>
+            <input asp-for="ApplicationUser.FirstName" class="form-control" disabled style="width:50%">
+            <span asp-validation-for="ApplicationUser.FirstName" class="text-danger"></span>
+        </div>*@
+        <div class="col pb-2">
+            <label class="col-1 col-form-label fw-bold">Title:</label>
+            <label>@Model.ApplicationUser.Title</label>
+@*            <input asp-for="ApplicationUser.Title" disabled class="form-control" />*@
+            <span asp-validation-for="ApplicationUser.Title" class="text-danger"></span>
+        </div>
+
+
         <div class="form-floating mb-3 col-5">
             <input asp-for="ApplicationUser.FirstName" disabled class="form-control" />
             <label asp-for="ApplicationUser.FirstName">First Name</label>
@@ -54,6 +69,12 @@
             <span asp-validation-for="Employer.TradingName" class="text-danger"></span>
         </div>
 
+        <div class="form-floating mb-3 col-5">
+            <textarea asp-for="Employer.RegisteredAddress" class="form-control" aria-required="true"></textarea>
+            <label asp-for="Employer.RegisteredAddress">Registered address</label>
+            <span asp-validation-for="Employer.RegisteredAddress" class="text-danger"></span>
+        </div>
+
         <div class="mb-3 form-group row col-5">
             <div>
                 <label asp-for="Employer.BusinessType">Business Type</label>
@@ -63,6 +84,7 @@
                 <br />
                 <span asp-validation-for="Employer.BusinessTypeId" class="text-danger"></span>
             </div>
+        </div>
 @*        <div class="form-floating mb-3">
             <input asp-for="Employer.BusinessType" class="form-control" aria-required="true" />
             <label asp-for="Employer.BusinessType">Business Type</label>
@@ -70,11 +92,6 @@
         </div>*@
 
 
-        <div class="form-floating mb-3">
-            <textarea asp-for="Employer.RegisteredAddress" class="form-control" aria-required="true"></textarea>
-            <label asp-for="Employer.RegisteredAddress">Registered address</label>
-            <span asp-validation-for="Employer.RegisteredAddress" class="text-danger"></span>
-        </div>
 
             <div class="mb-3 form-group row">
             <div class="col-5">

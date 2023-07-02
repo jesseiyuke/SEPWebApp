@@ -2,7 +2,7 @@
 @model RegisterModel
 
 
-<div class="row pt-1 center-container ">
+<div class="row pt-1 center-container">
     <div class="col-md-7">
         <form id="registerForm" class="row" asp-route-returnUrl="@Model.ReturnUrl" method="post">
             <h2>Create a new account.</h2>
@@ -51,13 +51,12 @@
                 <label class="fw-bold" asp-for="Input.ConfirmPassword"></label>
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
-            <div class="form-floating py-2 col-6">
-                <select asp-for="Input.Role" asp-items="@Model.Input.RoleList" class=form-select>
-                    <option disabled selected>-Select Role-</option>
+            <div class="form-floating py-2" style="display:flex;justify-content:center; ">
+                <select asp-for="Input.Role" asp-items="@Model.Input.RoleList" class="form-select col-1" style="width:30%;text-align:center;margin-right:10px">
+                    <option disabled selected>-What are you?-</option>
                 </select>
                 <span asp-validation-for="Input.Role" class="text-danger"></span>
             </div>
-            <hr />
             <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
         </form>
     </div>
@@ -67,10 +66,10 @@
     <partial name="_ValidationScriptsPartial" />
     <style>
         .center-container {
-            display: flex;
+            display:inline-flex ;
             justify-content: center;
             align-items: center;
-            height: 70vh; /* Optional, set a height to center vertically */
+            /* height: 50vh; Optional, set a height to center vertically */
         }
     </style>
 @*     <script>
