@@ -3,86 +3,71 @@
 
 <form method="post" asp-action="Upsert">
     <input asp-for="Employer.Id" hidden />
+    <input asp-for="Employer.JobTitle" hidden />
+    <input asp-for="Employer.CompanyRegNo" hidden />
+    <input asp-for="Employer.BusinessName" hidden />
+    <input asp-for="Employer.TradingName" hidden />
+    <input asp-for="Employer.BusinessTypeId" hidden />
+    <input asp-for="Employer.RegisteredAddress" hidden />
     <input asp-for="Employer.ApplicationUserId" hidden />
     <div class="border p-3 mt-2">
-        <div class="row pb-2">
-            <h2 class="text-primary">Approver → Approve Employers → Details</h2>
-        </div>
 
         @*        Register section*@
-        <div class="form-floating mb-3">
+@*        <div class="form-floating mb-3">
             <input asp-for="ApplicationUser.Title" disabled class="form-control" />
             <label asp-for="ApplicationUser.Title">Title</label>
             <span asp-validation-for="ApplicationUser.Title" class="text-danger"></span>
+        </div>*@
+
+        <div class="col pb-2">
+            <label class="col-3 col-form-label fw-bold">Title:</label>
+            <label>@Model.ApplicationUser.Title</label>
         </div>
-        <div class="form-floating mb-3">
-            <input asp-for="ApplicationUser.FirstName" disabled class="form-control" />
-            <label asp-for="ApplicationUser.FirstName">First Name</label>
-            <span asp-validation-for="ApplicationUser.FirstName" class="text-danger"></span>
+        <div class="col pb-2">
+            <label class="col-3 col-form-label fw-bold">First Name:</label>
+            <label>@Model.ApplicationUser.FirstName</label>
         </div>
-        <div class="form-floating mb-3">
-            <input asp-for="ApplicationUser.LastName" disabled class="form-control" />
-            <label asp-for="ApplicationUser.LastName">Last Name</label>
-            <span asp-validation-for="ApplicationUser.LastName" class="text-danger"></span>
+        <div class="col pb-2">
+            <label class="col-3 col-form-label fw-bold">Last Name:</label>
+            <label>@Model.ApplicationUser.LastName</label>
         </div>
-        <div class="form-floating mb-3">
-            <input asp-for="ApplicationUser.Telephone" disabled class="form-control" />
-            <label asp-for="ApplicationUser.Telephone">Telephone</label>
-            <span asp-validation-for="ApplicationUser.Telephone" class="text-danger"></span>
+        <div class="col pb-2">
+            <label class="col-3 col-form-label fw-bold">Telephone:</label>
+            <label>@Model.ApplicationUser.Telephone</label>
         </div>
 
 
 
         @*        Employer section*@
-        <div class="form-floating mb-3">
-            <input asp-for="Employer.JobTitle" class="form-control" aria-required="true" readonly/>
-            <label asp-for="Employer.JobTitle">Job Title</label>
-            <span asp-validation-for="Employer.JobTitle" class="text-danger"></span>
+        <div class="col pb-2">
+            <label class="col-3 col-form-label fw-bold">Job Title:</label>
+            <label>@Model.Employer.JobTitle</label>
         </div>
-        <div class="form-floating mb-3">
-            <input asp-for="Employer.CompanyRegNo" class="form-control" aria-required="true" readonly />
-            <label asp-for="Employer.CompanyRegNo">Company registration number</label>
-            <span asp-validation-for="Employer.CompanyRegNo" class="text-danger"></span>
+        <div class="col pb-2">
+            <label class="col-3 col-form-label fw-bold">Company registration number:</label>
+            <label>@Model.Employer.CompanyRegNo</label>
         </div>
-        <div class="form-floating mb-3">
-            <input asp-for="Employer.BusinessName" class="form-control" aria-required="true" readonly />
-            <label asp-for="Employer.BusinessName">Registered name of business</label>
-            <span asp-validation-for="Employer.BusinessName" class="text-danger"></span>
+        <div class="col pb-2">
+            <label class="col-3 col-form-label fw-bold">Business Name:</label>
+            <label>@Model.Employer.BusinessName</label>
         </div>
-        <div class="form-floating mb-3">
-            <input asp-for="Employer.TradingName" class="form-control" aria-required="true" readonly />
-            <label asp-for="Employer.TradingName">Trading name (displayed)</label>
-            <span asp-validation-for="Employer.TradingName" class="text-danger"></span>
+        <div class="col pb-2">
+            <label class="col-3 col-form-label fw-bold">Trading Name:</label>
+            <label>@Model.Employer.TradingName</label>
         </div>
+        <div class="col pb-2">
+            <label class="col-3 col-form-label fw-bold">Business Type:</label>
+            <label>@Model.Employer.BusinessType.Name</label>
+        </div>
+        <div class="col pb-2">
+            <label class="col-3 col-form-label fw-bold">Registered Address:</label>
+            <label>@Model.Employer.RegisteredAddress</label>
+        </div>
+        
 
-        <div class="mb-3 form-group row">
-            <div class="col-10">
-                <select asp-for="Employer.BusinessTypeId" asp-items=@Model.BusinessTypeList class="form-select" aria-required="true" disabled>
-                    <option disabled selected>Select Business Type</option> @*default value in select list*@
-                </select>
-                <select hidden asp-for="Employer.BusinessTypeId" asp-items=@Model.BusinessTypeList class="form-select" aria-required="true">
-                    <option hidden selected>Select Business Type</option> @*default value in select list*@
-                </select>
-                <br />
-                <span asp-validation-for="Employer.BusinessTypeId" class="text-danger"></span>
-            </div>
-        </div>
-
-
-@*        <div class="form-floating mb-3">
-            <input asp-for="Employer.BusinessType" class="form-control" aria-required="true" />
-            <label asp-for="Employer.BusinessType">Business Type</label>
-            <span asp-validation-for="Employer.BusinessType" class="text-danger"></span>
-        </div>*@
-
-
-        <div class="form-floating mb-3">
-                <input asp-for="Employer.RegisteredAddress" class="form-control" aria-required="true" readonly />
-            <label asp-for="Employer.RegisteredAddress">Registered address</label>
-            <span asp-validation-for="Employer.RegisteredAddress" class="text-danger"></span>
-        </div>
             <div class="mb-3 form-group row">
-                <div class="col-6">
+                <div class="col-3">
+                <label class="col-3 col-form-label fw-bold">Status:</label>
                     <select asp-for="Employer.StatusId" asp-items=@Model.StatusList class="form-select">
                     </select>
                     <br />
