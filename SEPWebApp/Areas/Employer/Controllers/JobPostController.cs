@@ -97,6 +97,8 @@ namespace SEPWebApp.Areas.Employer.Controllers
                 JobPostVM.WeekHourList = weekHour;
 
                 JobPostVM.ApplicationUser = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == EmployerId);
+
+                JobPostVM.JobPost.StartDate = DateTime.Now;
                 return View(JobPostVM);
             }
             else

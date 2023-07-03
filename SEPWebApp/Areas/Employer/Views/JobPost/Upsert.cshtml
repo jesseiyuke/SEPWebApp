@@ -128,7 +128,7 @@
         <div class="mb-3 form-group row">
             <label asp-for="JobPost.StartDate" class="col-sm-2 col-form-label"></label>
             <div class="col-5">
-                <input asp-for="JobPost.StartDate" class="datepicker"/>
+                <input asp-for="JobPost.StartDate" id="startDate" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" name="startDate" />
                 <span asp-validation-for="JobPost.StartDate" class="text-danger"></span>
             </div>
         </div>
@@ -136,7 +136,7 @@
         <div class="mb-3 form-group row">
             <label asp-for="JobPost.EndDate" class="col-sm-2 col-form-label"></label>
             <div class="col-5">
-                <input asp-for="JobPost.EndDate" class="datepicker" />
+                <input asp-for="JobPost.EndDate" id="endDate" type="date"  min="@DateTime.Now.ToString("yyyy-MM-dd")"/>
                 <span asp-validation-for="JobPost.EndDate" class="text-danger"></span>
             </div>
         </div>
@@ -362,22 +362,76 @@
         })
     </script>
 
+@*    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var startDateInput = document.getElementById("startDate");
+            var endDateInput = document.getElementById("endDate");
+            var closingDateInput = document.getElementById("closingDate");
+
+            var startDateError = document.getElementById("startDateError");
+            var endDateError = document.getElementById("endDateError");
+            var closingDateError = document.getElementById("closingDateError");
+
+            startDateInput.addEventListener("change", validateDates);
+            endDateInput.addEventListener("change", validateDates);
+            closingDateInput.addEventListener("change", validateDates);
+
+            startDateError.textContent = "";
+            endDateError.textContent = "";
+            closingDateError.textContent = "";
+
+            function validateDates() {
+                var startDate = new Date(startDateInput.value);
+                var endDate = new Date(endDateInput.value);
+                var closingDate = new Date(closingDateInput.value);
+
+
+                if (startDate > endDate) {
+                    startDateError.textContent = "The start date should not be set later than the end date.";
+                    startDateInput.value = null;
+                }
+                if (startDate < closingDate) {
+                    startDateError.textContent = "The start date should not be set earlier than the closing date.";
+                    startDateInput.value = null;
+                }
+
+                if (endDate < startDate) {
+                    endDateError.textContent = "The end date should not be set earlier than the start date.";
+                    endDateInput.value = null;
+                }
+                if (endDate < closingDate) {
+                    endDateError.textContent = "The end date should not be set earlier than the closing date.";
+                    endDateInput.value = null;
+                }
+
+                if (closingDate > startDate) {
+                    closingDateError.textContent = "The closing date should not be set earlier than the start date.";
+                    closingDateInput.value = null;
+                }
+                if (closingDate > endDate) {
+                    closingDateError.textContent = "The closing date should not be set earlier than the end date.";
+                    closingDateInput.value = null;
+                }
+
+            }
+        });
+    </script>*@
+
 
     <script>
-        $(function () {
-            // Get the current date
-            var currentDate = new Date();
+        $(document).ready(function () {
+            $('#endDate').change(function () {
+                var startDate = new Date($('#startDate').val());
+                var endDate = new Date($(this).val());
 
-            // Set the date format for display
-            $("#datepicker").datepicker({
-                dateFormat: "yy-mm-dd",
-                // Set the default date to the current date
-                defaultDate: currentDate,
-                // Only allow selection of dates in the future
-                minDate: currentDate
+                if (endDate < startDate) {
+                    alert('End date cannot be before the start date.');
+                    $(this).val('');
+                }
             });
         });
     </script>
+
     }
 
 

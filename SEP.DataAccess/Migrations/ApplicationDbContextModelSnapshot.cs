@@ -258,7 +258,7 @@ namespace SEP.DataAccess.Migrations
 
                     b.HasIndex("ApplicationId");
 
-                    b.ToTable("ApplicationDocument");
+                    b.ToTable("ApplicationDocument", (string)null);
                 });
 
             modelBuilder.Entity("SEP.Models.ApplicationStatus", b =>
@@ -675,7 +675,7 @@ namespace SEP.DataAccess.Migrations
 
                     b.HasIndex("StatusId");
 
-                    b.ToTable("Employer");
+                    b.ToTable("Employer", (string)null);
                 });
 
             modelBuilder.Entity("SEP.Models.Experience", b =>
@@ -712,7 +712,7 @@ namespace SEP.DataAccess.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("Experience");
+                    b.ToTable("Experience", (string)null);
                 });
 
             modelBuilder.Entity("SEP.Models.Faculty", b =>
@@ -924,7 +924,7 @@ namespace SEP.DataAccess.Migrations
 
                     b.HasIndex("WeekHourId");
 
-                    b.ToTable("JobPost");
+                    b.ToTable("JobPost", (string)null);
                 });
 
             modelBuilder.Entity("SEP.Models.JobType", b =>
@@ -1031,7 +1031,7 @@ namespace SEP.DataAccess.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("Qualifications");
+                    b.ToTable("Qualifications", (string)null);
                 });
 
             modelBuilder.Entity("SEP.Models.Race", b =>
@@ -1114,7 +1114,7 @@ namespace SEP.DataAccess.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("Referees");
+                    b.ToTable("Referees", (string)null);
                 });
 
             modelBuilder.Entity("SEP.Models.Status", b =>
@@ -1207,7 +1207,7 @@ namespace SEP.DataAccess.Migrations
 
                     b.HasIndex("YearOfStudyId");
 
-                    b.ToTable("Student");
+                    b.ToTable("Student", (string)null);
                 });
 
             modelBuilder.Entity("SEP.Models.StudentApplication", b =>
@@ -1236,7 +1236,7 @@ namespace SEP.DataAccess.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("StudentApplication");
+                    b.ToTable("StudentApplication", (string)null);
                 });
 
             modelBuilder.Entity("SEP.Models.WeekHour", b =>
