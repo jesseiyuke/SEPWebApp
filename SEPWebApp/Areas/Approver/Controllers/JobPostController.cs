@@ -23,7 +23,7 @@ namespace SEPWebApp.Areas.Approver.Controllers
             _unitOfWork = unitOfWork;
             _db = applicationDbContext;
         }
-        [Breadcrumb("JobPosts", AreaName = "Approver")]
+        [Breadcrumb("Review Posts", AreaName = "Approver")]
         public IActionResult Index()
         {
             /*            IEnumerable<JobPost> objJobPostList = _unitOfWork.JobPost.GetAll();
@@ -60,7 +60,7 @@ namespace SEPWebApp.Areas.Approver.Controllers
         }
 
         //GET
-        [Breadcrumb("Update", AreaName = "JobPost")]
+        [Breadcrumb("Job Post", AreaName = "JobPost")]
         public IActionResult Upsert(int? id)
         {
             //

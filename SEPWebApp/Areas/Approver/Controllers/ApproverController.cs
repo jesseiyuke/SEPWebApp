@@ -17,7 +17,7 @@ namespace SEPWebApp.Areas.Approver.Controllers
             _unitOfWork = unitOfWork;
         }
         //[DefaultBreadcrumb("Home", AreaName = "Approver")]
-        [Breadcrumb("Index", AreaName = "Approver")]
+        [Breadcrumb("Approver", AreaName = "Approver")]
         public IActionResult Index()
         {
             return View();
