@@ -136,7 +136,7 @@
         <div class="mb-3 form-group row">
             <label asp-for="JobPost.EndDate" class="col-sm-2 col-form-label"></label>
             <div class="col-5">
-                <input asp-for="JobPost.EndDate" id="endDate" type="date"  min="@DateTime.Now.ToString("yyyy-MM-dd")"/>
+                <input asp-for="JobPost.EndDate" id="endDate" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" name="endDate" />
                 <span asp-validation-for="JobPost.EndDate" class="text-danger"></span>
             </div>
         </div>
@@ -233,7 +233,8 @@
         <div class="mb-3 form-group row">
             <label asp-for="JobPost.ClosingDate" class="col-sm-2 col-form-label"></label>
             <div class="col-5">
-                <input asp-for="JobPost.ClosingDate" class="datepicker" />
+                <input asp-for="JobPost.ClosingDate" id="closingDate" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" name="closingDate" />
+@*                <input asp-for="JobPost.ClosingDate" class="datepicker" />*@
                 <span asp-validation-for="JobPost.ClosingDate" class="text-danger"></span>
             </div>
         </div>
@@ -420,15 +421,53 @@
 
     <script>
         $(document).ready(function () {
+
+            $('#startDate').change(function () {
+                var endDate = new Date($('#endDate').val());
+                var closingDate = new Date($('#closingDate').val());
+                var startDate = new Date($(this).val());
+
+                if (startDate > endDate) {
+                    alert('Start date cannot be after the end date.');
+                    $(this).val('');
+                }
+
+                if (startDate < closingDate) {
+                    alert('Start date cannot be before the closing date.');
+                    $(this).val('');
+                }
+            });
+
             $('#endDate').change(function () {
                 var startDate = new Date($('#startDate').val());
+                var closingDate = new Date($('#closingDate').val());
                 var endDate = new Date($(this).val());
 
                 if (endDate < startDate) {
                     alert('End date cannot be before the start date.');
                     $(this).val('');
                 }
+                if (endDate < closingDate) {
+                    alert('End date cannot be before the closing date.');
+                    $(this).val('');
+                }
             });
+
+            $('#closingDate').change(function () {
+                var startDate = new Date($('#startDate').val());
+                var endDate = new Date($('#endDate').val());
+                var closingDate = new Date($(this).val());
+
+                if (closingDate > startDate) {
+                    alert('Closing date cannot be after the start date.');
+                    $(this).val('');
+                }
+                if (closingDate > endDate) {
+                    alert('Closing date cannot be after the end date.');
+                    $(this).val('');
+                }
+            });
+
         });
     </script>
 

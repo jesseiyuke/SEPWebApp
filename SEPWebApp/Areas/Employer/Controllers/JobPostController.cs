@@ -98,7 +98,9 @@ namespace SEPWebApp.Areas.Employer.Controllers
 
                 JobPostVM.ApplicationUser = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == EmployerId);
 
-                JobPostVM.JobPost.StartDate = DateTime.Now;
+                /*                JobPostVM.JobPost.StartDate = DateTime.Now;
+                                JobPostVM.JobPost.EndDate = DateTime.Now;
+                                JobPostVM.JobPost.ClosingDate = DateTime.Now;*/
                 return View(JobPostVM);
             }
             else
@@ -175,7 +177,7 @@ namespace SEPWebApp.Areas.Employer.Controllers
         {
             /*            var StudentList = _unitOfWork.StudentApplication.GetAll();*/
             //var StudentList = _unitOfWork.StudentApplication.GetAll(includeProperties: "ApplicationUser,Faculty,Department,YearOfStudy,Gender,Student,Department,Status").Where(u => u.JobPostId == id);
-            var StudentList = _unitOfWork.StudentApplication.GetAll(includeProperties: "Student.ApplicationUser,Student.Department.Faculty,Student.Department,Student.YearOfStudy,Student.Gender,applicationStatus").Where(u => u.JobPostId == id).Where(s=>s.applicationStatus.Name!= "Withdrawn");
+            var StudentList = _unitOfWork.StudentApplication.GetAll(includeProperties: "Student.ApplicationUser,Student.Department.Faculty,Student.Department,Student.YearOfStudy,Student.Gender,applicationStatus").Where(u => u.JobPostId == id).Where(s => s.applicationStatus.Name != "Withdrawn");
             return Json(new { data = StudentList });
         }
         #endregion
@@ -233,7 +235,7 @@ namespace SEPWebApp.Areas.Employer.Controllers
 
             JobPostVM jobPostVM = new JobPostVM();
 
-            jobPostVM.StudentApplication= studentApplication;
+            jobPostVM.StudentApplication = studentApplication;
 
             IEnumerable<ApplicationStatus> applicationStatuses = _db.ApplicationStatus;
 

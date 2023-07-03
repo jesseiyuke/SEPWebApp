@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SEP.DataAccess;
 
@@ -11,9 +12,11 @@ using SEP.DataAccess;
 namespace SEP.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230703215023_DatesNullJobPost")]
+    partial class DatesNullJobPost
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -258,7 +261,7 @@ namespace SEP.DataAccess.Migrations
 
                     b.HasIndex("ApplicationId");
 
-                    b.ToTable("ApplicationDocument", (string)null);
+                    b.ToTable("ApplicationDocument");
                 });
 
             modelBuilder.Entity("SEP.Models.ApplicationStatus", b =>
@@ -675,7 +678,7 @@ namespace SEP.DataAccess.Migrations
 
                     b.HasIndex("StatusId");
 
-                    b.ToTable("Employer", (string)null);
+                    b.ToTable("Employer");
                 });
 
             modelBuilder.Entity("SEP.Models.Experience", b =>
@@ -712,7 +715,7 @@ namespace SEP.DataAccess.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("Experience", (string)null);
+                    b.ToTable("Experience");
                 });
 
             modelBuilder.Entity("SEP.Models.Faculty", b =>
@@ -928,7 +931,7 @@ namespace SEP.DataAccess.Migrations
 
                     b.HasIndex("WeekHourId");
 
-                    b.ToTable("JobPost", (string)null);
+                    b.ToTable("JobPost");
                 });
 
             modelBuilder.Entity("SEP.Models.JobType", b =>
@@ -1035,7 +1038,7 @@ namespace SEP.DataAccess.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("Qualifications", (string)null);
+                    b.ToTable("Qualifications");
                 });
 
             modelBuilder.Entity("SEP.Models.Race", b =>
@@ -1118,7 +1121,7 @@ namespace SEP.DataAccess.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("Referees", (string)null);
+                    b.ToTable("Referees");
                 });
 
             modelBuilder.Entity("SEP.Models.Status", b =>
@@ -1211,7 +1214,7 @@ namespace SEP.DataAccess.Migrations
 
                     b.HasIndex("YearOfStudyId");
 
-                    b.ToTable("Student", (string)null);
+                    b.ToTable("Student");
                 });
 
             modelBuilder.Entity("SEP.Models.StudentApplication", b =>
@@ -1240,7 +1243,7 @@ namespace SEP.DataAccess.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("StudentApplication", (string)null);
+                    b.ToTable("StudentApplication");
                 });
 
             modelBuilder.Entity("SEP.Models.WeekHour", b =>
