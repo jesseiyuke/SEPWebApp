@@ -130,6 +130,7 @@
             <div class="col-5">
                 <input asp-for="JobPost.StartDate" id="startDate" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" name="startDate" />
                 <span asp-validation-for="JobPost.StartDate" class="text-danger"></span>
+                <span asp-validation-for="JobPost.StartDate" class="text-danger" id="startDateError"></span>
             </div>
         </div>
 
@@ -138,6 +139,7 @@
             <div class="col-5">
                 <input asp-for="JobPost.EndDate" id="endDate" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" name="endDate" />
                 <span asp-validation-for="JobPost.EndDate" class="text-danger"></span>
+                <span asp-validation-for="JobPost.EndDate" class="text-danger" id="endDateError"></span>
             </div>
         </div>
 
@@ -236,6 +238,7 @@
                 <input asp-for="JobPost.ClosingDate" id="closingDate" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" name="closingDate" />
 @*                <input asp-for="JobPost.ClosingDate" class="datepicker" />*@
                 <span asp-validation-for="JobPost.ClosingDate" class="text-danger"></span>
+                <span asp-validation-for="JobPost.ClosingDate" class="text-danger" id="closingDateError"></span>
             </div>
         </div>
 
@@ -363,8 +366,9 @@
         })
     </script>
 
-@*    <script>
+    <script>
         document.addEventListener("DOMContentLoaded", function () {
+
             var startDateInput = document.getElementById("startDate");
             var endDateInput = document.getElementById("endDate");
             var closingDateInput = document.getElementById("closingDate");
@@ -374,6 +378,7 @@
             var closingDateError = document.getElementById("closingDateError");
 
             startDateInput.addEventListener("change", validateDates);
+           //startDateInput.addEventListener("submit", validateDates);
             endDateInput.addEventListener("change", validateDates);
             closingDateInput.addEventListener("change", validateDates);
 
@@ -388,38 +393,43 @@
 
 
                 if (startDate > endDate) {
-                    startDateError.textContent = "The start date should not be set later than the end date.";
+                    startDateError.textContent = "Start date cannot be after the end date.";
                     startDateInput.value = null;
                 }
                 if (startDate < closingDate) {
-                    startDateError.textContent = "The start date should not be set earlier than the closing date.";
+                    startDateError.textContent = "Start date cannot be before the closing date.";
                     startDateInput.value = null;
                 }
 
                 if (endDate < startDate) {
-                    endDateError.textContent = "The end date should not be set earlier than the start date.";
+                    endDateError.textContent = "End date cannot be before the start date.";
                     endDateInput.value = null;
                 }
                 if (endDate < closingDate) {
-                    endDateError.textContent = "The end date should not be set earlier than the closing date.";
+                    endDateError.textContent = "End date cannot be before the closing date.";
                     endDateInput.value = null;
                 }
 
                 if (closingDate > startDate) {
-                    closingDateError.textContent = "The closing date should not be set earlier than the start date.";
+                    closingDateError.textContent = "Closing date cannot be after the start date.";
                     closingDateInput.value = null;
                 }
                 if (closingDate > endDate) {
-                    closingDateError.textContent = "The closing date should not be set earlier than the end date.";
+                    closingDateError.textContent = "Closing date cannot be after the end date.";
                     closingDateInput.value = null;
+                }
+                else{
+                    startDateError.textContent=null;
+                    endDateError.textContent = null;
+                    closingDateError.textContent = null;
                 }
 
             }
         });
-    </script>*@
+    </script>
 
 
-    <script>
+    @*<script>
         $(document).ready(function () {
 
             $('#startDate').change(function () {
@@ -428,6 +438,7 @@
                 var startDate = new Date($(this).val());
 
                 if (startDate > endDate) {
+                    //$('#startEnd').val('Start date cannot be after the end date.');
                     alert('Start date cannot be after the end date.');
                     $(this).val('');
                 }
@@ -469,7 +480,7 @@
             });
 
         });
-    </script>
+    </script>*@
 
     }
 

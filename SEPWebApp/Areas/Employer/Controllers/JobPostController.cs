@@ -63,7 +63,7 @@ namespace SEPWebApp.Areas.Employer.Controllers
         }
 
         //GET
-        [Breadcrumb("Update", AreaName = "JobPost")]
+        [Breadcrumb("Job Post", AreaName = "JobPost")]
         public IActionResult Upsert(int? id)
         {
             //
@@ -98,9 +98,9 @@ namespace SEPWebApp.Areas.Employer.Controllers
 
                 JobPostVM.ApplicationUser = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == EmployerId);
 
-                /*                JobPostVM.JobPost.StartDate = DateTime.Now;
-                                JobPostVM.JobPost.EndDate = DateTime.Now;
-                                JobPostVM.JobPost.ClosingDate = DateTime.Now;*/
+                JobPostVM.JobPost.StartDate = DateTime.Now;
+                JobPostVM.JobPost.EndDate = DateTime.Now;
+                JobPostVM.JobPost.ClosingDate = DateTime.Now;
                 return View(JobPostVM);
             }
             else
