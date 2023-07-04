@@ -4,75 +4,141 @@
     <input asp-for="StudentApplication.Id" hidden />
 @*    <input asp-for="JobPost.ApplicationUserId" hidden />*@
 
-    <h3>Details:</h3>
-    <div class="col pb-2">
-        <label class="col-sm-2 col-form-label">Job Title :</label>
-        <input disabled asp-for="StudentApplication.jobPost.JobTitle" class="col-4"/>
-    </div>
-
-    <div class="col pb-2">
-        <label class="col-sm-2 col-form-label">Description of job : </label>
-        <input disabled asp-for="StudentApplication.jobPost.JobDescription" class="col-4" />
-    </div>
-    <br />
-
- <h3>Profile:</h3>
-
-    <div class="col pb-2">
-        <label class="col-sm-2 col-form-label">First Name : </label>
-        <input disabled asp-for="StudentApplication.Student.ApplicationUser.FirstName" class="col-4">
-    </div>
-
-    <div class="col pb-2">
-        <label class="col-sm-2 col-form-label" asp-for="StudentApplication.Student.ApplicationUser.LastName"></label>
-        <input asp-for="StudentApplication.Student.ApplicationUser.LastName" disabled class="col-4">
-    </div>
-
-    <div class="col pb-2">
-        <label class="col-sm-2 col-form-label" asp-for="StudentApplication.Student.ApplicationUser.Email"></label>
-        <input asp-for="StudentApplication.Student.ApplicationUser.Email" disabled class="col-4">
-    </div>
-
-    <div class="col pb-2">
-        <label class="col-sm-2 col-form-label" asp-for="StudentApplication.Student.ApplicationUser.Telephone"></label>
-        <input asp-for="StudentApplication.Student.ApplicationUser.Telephone" disabled class="col-4">
-    </div>
-
-
-    <div class="col pb-2">
-        <label class="col-sm-2 col-form-label">Faculty: </label>
-        <input asp-for="StudentApplication.Student.Department.Faculty.Name" disabled class="col-4">
-    </div>
-    <div class="col pb-2">
-        <label class="col-sm-2 col-form-label">Department: </label>
-        <input asp-for="StudentApplication.Student.Department.Name" disabled class="col-4">
-    </div>
-    <div class="col pb-2">
-        <label class="col-sm-2 col-form-label">Level: </label>
-        <input asp-for="StudentApplication.Student.YearOfStudy.Name" disabled class="col-4">
-    </div>
-    <div class="col pb-2">
-        <label class="col-sm-2 col-form-label">Gender : </label>
-        <input asp-for="StudentApplication.Student.Gender.Name" disabled class="col-4">
-    </div>
-    <div class="col pb-2">
-        <label class="col-sm-2 col-form-label">Nationality : </label>
-        <input asp-for="StudentApplication.Student.Nationality.Name" disabled class="col-4">
-    </div>
-    <br />
-
-    <h3>Documents:</h3>
-    @foreach (ApplicationDocument document in Model.StudentApplication.Documents)
-    {
-        <div class="col pb-2">
-            <label class="col-sm-2 col-form-label" >@document.Description</label>
-            <a href="@document.FilePath" target="_blank">@document.Name</a>
+    <div class="p-3 mt-2 row">
+        <div class="row pb-2">
+            <h2 class="text-primary">Details:</h2>
         </div>
-    }
 
-    <div class="mb-3 form-group row col-5">
+        <div class="mb-2 col-6">
+            <label class="fw-bold mb-1">Job Title</label>
+            <br />
+            <label>@Model.StudentApplication.jobPost.JobTitle</label>
+        </div>
+
+        <div class="mb-2 col-6">
+            <label class="fw-bold mb-1">Description of job</label>
+            <br />
+            <label>@Model.StudentApplication.jobPost.JobDescription</label>
+        </div>
+        <br />
+
+        <div class="row pb-2">
+            <h2 class="text-primary">Profile:</h2>
+        </div>
+
+
+        <div class="mb-4 col-6">
+            <label class="fw-bold mb-1">First Name</label>
+            <br />
+            <label>@Model.StudentApplication.Student.ApplicationUser.FirstName</label>
+        </div>
+
+        <div class="mb-4 col-6">
+            <label class="fw-bold mb-1">Last Name</label>
+            <br />
+            <label>@Model.StudentApplication.Student.ApplicationUser.LastName</label>
+        </div>
+
+        <div class="mb-4 col-6">
+            <label class="fw-bold mb-1">Email</label>
+            <br />
+            <label>@Model.StudentApplication.Student.ApplicationUser.Email</label>
+        </div>
+
+        <div class="mb-4 col-6">
+            <label class="fw-bold mb-1">Telephone</label>
+            <br />
+            <label>@Model.StudentApplication.Student.ApplicationUser.Telephone</label>
+        </div>
+
+
+        <div class="mb-4 col-6">
+            <label class="fw-bold mb-1">Faculty</label>
+            <br />
+            <label>@Model.StudentApplication.Student.Department.Faculty.Name</label>
+        </div>
+        <div class="mb-4 col-6">
+            <label class="fw-bold mb-1">Department</label>
+            <br />
+            <label>@Model.StudentApplication.Student.Department.Name</label>
+        </div>
+        <div class="mb-4 col-6">
+            <label class="fw-bold mb-1">Year of Study</label>
+            <br />
+            <label>@Model.StudentApplication.Student.YearOfStudy.Name</label>
+        </div>
+        <div class="mb-4 col-6">
+            <label class="fw-bold mb-1">Gender</label>
+            <br />
+            <label>@Model.StudentApplication.Student.Gender.Name</label>
+        </div>
+        <div class="mb-4 col-6">
+            <label class="fw-bold mb-1">Nationality</label>
+            <br />
+            <label>@Model.StudentApplication.Student.Nationality.Name</label>
+            <br />
+        </div>
+        <div class="mb-4 col-6">
+            <label class="fw-bold mb-1">Address</label>
+            <br />
+            <label>@Model.StudentApplication.Student.Address</label>
+            <br />
+        </div>
+        <div class="mb-4 col-6">
+            <label class="fw-bold mb-1">ID/Passport No</label>
+            <br />
+            <label>@Model.StudentApplication.Student.IdNo</label>
+            <br />
+        </div>
+        <div class="mb-4 col-6">
+            <label class="fw-bold mb-1">Drivers License</label>
+            <br />
+            <input asp-for="StudentApplication.Student.DriversLicense.Name" disabled class="col-4">
+@*            <label>@Model.StudentApplication.Student.DriversLicense.Name</label>*@
+            <br />
+        </div>
+        <div class="mb-4 col-6">
+            <label class="fw-bold mb-1">Career Objective</label>
+            <br />
+            <label>@Model.StudentApplication.Student.CareerObjective</label>
+            <br />
+        </div>
+        <div class="mb-4 col-6">
+            <label class="fw-bold mb-1">Achievements</label>
+            <br />
+            <label>@Model.StudentApplication.Student.Achivements</label>
+            <br />
+        </div>
+        <div class="mb-4 col-6">
+            <label class="fw-bold mb-1">Skills</label>
+            <br />
+            <label>@Model.StudentApplication.Student.Skills</label>
+            <br />
+        </div>
+        <div class="mb-4 col-6">
+            <label class="fw-bold mb-1">Interests</label>
+            <br />
+            <label>@Model.StudentApplication.Student.Interests</label>
+            <br />
+        </div>
+
+
+        <div class="row pb-2">
+            <h2 class="text-primary">Documents:</h2>
+        </div>
+        @foreach (ApplicationDocument document in Model.StudentApplication.Documents)
+        {
+            <div class="col pb-2">
+                <label class="col-sm-2 col-form-label" >@document.Description</label>
+                <a href="@document.FilePath" target="_blank">@document.Name</a>
+            </div>
+        }
+
+    </div>
+
+    <div class="mb-3 form-group col-5">
         <div>
-            <label class="col-sm-2 col-form-label">Status :</label>
+            <label class="col-sm-2 col-form-label fw-bold">Status :</label>
             <select asp-for="StudentApplication.applicationStatus.Id">
                 <option disabled selected>Select Outcome</option>
                 @foreach (var fac in Model.ApplicationStatusList)
@@ -82,12 +148,9 @@
             </select>
             <br />
         </div>
-
-
-        <button type="submit" class="btn btn-primary" style="width:150px">Update</button>
-        <a href="/Employer/JobPost/ApplicationIndex?id=@Model.StudentApplication.JobPostId" class="btn btn-secondary" style="width:150px">Back</a>
-@*        <a asp-area="JobPost" asp-action="Index" class="btn btn-secondary" style="width:150px">Back</a>*@
-
     </div>
+
+    <button type="submit" class="btn btn-primary" style="width:150px;margin-right:10px">Update</button>
+    <a href="/Employer/JobPost/ApplicationIndex?id=@Model.StudentApplication.JobPostId" class="btn btn-secondary" style="width:150px">Back</a>
 
 </form>

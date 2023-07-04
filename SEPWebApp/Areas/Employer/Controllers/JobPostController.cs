@@ -226,6 +226,7 @@ namespace SEPWebApp.Areas.Employer.Controllers
             return View(jobPost);
         }
 
+        //GET
         public IActionResult Detail(int id)
         {
             StudentApplication studentApplication = new StudentApplication();
@@ -234,6 +235,8 @@ namespace SEPWebApp.Areas.Employer.Controllers
             studentApplication.Documents = (ICollection<ApplicationDocument>)_unitOfWork.ApplicationDocument.GetApplicationDocument(id);
 
             JobPostVM jobPostVM = new JobPostVM();
+
+/*            jobPostVM.StudentApplication.Student.DriversLicense = studentApplication.Student.DriversLicense;*/
 
             jobPostVM.StudentApplication = studentApplication;
 

@@ -4,13 +4,13 @@
 <form method="get" asp-action="ApplicationIndex">
 
     <div class="col pb-2">
-        <label class="col-sm-2 col-form-label">Job Title :</label>
-        <input disabled asp-for="@Model.JobTitle" />
+        <label class="col-sm-2 col-form-label fw-bold">Job Title :</label>
+        <label>@Model.JobTitle</label>
     </div>
 
     <div class="col pb-2">
-        <label class="col-sm-2 col-form-label">Description of job : </label>
-        <input disabled asp-for="@Model.JobDescription" />
+        <label class="col-sm-2 col-form-label fw-bold">Description of job : </label>
+        <label>@Model.JobDescription</label>
     </div>
 </form>
 
