@@ -122,6 +122,21 @@
             <br />
         </div>
 
+        <div class="row pb-2">
+            <h2 class="text-primary">Referees:</h2>
+        </div>
+
+        @foreach (var referee in Model.Referees)
+        {
+            <div class="from-group row">
+                <label class="col-sm-2 col-form-label">@referee.JobTitle</label>
+                <div class="col pb-2">
+                    <a asp-controller="JobPost" asp-action="EditReferees" asp-route-id="@referee.Id" class="btn btn-primary" style="width:100px">View</a>
+
+                </div>
+            </div>
+        }
+
 
         <div class="row pb-2">
             <h2 class="text-primary">Documents:</h2>

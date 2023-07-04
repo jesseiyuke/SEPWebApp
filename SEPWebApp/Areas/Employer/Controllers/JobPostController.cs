@@ -236,7 +236,7 @@ namespace SEPWebApp.Areas.Employer.Controllers
 
             JobPostVM jobPostVM = new JobPostVM();
 
-/*            jobPostVM.StudentApplication.Student.DriversLicense = studentApplication.Student.DriversLicense;*/
+            /*            jobPostVM.StudentApplication.Student.DriversLicense = studentApplication.Student.DriversLicense;*/
 
             jobPostVM.StudentApplication = studentApplication;
 
@@ -246,6 +246,10 @@ namespace SEPWebApp.Areas.Employer.Controllers
 
             int numberOfStatusToShow = 3;
             jobPostVM.ApplicationStatusList = jobPostVM.ApplicationStatusList.Take(numberOfStatusToShow);
+
+            jobPostVM.Referees = _unitOfWork.Referees.GetByUserId(studentApplication.StudentId);
+            jobPostVM.Qualification = _unitOfWork.Qualification.GetByUserId(studentApplication.StudentId);
+            jobPostVM.Experience = _unitOfWork.Experience.GetByUserId(studentApplication.StudentId);
 
 
             return View(jobPostVM);
@@ -269,6 +273,12 @@ namespace SEPWebApp.Areas.Employer.Controllers
             }
             return View(obj);
 
+        }
+
+        public IActionResult EditReferees(int Id)
+        {
+            Referees referees = _unitOfWork.Referees.GetFirstOrDefault(d => d.Id == Id);
+            return View(referees);
         }
 
 

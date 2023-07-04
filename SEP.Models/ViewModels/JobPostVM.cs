@@ -27,8 +27,9 @@ namespace SEP.Models.ViewModels
         [ValidateNever]
         public IEnumerable<ApplicationStatus> ApplicationStatusList { get; set; }
 
-        [ValidateNever]
-        public Student Student { get; set; }
+        public IEnumerable<Referees>? Referees { get; set; }
+        public IEnumerable<Qualifications>? Qualification { get; set; }
+        public IEnumerable<Experience>? Experience { get; set; }
 
 
 
