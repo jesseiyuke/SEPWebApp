@@ -194,11 +194,16 @@
             <span asp-validation-for="JobPost.ContactNo" class="text-danger"></span>
         </div>
 
-        <div class="mb-2">
-            <label asp-for="JobPost.ReviewerComment" class="col-2 fw-bold"></label>
-            <textarea asp-for="JobPost.ReviewerComment" class="form-control" readonly="readonly"></textarea>
-            <span asp-validation-for="JobPost.ReviewerComment" class="text-danger"></span>
-        </div>
+        @if (Model.JobPost.Id != 0)
+        {
+            <div class="mb-2">
+                <label asp-for="JobPost.ReviewerComment" class="col-2 fw-bold"></label>
+                <textarea asp-for="JobPost.ReviewerComment" class="form-control" readonly="readonly"></textarea>
+                <span asp-validation-for="JobPost.ReviewerComment" class="text-danger"></span>
+            </div>
+        }
+
+
 
         <div class="mb-3 form-group row">
             <label asp-for="JobPost.StatusId" class="col-sm-2 col-form-label" hidden></label>

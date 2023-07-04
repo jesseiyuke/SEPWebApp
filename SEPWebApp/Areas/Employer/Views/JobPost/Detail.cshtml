@@ -122,32 +122,74 @@
             <br />
         </div>
 
-        <div class="row pb-2">
-            <h2 class="text-primary">Referees:</h2>
-        </div>
+        <div class="mb-4 col-6">
+            <div class="row pb-2">
+                <h2 class="text-primary">Referees</h2>
+            </div>
 
-        @foreach (var referee in Model.Referees)
-        {
-            <div class="from-group row">
-                <label class="col-sm-2 col-form-label">@referee.JobTitle</label>
-                <div class="col pb-2">
-                    <a asp-controller="JobPost" asp-action="EditReferees" asp-route-id="@referee.Id" class="btn btn-primary" style="width:100px">View</a>
+            @foreach (var referee in Model.Referees)
+            {
+                <div class="from-group row">
+                    <label class="col-5">@referee.JobTitle</label>
+                    <div class="col pb-2">
+                        <a asp-controller="JobPost" asp-action="EditReferees" asp-route-id="@referee.Id" class="btn btn-primary" style="width:100px">View</a>
 
+                    </div>
                 </div>
-            </div>
-        }
-
-
-        <div class="row pb-2">
-            <h2 class="text-primary">Documents:</h2>
+            }
         </div>
-        @foreach (ApplicationDocument document in Model.StudentApplication.Documents)
-        {
-            <div class="col pb-2">
-                <label class="col-sm-2 col-form-label" >@document.Description</label>
-                <a href="@document.FilePath" target="_blank">@document.Name</a>
+
+        <div class="mb-4 col-6">
+            <div class="row pb-2">
+                <h2 class="text-primary">Work Experience</h2>
             </div>
-        }
+
+            @foreach (var experience in Model.Experience)
+            {
+                <div class="from-group row">
+                    <label class="col-5">@experience.JobTitle</label>
+                    <div class="col pb-2">
+                        <a asp-controller="JobPost" asp-action="EditExperience" asp-route-id="@experience.Id" class="btn btn-primary" style="width:100px">View</a>
+
+                    </div>
+                </div>
+            }
+        </div>
+
+        
+        <div class="mb-4 col-6">
+            <div class="row pb-2">
+                <h2 class="text-primary">Education</h2>
+            </div>
+
+            @foreach (var education in Model.Qualification)
+            {
+                <div class="from-group row">
+                    <label class="col-5">@education.Qalificatiion</label>
+                    <div class="col pb-2">
+                        <a asp-controller="JobPost" asp-action="EditQualification" asp-route-id="@education.Id" class="btn btn-primary" style="width:100px">View</a>
+
+                    </div>
+                </div>
+            }
+        </div>
+
+
+        <div class="mb-4 col-6">
+            <div class="row pb-2">
+                <h2 class="text-primary">Documents:</h2>
+            </div>
+            @foreach (ApplicationDocument document in Model.StudentApplication.Documents)
+            {
+                <div class="col pb-2">
+                    <label class="col-5">@document.Description</label>
+                    <a href="@document.FilePath" target="_blank">@document.Name</a>
+                </div>
+            }
+        </div>
+
+
+
 
     </div>
 

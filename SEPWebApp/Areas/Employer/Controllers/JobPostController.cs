@@ -281,6 +281,18 @@ namespace SEPWebApp.Areas.Employer.Controllers
             return View(referees);
         }
 
+        public IActionResult EditExperience(int Id)
+        {
+            Experience experience = _unitOfWork.Experience.GetFirstOrDefault(d => d.Id == Id);
+            return View(experience);
+        }
+
+        public IActionResult EditQualification(int Id)
+        {
+            Qualifications qualifications = _unitOfWork.Qualification.GetFirstOrDefault(d => d.Id == Id);
+            return View(qualifications);
+        }
+
 
     }
 }
