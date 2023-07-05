@@ -2,11 +2,13 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using SEP.DataAccess.Data;
 using SEP.DataAccess.Repository.IRepository;
 using SEP.Models;
 using SEP.Models.ViewModels;
 using SEP.Utility;
 using SmartBreadcrumbs.Attributes;
+using System.Collections.Generic;
 using System.Data;
 
 namespace SEPWebApp.Controllers
@@ -20,12 +22,14 @@ namespace SEPWebApp.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly FakeJobPost _fakeJobPost;
 
-        public EmployerController(IUnitOfWork unitOfWork, SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager)
+        public EmployerController(IUnitOfWork unitOfWork, SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager,FakeJobPost fakeJobPost)
         {
             _unitOfWork = unitOfWork;
             _signInManager = signInManager;
             _userManager = userManager;
+            _fakeJobPost = fakeJobPost;
         }
 
         //[DefaultBreadcrumb("Home",AreaName ="Employer")]
@@ -49,6 +53,31 @@ namespace SEPWebApp.Controllers
             }
 
         }
+        public IActionResult PlotJobPost()
+        {
+
+            var fakeDataGenerator = new FakeJobPost();
+            var jobs = _fakeJobPost.GenerateFakePost(50);
+            foreach (FakePost fakeJob in jobs)
+            {
+                Department department = _unitOfWork.Department.GetFirstOrDefault(s=> s.Id==fakeJob.DepartmentId);
+                fakeJob.Department = department;
+                WeekHour hour =_unitOfWork.WeekHour.GetFirstOrDefault(s => s.Id == fakeJob.HoursId);
+                fakeJob.Hours = hour;
+            }
+
+            Dictionary<string, decimal> rateByDepartment = fakeDataGenerator.GetAverageRateByDepartment(jobs);
+
+            Dictionary<string, decimal> rateByWeekHour = fakeDataGenerator.GetAverageRateByWeekHour(jobs);
+
+            ViewBag.DepartmentNames = rateByDepartment.Keys.ToArray();
+            ViewBag.DepartmentRates = rateByDepartment.Values.ToArray();
+            ViewBag.WeekHours = rateByWeekHour.Keys.ToArray();
+            ViewBag.WeekHourRates = rateByWeekHour.Values.ToArray();
+            return View();
+        }
+
+
 
         //GET
         [Breadcrumb("Update", AreaName = "Employer")]

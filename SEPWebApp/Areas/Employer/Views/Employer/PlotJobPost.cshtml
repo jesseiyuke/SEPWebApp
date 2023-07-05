@@ -1,0 +1,76 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div style="display: flex;">
+        <div>
+            <canvas id="rateByWeekHourChart" width="800" height="600"></canvas>
+        </div>
+        <div>
+            <canvas id="rateByDepartmentChart" width="800" height="600"></canvas>
+        </div>
+
+    </div>
+
+    <script>
+        var weekHours = @Html.Raw(Json.Serialize(ViewBag.WeekHours));
+        var weekHourRates = @Html.Raw(Json.Serialize(ViewBag.WeekHourRates));
+        var departmentNames = @Html.Raw(Json.Serialize(ViewBag.DepartmentNames));
+        var departmentRates = @Html.Raw(Json.Serialize(ViewBag.DepartmentRates));
+
+        var ctx2 = document.getElementById('rateByWeekHourChart').getContext('2d');
+        var chart2 = new Chart(ctx2, {
+            type: 'line',
+            data: {
+                labels: weekHours,
+                datasets: [{
+                    label: 'Rate vs Weekly hours',
+                    data: weekHourRates,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        var ctx1 = document.getElementById('rateByDepartmentChart').getContext('2d');
+        var chart1 = new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: departmentNames,
+                datasets: [{
+                    label: 'Rate vs Department',
+                    data: departmentRates,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: false,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+
+    </script>
+</body>
+</html>
