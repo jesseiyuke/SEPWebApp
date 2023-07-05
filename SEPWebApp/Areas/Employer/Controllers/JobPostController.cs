@@ -227,6 +227,7 @@ namespace SEPWebApp.Areas.Employer.Controllers
         }
 
         //GET
+        [Breadcrumb("Details", AreaName = "JobPost")]
         public IActionResult Detail(int id)
         {
             StudentApplication studentApplication = new StudentApplication();

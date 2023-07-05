@@ -30,6 +30,7 @@ namespace SEP.DataAccess.Repository
         }
         public IEnumerable<JobPost> GetJobPosts(Student student)
         {
+            DateTime currentDate = DateTime.Now;
             var predicate = PredicateBuilder.New<JobPost>();
             predicate = predicate.And(p => p.StatusId==2);
             //filter if student is not a south african citizen
@@ -66,16 +67,14 @@ namespace SEP.DataAccess.Repository
                     predicate = predicate.And(p => p.Postdoc);
                     break;
             }
+            predicate = predicate.And(j => j.ClosingDate > currentDate);
             predicate = predicate.Or(p => /*p.isApproved &&*/ p.StatusId==2 && !p.FirstYear && !p.SecondYear && !p.ThirdYear && !p.Honours && !p.Graduates && !p.Masters && !p.PhD && !p.Postdoc);
 
 
             //filter out job posts that have already been applied to
             var postsAppliedToIds = _db.StudentApplication.Where(a => a.StudentId == student.Id).Select(a => a.JobPostId);
 
-            var posts = _db.JobPost.Where(predicate)
-                .Include(a => a.JobType)
-                .Include(a => a.WeekHour)
-                .Include(a => a.Department).ToList();
+            var posts = _db.JobPost.Where(predicate).ToList();
             posts = posts.Where(p => !postsAppliedToIds.Contains(p.Id)).ToList();
             return posts;
         }
