@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -20,16 +21,20 @@ namespace SEP.Models
         //EmoloyerType
 
         [BindProperty]
+        [Required]
+        [DisplayName("Employer Type")]
         public string EmoloyerType { get; set; }
-        public string[] EmoloyerTypes = new[] { "Internal (within Wits)", "External (created on behalf of)" };
+        public string[] EmoloyerTypes = new[] { "Internal", "External" };
 
         [Required]
+        [DisplayName("Faculty")]
         public int FacultyId { get; set; }
         [ForeignKey("FacultyId")]
         [ValidateNever]
         public Faculty Faculty { get; set; }
 
         [Required]
+        [DisplayName("Department")]
         public int DepartmentId { get; set; }
         [ForeignKey("DepartmentId")]
         [ValidateNever]
@@ -41,19 +46,21 @@ namespace SEP.Models
         [Required]
         public string Location { get; set; }
         [Required]
-        [Display(Name = "Description of job")]
+        [Display(Name = "Job Description")]
         public string JobDescription { get; set; }
         [Required]
         [Display(Name = "Key responsibilities")]
         public string KeyResponsibilities { get; set; }
 
         [Required]
+        [Display(Name = "Job Type")]
         public int JobTypeId { get; set; }
         [ForeignKey("JobTypeId")]
         [ValidateNever]
         public JobType JobType { get; set; }
 
         [Required]
+        [Display(Name = "Week hour")]
         public int WeekHourId { get; set; }
         [ForeignKey("WeekHourId")]
         [ValidateNever]
@@ -69,6 +76,7 @@ namespace SEP.Models
         public DateTime? EndDate { get; set; }
         [Required]
         [Display(Name = "Hourly Rate")]
+        [RegularExpression(@"^\d+$", ErrorMessage = "Hourly Rate must contain only numbers.")]
         public string HourlyRate { get; set; }
 
         //YOS
@@ -95,8 +103,10 @@ namespace SEP.Models
         //CitizenOrNot
 
         [BindProperty]
+        [Required]
+        [DisplayName("Nationality")]
         public string OpenTo { get; set; }
-        public string[] OpenTos = new[] { "South African citizens or", "Open to everyone" };
+        public string[] OpenTos = new[] { "South African citizens", "Open to everyone" };
 
         [Required]
         [Display(Name = "Minimum Requirements")]
@@ -109,14 +119,15 @@ namespace SEP.Models
         [Display(Name = "Closing Date")]
         public DateTime? ClosingDate { get; set; }
         [Required]
-        [Display(Name = "Contact person (for internal use and not visible to students)")]
+        [Display(Name = "Contact person")]
         public string ContactPerson { get; set; }
         [Required]
         [EmailAddress]
         public string Email { get; set; }
         [Required]
-        [Display(Name = "Contact No")]
-        [StringLength(60, MinimumLength = 10, ErrorMessage = "Contact Number must be at least 10 digits long")]
+        [Display(Name = "Contact Number")]
+        [StringLength(10, ErrorMessage = "Must be 10 digits")]
+        [RegularExpression(@"^\d+$", ErrorMessage = "Contact number must contain only numbers.")]
         public string ContactNo { get; set; }
 
         [Display(Name = "Reviewer’s comment")]

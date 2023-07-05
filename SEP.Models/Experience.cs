@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SEP.Models
 {
@@ -16,10 +12,20 @@ namespace SEP.Models
         public string StudentId { get; set; }
         [Required]
         public Student Student { get; set; }
+        [Required]
+        [DisplayName("Employer Name")]
         public string EmployerName { get; set; }
+        [Required]
+        [DisplayName("Start Date")]
         public DateTime StartDate { get; set; }
+        [Required]
+        [DisplayName("End Date")]
         public DateTime EndDate { get; set; }
+        [Required]
+        [DisplayName("Job Title")]
         public string JobTitle { get; set; }
+        [Required]
+        [DisplayName("Tasks And Responsilities")]
         public string TasksAndResponsilities { get; set; }
 
     }

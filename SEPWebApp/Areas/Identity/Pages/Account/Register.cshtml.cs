@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
-using Newtonsoft.Json.Serialization;
 using SEP.DataAccess.Repository.IRepository;
 using SEP.Models;
 using SEP.Utility;
@@ -122,14 +121,16 @@ namespace SEPWebApp.Areas.Identity.Pages.Account
             public string LastName { get; set; }
             [Required]
             [DisplayName("Telephone")]
-            [StringLength(60, MinimumLength = 10, ErrorMessage = "Telephone must be at least 10 digits long")]
+            [StringLength(10, ErrorMessage = "Must be 10 digits")]
+            [RegularExpression(@"^\d+$", ErrorMessage = "Cellphone number must contain only numbers.")]
             public string? Telephone { get; set; }
             [Required]
             [DisplayName("Cellphone")]
-            [StringLength(60, MinimumLength = 10, ErrorMessage = "Cellphone must be at least 10 digits long")]
+            [StringLength(10, ErrorMessage = "Must be 10 digits")]
+            [RegularExpression(@"^\d+$", ErrorMessage = "Cellphone number must contain only numbers.")]
             public string? Cellphone { get; set; } //Cellphone property in database
 
-            [Required(ErrorMessage ="What are you?")]
+            [Required(ErrorMessage = "What are you?")]
             [DisplayName("Role")]
             public string Role { get; set; }
 

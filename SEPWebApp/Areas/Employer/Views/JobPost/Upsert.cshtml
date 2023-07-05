@@ -10,7 +10,7 @@
         </div>
 
 
-        <div class="mb-3">
+        <div class="mb-4">
             <label class="fw-bold mb-1" style="margin-right:10px">Recruiter Type:</label>
             @foreach (var emoloyerType in Model.JobPost.EmoloyerTypes)
             {
@@ -21,7 +21,7 @@
             <span asp-validation-for="JobPost.EmoloyerType" class="text-danger"></span>
         </div>
 
-        <div class="mb-2 col-6">
+        <div class="mb-4 col-6">
             <label class="fw-bold mb-1">Faculty</label>
             <select asp-for="JobPost.FacultyId" id="faculty" class="form-select">
                 <option disabled selected>Select Faculty</option>
@@ -33,7 +33,7 @@
             <span asp-validation-for="JobPost.FacultyId" class="text-danger"></span>
         </div>
 
-        <div class="mb-2 col-6">
+        <div class="mb-4 col-6">
             <label class="fw-bold mb-1">Department</label>
             <select asp-for="JobPost.DepartmentId" id="department" class="form-select">
                 <option disabled selected>Select Department</option>
@@ -45,32 +45,32 @@
             <span asp-validation-for="JobPost.DepartmentId" class="text-danger"></span>
         </div>
 
-        <div class="mb-2 col-6">
+        <div class="mb-4 col-6">
             <label asp-for="JobPost.JobTitle" class="col-2 fw-bold"></label>
             <input asp-for="JobPost.JobTitle" class="form-control">
             <span asp-validation-for="JobPost.JobTitle" class="text-danger"></span>
         </div>
 
-        <div class="mb-2 col-6">
+        <div class="mb-4 col-6">
             <label asp-for="JobPost.Location" class="col-2 fw-bold"></label>
             <input asp-for="JobPost.Location" class="form-control">
             <span asp-validation-for="JobPost.Location" class="text-danger"></span>
         </div>
 
-        <div class="mb-2 col-6">
+        <div class="mb-4 col-6">
             <label asp-for="JobPost.JobDescription" class="fw-bold"></label>
             <textarea asp-for="JobPost.JobDescription" class="form-control"></textarea>
             <span asp-validation-for="JobPost.JobDescription" class="text-danger"></span>
         </div>
 
-        <div class="mb-2 col-6">
+        <div class="mb-4 col-6">
             <label asp-for="JobPost.KeyResponsibilities" class="fw-bold"></label>
             <textarea asp-for="JobPost.KeyResponsibilities" class="form-control" ></textarea>
             <span asp-validation-for="JobPost.KeyResponsibilities" class="text-danger"></span>
         </div>
 
 
-        <div class="mb-2 col-6">
+        <div class="mb-4 col-6">
             <label class="fw-bold mb-1">FullTime or part-time</label>
             <select asp-for="JobPost.JobTypeId" id="jobtype" class="form-select">
                 <option disabled selected>Select Job Type</option>
@@ -82,7 +82,7 @@
             <span asp-validation-for="JobPost.JobTypeId" class="text-danger"></span>
         </div>
 
-        <div class="mb-2 col-6">
+        <div class="mb-4 col-6">
             <label class="fw-bold mb-1"></label>
             <select asp-for="JobPost.WeekHourId" class="form-select" id="weekhour">
                 <option selected>Number of hours required in a week</option>
@@ -101,7 +101,7 @@
                 <span asp-validation-for="JobPost.StartDate" class="text-danger"></span>
             </div>
         </div>*@
-        <div class="mb-3 col-6">
+        <div class="mb-4 col-6">
             <label asp-for="JobPost.StartDate" class="fw-bold"></label>
             <br />
             <input asp-for="JobPost.StartDate" id="startDate" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
@@ -109,7 +109,7 @@
             <span class="text-danger" id="startDateError"></span>
         </div>
 
-        <div class="mb-3 col-6">
+        <div class="mb-4 col-6">
             <label asp-for="JobPost.EndDate" class="fw-bold"></label>
             <br />
             <input asp-for="JobPost.EndDate" id="endDate" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
@@ -117,13 +117,13 @@
             <span class="text-danger" id="endDateError"></span>
         </div>
 
-        <div class="mb-3 col-6">
+        <div class="mb-4 col-6">
             <label asp-for="JobPost.HourlyRate" class="fw-bold"></label>
-            <input asp-for="JobPost.HourlyRate" class="form-control">
+            <input asp-for="JobPost.HourlyRate" class="form-control" placeholder="Rands">
             <span asp-validation-for="JobPost.HourlyRate" class="text-danger"></span>
         </div>
 
-        <div class="mb-3 col-6">
+        <div class="mb-4 col-6">
             <label class="fw-bold mb-1" style="margin-right:10px">Limited to:</label>
             <br />
             @foreach (var openTo in Model.JobPost.OpenTos)
@@ -136,7 +136,7 @@
             <span asp-validation-for="JobPost.OpenTo" class="text-danger"></span>
         </div>
 
-        <div class="mb-3">
+        <div class="mb-4">
             <label class="fw-bold">Limited to</label>
             <br />
             <input type="checkbox" asp-for="JobPost.FirstYear" /><label class="col-2">Year 1</label>
@@ -155,19 +155,19 @@
             @*                <span asp-validation-for="JobPost.FirstYear" class="text-danger"></span>*@
         </div>
 
-        <div class="mb-2 col-6">
+        <div class="mb-4 col-6">
             <label asp-for="JobPost.MinimumRequirements" class=" fw-bold"></label>
             <textarea asp-for="JobPost.MinimumRequirements" class="form-control" ></textarea>
             <span asp-validation-for="JobPost.MinimumRequirements" class="text-danger"></span>
         </div>
 
-        <div class="mb-2 col-6">
+        <div class="mb-4 col-6">
             <label asp-for="JobPost.ApplicationInstruction" class=" fw-bold"></label>
             <textarea asp-for="JobPost.ApplicationInstruction" class="form-control"></textarea>
             <span asp-validation-for="JobPost.ApplicationInstruction" class="text-danger"></span>
         </div>
 
-        <div class="mb-2 col-6">
+        <div class="mb-4 col-6">
             <label asp-for="JobPost.ClosingDate" class="fw-bold"></label>
             <br />
             <input asp-for="JobPost.ClosingDate" id="closingDate" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
@@ -175,27 +175,27 @@
             <span class="text-danger" id="closingDateError"></span>
         </div>
 
-        <div class="mb-2 col-6">
+        <div class="mb-4 col-6">
             <label asp-for="JobPost.ContactPerson" class=" fw-bold"></label>
             <input asp-for="JobPost.ContactPerson" class="form-control" >
             <span asp-validation-for="JobPost.ContactPerson" class="text-danger"></span>
         </div>
 
-        <div class="mb-2 col-6">
+        <div class="mb-4 col-6">
             <label asp-for="JobPost.Email" class="col-2 fw-bold"></label>
             <input asp-for="JobPost.Email" class="form-control" >
             <span asp-validation-for="JobPost.Email" class="text-danger"></span>
         </div>
 
-        <div class="mb-2 col-6">
-            <label asp-for="JobPost.ContactNo" class="col-2 fw-bold"></label>
+        <div class="mb-4 col-6">
+            <label asp-for="JobPost.ContactNo" class="fw-bold"></label>
             <input asp-for="JobPost.ContactNo" class="form-control" >
             <span asp-validation-for="JobPost.ContactNo" class="text-danger"></span>
         </div>
 
         @if (Model.JobPost.Id != 0)
         {
-            <div class="mb-2">
+            <div class="mb-4">
                 <label asp-for="JobPost.ReviewerComment" class="col-2 fw-bold"></label>
                 <textarea asp-for="JobPost.ReviewerComment" class="form-control" readonly="readonly"></textarea>
                 <span asp-validation-for="JobPost.ReviewerComment" class="text-danger"></span>
@@ -204,7 +204,7 @@
 
 
 
-        <div class="mb-3 form-group row">
+        <div class="mb-4 form-group row">
             <label asp-for="JobPost.StatusId" class="col-sm-2 col-form-label" hidden></label>
             <div class="col-5">
                 <select asp-for="JobPost.StatusId" asp-items=@Model.StatusList class="form-select" hidden>
