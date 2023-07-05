@@ -14,9 +14,11 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using SmartBreadcrumbs.Attributes;
 
 namespace SEPWebApp.Areas.Identity.Pages.Account
 {
+    [Breadcrumb("Log in")]
     public class LoginModel : PageModel
     {
         private readonly SignInManager<IdentityUser> _signInManager;

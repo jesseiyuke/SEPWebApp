@@ -10,6 +10,7 @@ using SEP.Utility;
 using SEPWebApp.Areas.Home.Controllers;
 using SmartBreadcrumbs.Attributes;
 using System.Data;
+using System.Net.NetworkInformation;
 
 namespace SEPWebApp.Areas.Controllers
 {
@@ -31,7 +32,7 @@ namespace SEPWebApp.Areas.Controllers
             _webHostEnvironment = webHostEnvironment;
         }
 
-        [Breadcrumb("Home", AreaName = "Student")]
+        [Breadcrumb("Student", AreaName = "Student")]
         public IActionResult Index()
         {
 
@@ -442,7 +443,16 @@ namespace SEPWebApp.Areas.Controllers
                 {
                     var fileName = Path.GetFileNameWithoutExtension(file.FileName);
                     var uploads = Path.Combine(wwwRootPath, @"files\Documents");
+
                     var extension = Path.GetExtension(file.FileName);
+                    string[] allowedExtensions = { ".pdf", ".jpg", ".png", ".doc", ".docx", ".jpeg", ".ppt", ".pptx" };
+                    bool isValidExtension = allowedExtensions.Contains(extension, StringComparer.OrdinalIgnoreCase);
+
+                    if(!isValidExtension)
+                    {
+                        TempData["error"] = "Only upload .pdf, .jpg,.jpeg, .png, .doc, .docx,.ppt, or .pptx files.";
+                        return View();
+                    }
 
                     if (obj.ApplicationDocument.FilePath != null)
                     {

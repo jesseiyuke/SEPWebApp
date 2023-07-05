@@ -14,6 +14,7 @@ using Newtonsoft.Json.Serialization;
 using SEP.DataAccess.Repository.IRepository;
 using SEP.Models;
 using SEP.Utility;
+using SmartBreadcrumbs.Attributes;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
@@ -21,6 +22,7 @@ using System.Text.Encodings.Web;
 
 namespace SEPWebApp.Areas.Identity.Pages.Account
 {
+    [Breadcrumb("Register")]
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<IdentityUser> _signInManager;
@@ -105,14 +107,17 @@ namespace SEPWebApp.Areas.Identity.Pages.Account
             public string ConfirmPassword { get; set; }
             [Required]
             [DisplayName("Title")]
+            [RegularExpression("^[a-zA-Z]+$", ErrorMessage = "Title should contain only letters.")]
             [StringLength(60, MinimumLength = 2, ErrorMessage = "Title must be at least 2 characters long")]
             public string Title { get; set; }
             [Required]
             [DisplayName("First Name")]
             [StringLength(60, MinimumLength = 1, ErrorMessage = "First Name must be at least 1 character long")]
+            [RegularExpression("^[a-zA-Z]+$", ErrorMessage = "First name should contain only letters.")]
             public string FirstName { get; set; }
             [Required]
             [DisplayName("Last Name")]
+            [RegularExpression("^[a-zA-Z]+$", ErrorMessage = "Last name should contain only letters.")]
             [StringLength(60, MinimumLength = 1, ErrorMessage = "Last Name must be at least 1 character long")]
             public string LastName { get; set; }
             [Required]
@@ -132,7 +137,6 @@ namespace SEPWebApp.Areas.Identity.Pages.Account
             public IEnumerable<SelectListItem> RoleList { get; set; }
 
         }
-
 
         public async Task OnGetAsync(string returnUrl = null)
         {
