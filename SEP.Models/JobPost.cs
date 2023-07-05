@@ -62,11 +62,11 @@ namespace SEP.Models
         [Required]
         [Display(Name = "Start Date")]
         [DataType(DataType.Date)]
-        public DateTime StartDate { get; set; }
+        public DateTime? StartDate { get; set; }
         [Required]
         [DataType(DataType.Date)]
         [Display(Name = "End Date")]
-        public DateTime EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
         [Required]
         [Display(Name = "Hourly Rate")]
         public string HourlyRate { get; set; }
@@ -107,7 +107,7 @@ namespace SEP.Models
         [Required]
         [DataType(DataType.Date)]
         [Display(Name = "Closing Date")]
-        public DateTime ClosingDate { get; set; }
+        public DateTime? ClosingDate { get; set; }
         [Required]
         [Display(Name = "Contact person (for internal use and not visible to students)")]
         public string ContactPerson { get; set; }

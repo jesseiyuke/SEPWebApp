@@ -10,7 +10,6 @@ using SEP.Utility;
 using SEPWebApp.Areas.Home.Controllers;
 using SmartBreadcrumbs.Attributes;
 using System.Data;
-using System.Net.NetworkInformation;
 
 namespace SEPWebApp.Areas.Controllers
 {
@@ -366,7 +365,10 @@ namespace SEPWebApp.Areas.Controllers
             studentApplication.StatusId = 4;
             _db.StudentApplication.Update(studentApplication);
             _db.SaveChanges();
-            return RedirectToAction("History");
+            //TempData["success"] = "Application Withdrawn";
+            //return View();
+            //return RedirectToAction("History");
+            return Json(new { success = true, message = "Application Withdrawn" });
 
         }
 
@@ -448,7 +450,7 @@ namespace SEPWebApp.Areas.Controllers
                     string[] allowedExtensions = { ".pdf", ".jpg", ".png", ".doc", ".docx", ".jpeg", ".ppt", ".pptx" };
                     bool isValidExtension = allowedExtensions.Contains(extension, StringComparer.OrdinalIgnoreCase);
 
-                    if(!isValidExtension)
+                    if (!isValidExtension)
                     {
                         TempData["error"] = "Only upload .pdf, .jpg,.jpeg, .png, .doc, .docx,.ppt, or .pptx files.";
                         return View();

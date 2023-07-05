@@ -104,17 +104,17 @@
         <div class="mb-3 col-6">
             <label asp-for="JobPost.StartDate" class="fw-bold"></label>
             <br />
-            <input asp-for="JobPost.StartDate" id="startDate" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" name="startDate" />
+            <input asp-for="JobPost.StartDate" id="startDate" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
             <span asp-validation-for="JobPost.StartDate" class="text-danger"></span>
-            <span asp-validation-for="JobPost.StartDate" class="text-danger" id="startDateError"></span>
+            <span class="text-danger" id="startDateError"></span>
         </div>
 
         <div class="mb-3 col-6">
             <label asp-for="JobPost.EndDate" class="fw-bold"></label>
             <br />
-            <input asp-for="JobPost.EndDate" id="endDate" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" name="endDate" />
+            <input asp-for="JobPost.EndDate" id="endDate" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
             <span asp-validation-for="JobPost.EndDate" class="text-danger"></span>
-            <span asp-validation-for="JobPost.EndDate" class="text-danger" id="endDateError"></span>
+            <span class="text-danger" id="endDateError"></span>
         </div>
 
         <div class="mb-3 col-6">
@@ -170,10 +170,9 @@
         <div class="mb-2 col-6">
             <label asp-for="JobPost.ClosingDate" class="fw-bold"></label>
             <br />
-            <input asp-for="JobPost.ClosingDate" id="closingDate" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" name="closingDate" />
-            @*                <input asp-for="JobPost.ClosingDate" class="datepicker" />*@
+            <input asp-for="JobPost.ClosingDate" id="closingDate" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
             <span asp-validation-for="JobPost.ClosingDate" class="text-danger"></span>
-            <span asp-validation-for="JobPost.ClosingDate" class="text-danger" id="closingDateError"></span>
+            <span class="text-danger" id="closingDateError"></span>
         </div>
 
         <div class="mb-2 col-6">
@@ -325,37 +324,66 @@
                 var closingDate = new Date(closingDateInput.value);
 
 
-                if (startDate > endDate) {
-                    startDateError.textContent = "Start date cannot be after the end date.";
-                    startDateInput.value = null;
-                }
+                //if (startDate > endDate) {
+                    //startDateError.textContent = "Start date cannot be after the end date.";
+                    //startDateInput.value = null;
+                    //endDateError.textContent = null;
+                    //closingDateError.textContent=null;
+                //}
+
                 if (startDate < closingDate) {
                     startDateError.textContent = "Start date cannot be before the closing date.";
                     startDateInput.value = null;
+                    endDateError.textContent = null;
+                    closingDateError.textContent = null;
+                }
+                if (startDate > closingDate) {
+                    startDateError.textContent = null;
                 }
 
                 if (endDate < startDate) {
                     endDateError.textContent = "End date cannot be before the start date.";
                     endDateInput.value = null;
+                    startDateError.textContent = null;
+                    closingDateError.textContent = null;
+                }
+
+                if (endDate > startDate) {
+                    endDateError.textContent = null;
                 }
                 if (endDate < closingDate) {
                     endDateError.textContent = "End date cannot be before the closing date.";
                     endDateInput.value = null;
+                    startDateError.textContent = null;
+                    closingDateError.textContent = null;
                 }
 
                 if (closingDate > startDate) {
                     closingDateError.textContent = "Closing date cannot be after the start date.";
                     closingDateInput.value = null;
+                    startDateError.textContent = null;
+                    endDateError.textContent = null;
+                }
+
+                if (closingDate < startDate) {
+                    closingDateError.textContent = null;
                 }
                 if (closingDate > endDate) {
                     closingDateError.textContent = "Closing date cannot be after the end date.";
                     closingDateInput.value = null;
-                }
-                else{
-                    startDateError.textContent=null;
+                    startDateError.textContent = null;
                     endDateError.textContent = null;
+                }
+
+                if (closingDate < endDate) {
                     closingDateError.textContent = null;
                 }
+
+                //else{
+                    //startDateError.textContent=null;
+                   // endDateError.textContent = null;
+                    //closingDateError.textContent = null;
+                //}
 
             }
 

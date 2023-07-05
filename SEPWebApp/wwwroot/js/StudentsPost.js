@@ -53,7 +53,7 @@ function loadDataTable() {
 	});
 }
 function formatDate(date) {
-	var formattedDate = new Date(date).toLocaleDateString('en-US', {
+	var formattedDate = new Date(date).toLocaleDateString('en-GB', {
 
 		year: 'numeric',
 		month: '2-digit',

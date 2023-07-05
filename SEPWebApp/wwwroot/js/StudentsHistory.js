@@ -38,7 +38,9 @@ function loadDataTable() {
 							<a href="/Student/Student/ReviewApplication?Id=${data}"
 						class="btn btn-primary mx-2">Details</a>
 
-						<a href="/Student/Student/WithdrawApplication?Id=${data}"
+
+
+						<a onClick=Delete('/Student/Student/WithdrawApplication/${data}')
 						class="btn btn-primary mx-2">Withdraw</a>
 						</div>
 
@@ -51,7 +53,7 @@ function loadDataTable() {
 	});
 }
 function formatDate(date) {
-	var formattedDate = new Date(date).toLocaleDateString('en-US', {
+	var formattedDate = new Date(date).toLocaleDateString('en-GB', {
 
 		year: 'numeric',
 		month: '2-digit',
@@ -59,3 +61,32 @@ function formatDate(date) {
 	});
 	return formattedDate;
 }
+
+function Delete(url) {
+	Swal.fire({
+		title: 'Are you sure?',
+		text: "You won't be able to apply to this job post again!",
+		icon: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		confirmButtonText: 'Yes, delete it!'
+	}).then((result) => {
+		if (result.isConfirmed) {
+			$.ajax({
+				url: url,
+				type: 'DELETE',
+				success: function (data) {
+					if (data.success) {
+						dataTable.ajax.reload();
+						toastr.success(data.message);
+					}
+					else {
+						toastr.error(data.message);
+					}
+				}
+			})
+		}
+	})
+}
+
