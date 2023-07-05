@@ -251,6 +251,8 @@ namespace SEPWebApp.Areas.Employer.Controllers
             jobPostVM.Qualification = _unitOfWork.Qualification.GetByUserId(studentApplication.StudentId);
             jobPostVM.Experience = _unitOfWork.Experience.GetByUserId(studentApplication.StudentId);
 
+            jobPostVM.StudentApplication.Student.DriversLicense = _unitOfWork.DriverLicence.GetFirstOrDefault(s => s.Id == jobPostVM.StudentApplication.Student.DriversLicenseId);
+
 
             return View(jobPostVM);
         }
