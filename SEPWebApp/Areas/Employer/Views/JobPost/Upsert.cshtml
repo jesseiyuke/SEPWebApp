@@ -6,7 +6,7 @@
     <input asp-for="JobPost.ApplicationUserId" hidden />
     <div class="p-3 mt-2 row">
         <div class="row pb-2">
-            <h2 class="text-primary">@(Model.JobPost.Id != 0 ? "Update" : "Create") Post</h2>
+            <h2 class="text-primary">@(Model.JobPost.Id != 0 ? "Edit" : "Create") Post</h2>
         </div>
 
 
@@ -218,7 +218,7 @@
 
         @if (Model.JobPost.Id != 0)
         {
-            <button type="submit" class="btn btn-primary" style="width:150px;margin-right:10px">Update</button>
+            <button type="submit" class="btn btn-primary" style="width:150px;margin-right:10px">Save</button>
         }
         else
         {
