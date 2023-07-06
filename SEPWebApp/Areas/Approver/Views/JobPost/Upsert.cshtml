@@ -119,7 +119,7 @@
             <input asp-for="JobPost.StartDate" type="text" class="datepicker form-control" readonly="readonly">
             <span asp-validation-for="JobPost.StartDate" class="text-danger"></span>
         </div>
-        <div class="mb-2 col-6">
+        <div class="mb-4 col-6">
             <label asp-for="JobPost.EndDate" class="fw-bold"></label>
             <input asp-for="JobPost.EndDate" type="text" class="datepicker form-control" readonly="readonly">
             <span asp-validation-for="JobPost.EndDate" class="text-danger"></span>
@@ -130,6 +130,19 @@
             <label asp-for="JobPost.HourlyRate" class="fw-bold"></label>
             <input asp-for="JobPost.HourlyRate" class="form-control" readonly="readonly">
             <span asp-validation-for="JobPost.HourlyRate" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3 col-6">
+            <label class="fw-bold mb-1" style="margin-right:10px">Limited to:</label>
+            @foreach (var openTo in Model.JobPost.OpenTos)
+            {
+                <input type="radio" asp-for="JobPost.OpenTo" value="@openTo" disabled="disabled" />
+                <input hidden asp-for="JobPost.OpenTo" value="@openTo" />
+
+                @openTo
+            }
+            <br />
+            <span asp-validation-for="JobPost.OpenTo" class="text-danger"></span>
         </div>
 
         <div class="mb-3">
@@ -164,18 +177,7 @@
         </div>
 
 
-        <div class="mb-3">
-            <label class="fw-bold mb-1" style="margin-right:10px">Limited to:</label>
-            @foreach (var openTo in Model.JobPost.OpenTos)
-            {
-                <input type="radio" asp-for="JobPost.OpenTo" value="@openTo" disabled="disabled" />
-                <input hidden asp-for="JobPost.OpenTo" value="@openTo" />
 
-                @openTo
-            }
-            <br />
-            <span asp-validation-for="JobPost.OpenTo" class="text-danger"></span>
-        </div>
 
         <div class="mb-2 col-6">
             <label asp-for="JobPost.MinimumRequirements" class=" fw-bold"></label>
@@ -208,7 +210,7 @@
         </div>
 
         <div class="mb-2 col-6">
-            <label asp-for="JobPost.ContactNo" class="col-2 fw-bold"></label>
+            <label asp-for="JobPost.ContactNo" class="fw-bold"></label>
             <input asp-for="JobPost.ContactNo" class="form-control" readonly="readonly">
             <span asp-validation-for="JobPost.ContactNo" class="text-danger"></span>
         </div>

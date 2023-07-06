@@ -152,6 +152,7 @@ namespace SEPWebApp.Areas.Employer.Controllers
                 else
                 {
                     //obj.JobPost.Status.Name = "Pending"; //every update to leave status=pending
+                    obj.JobPost.StatusId = 1;
                     _unitOfWork.JobPost.Update(obj.JobPost);
                 }
                 _unitOfWork.Save();
