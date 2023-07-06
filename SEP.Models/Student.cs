@@ -13,11 +13,11 @@ namespace SEP.Models
 
         [Required]
         [DisplayName("Address")]
-        public string? Address { set; get; }
+        public string Address { set; get; }
         [RegularExpression("(([0-9]{2})(0|1)([0-9])([0-3])([0-9]))([ ]?)(([ 0-9]{4})([ ]?)([ 0-1][8]([ ]?)[ 0-9]))", ErrorMessage = "Invalid ID number")]
         public string? IdNo { set; get; }
         [Required]
-        [DisplayName("DriversLicense")]
+        [DisplayName("Drivers License")]
         [ForeignKey(nameof(DriversLicenseId))]
         public int DriversLicenseId { get; set; }
         public DriverLicense? DriversLicense { set; get; }

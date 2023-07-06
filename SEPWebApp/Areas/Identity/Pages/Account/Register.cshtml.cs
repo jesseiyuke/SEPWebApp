@@ -144,9 +144,9 @@ namespace SEPWebApp.Areas.Identity.Pages.Account
 
             if (!_roleManager.RoleExistsAsync(SD.Role_Approver).GetAwaiter().GetResult())
             {
-                _roleManager.CreateAsync(new IdentityRole(SD.Role_Approver)).GetAwaiter().GetResult();
                 _roleManager.CreateAsync(new IdentityRole(SD.Role_Employer)).GetAwaiter().GetResult();
                 _roleManager.CreateAsync(new IdentityRole(SD.Role_Student)).GetAwaiter().GetResult();
+                _roleManager.CreateAsync(new IdentityRole(SD.Role_Approver)).GetAwaiter().GetResult();
             }
 
             ReturnUrl = returnUrl;
@@ -156,11 +156,13 @@ namespace SEPWebApp.Areas.Identity.Pages.Account
 
             Input = new InputModel()
             {
-                RoleList = _roleManager.Roles.Select(x => x.Name).Select(i => new SelectListItem
+                RoleList = _roleManager.Roles.Where(s => s.Name != SD.Role_Approver).Select(x => x.Name).Select(i => new SelectListItem
                 {
                     Text = i,
                     Value = i
                 }),
+
+                //.Where(s => s.Name != SD.Role_Approver).
 
                 //Create employer object
                 //Employer = new(),
@@ -169,8 +171,8 @@ namespace SEPWebApp.Areas.Identity.Pages.Account
                 //JobTitle=_unitOfWork.Employer.GetFirstOrDefault(u => u.JobTitle== )
 
             };
-            int numberOfRolesToShow = 2;
-            Input.RoleList = Input.RoleList.Take(numberOfRolesToShow);
+            /*            int numberOfRolesToShow = 2;
+                        Input.RoleList = Input.RoleList.Take(numberOfRolesToShow);*/
         }
 
         public async Task<IActionResult> OnPostAsync(string? returnUrl = null)
@@ -238,15 +240,15 @@ namespace SEPWebApp.Areas.Identity.Pages.Account
 
             Input = new InputModel()
             {
-                RoleList = _roleManager.Roles.Select(x => x.Name).Select(i => new SelectListItem
+                RoleList = _roleManager.Roles.Where(s => s.Name != SD.Role_Approver).Select(x => x.Name).Select(i => new SelectListItem
                 {
                     Text = i,
                     Value = i
                 }),
 
             };
-            int numberOfRolesToShow = 2;
-            Input.RoleList = Input.RoleList.Take(numberOfRolesToShow);
+            /*            int numberOfRolesToShow = 2;
+                        Input.RoleList = Input.RoleList.Take(numberOfRolesToShow);*/
 
             // If we got this far, something failed, redisplay form
             return Page();
