@@ -513,12 +513,13 @@ namespace SEPWebApp.Areas.Controllers
         }
 
         [HttpDelete]
-        public IActionResult DeleteDocument(int? id)
+        public IActionResult DeleteDocument(int id)
         {
             var obj = _unitOfWork.ApplicationDocument.GetFirstOrDefault(u => u.Id == id);
             if (obj == null)
             {
-                return Json(new { success = false, message = "Error while deleting" });
+                return RedirectToAction("Index");
+                //return Json(new { success = false, message = "Error while deleting" });
             }
 
             var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, obj.FilePath.TrimStart('\\'));
@@ -529,7 +530,8 @@ namespace SEPWebApp.Areas.Controllers
 
             _unitOfWork.ApplicationDocument.Remove(obj);
             _unitOfWork.Save();
-            return Json(new { success = true, message = "Delete Successful" });
+            return RedirectToAction("Index");
+            //return Json(new { success = true, message = "Delete Successful" });
 
         }
 

@@ -189,7 +189,7 @@
 
         <div class="mb-4 col-6">
             <label asp-for="JobPost.ContactNo" class="fw-bold"></label>
-            <input asp-for="JobPost.ContactNo" class="form-control" >
+            <input asp-for="JobPost.ContactNo" class="form-control" pattern="[0][0-9]{9}">
             <span asp-validation-for="JobPost.ContactNo" class="text-danger"></span>
         </div>
 

@@ -24,7 +24,7 @@ namespace SEP.Models
         [Required]
         [DisplayName("Employer Type")]
         public string EmoloyerType { get; set; }
-        public string[] EmoloyerTypes = new[] { "Internal", "External" };
+        public string[] EmoloyerTypes = new[] { "Internal(within Wits) ", "External" };
 
         [Required]
         [DisplayName("Faculty")]

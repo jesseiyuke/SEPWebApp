@@ -14,6 +14,8 @@ namespace SEP.Models
         public string StudentId { get; set; }
         [Required]
         public Student Student { get; set; }
+        [Required]
+        [DisplayName("Institution")]
 
         public string Institution { get; set; }
         [Required]
@@ -25,9 +27,9 @@ namespace SEP.Models
         [Required]
         [DisplayName("Qualification")]
         public string Qalificatiion { get; set; }
-        public string Subjects { get; set; }
-        public string Majors { get; set; }
-        public string SubMajors { get; set; }
-        public string Research { get; set; }
+        public string? Subjects { get; set; }
+        public string? Majors { get; set; }
+        public string? SubMajors { get; set; }
+        public string? Research { get; set; }
     }
 }
