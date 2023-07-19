@@ -1,0 +1,460 @@
+﻿@model SEP.Models.ViewModels.JobPostVM
+
+
+<form method="post" asp-action="Upsert">
+    <input asp-for="JobPost.Id" hidden />
+    <input asp-for="JobPost.ApplicationUserId" hidden />
+    <div class="p-3 mt-2 row">
+        <div class="row pb-2">
+            <h2 class="text-primary">@(Model.JobPost.Id != 0 ? "Edit" : "Create") Post</h2>
+        </div>
+
+
+        <div class="mb-4">
+            <label class="fw-bold mb-1" style="margin-right:10px">Recruiter Type:</label>
+            @foreach (var emoloyerType in Model.JobPost.EmoloyerTypes)
+            {
+                <input type="radio" asp-for="JobPost.EmoloyerType" value="@emoloyerType" />
+                @emoloyerType
+            }
+            <br />
+            <span asp-validation-for="JobPost.EmoloyerType" class="text-danger"></span>
+        </div>
+
+        <div class="mb-4 col-6">
+            <label class="fw-bold mb-1">Faculty</label>
+            <select asp-for="JobPost.FacultyId" id="faculty" class="form-select">
+                <option disabled selected>Select Faculty</option>
+                @foreach (var fac in Model.FacultyList)
+                {
+                    <option value="@fac.Id">@fac.Name</option>
+                }
+            </select>
+            <span asp-validation-for="JobPost.FacultyId" class="text-danger"></span>
+        </div>
+
+        <div class="mb-4 col-6">
+            <label class="fw-bold mb-1">Department</label>
+            <select asp-for="JobPost.DepartmentId" id="department" class="form-select">
+                <option disabled selected>Select Department</option>
+                @foreach (var dep in Model.DepartmentList)
+                {
+                    <option value="@dep.Id">@dep.Name</option>
+                }
+            </select>
+            <span asp-validation-for="JobPost.DepartmentId" class="text-danger"></span>
+        </div>
+
+        <div class="mb-4 col-6">
+            <label asp-for="JobPost.JobTitle" class="col-2 fw-bold"></label>
+            <input asp-for="JobPost.JobTitle" class="form-control">
+            <span asp-validation-for="JobPost.JobTitle" class="text-danger"></span>
+        </div>
+
+        <div class="mb-4 col-6">
+            <label asp-for="JobPost.Location" class="col-2 fw-bold"></label>
+            <input asp-for="JobPost.Location" class="form-control">
+            <span asp-validation-for="JobPost.Location" class="text-danger"></span>
+        </div>
+
+        <div class="mb-4 col-6">
+            <label asp-for="JobPost.JobDescription" class="fw-bold"></label>
+            <textarea asp-for="JobPost.JobDescription" class="form-control"></textarea>
+            <span asp-validation-for="JobPost.JobDescription" class="text-danger"></span>
+        </div>
+
+        <div class="mb-4 col-6">
+            <label asp-for="JobPost.KeyResponsibilities" class="fw-bold"></label>
+            <textarea asp-for="JobPost.KeyResponsibilities" class="form-control" ></textarea>
+            <span asp-validation-for="JobPost.KeyResponsibilities" class="text-danger"></span>
+        </div>
+
+
+        <div class="mb-4 col-6">
+            <label class="fw-bold mb-1">FullTime or part-time</label>
+            <select asp-for="JobPost.JobTypeId" id="jobtype" class="form-select">
+                <option disabled selected>Select Job Type</option>
+                @foreach (var job in Model.JobTypeList)
+                {
+                    <option value="@job.Id">@job.Name</option>
+                }
+            </select>
+            <span asp-validation-for="JobPost.JobTypeId" class="text-danger"></span>
+        </div>
+
+        <div class="mb-4 col-6">
+            <label class="fw-bold mb-1"></label>
+            <select asp-for="JobPost.WeekHourId" class="form-select" id="weekhour">
+                <option selected>Number of hours required in a week</option>
+                @foreach (var week in Model.WeekHourList)
+                {
+                    <option value="@week.Id">@week.Name</option>
+                }
+            </select>
+            <span asp-validation-for="JobPost.WeekHourId" class="text-danger"></span>
+        </div>
+
+@*        <div class="mb-3 form-group row">
+            <label asp-for="JobPost.StartDate" class="col-2 control-label"></label>
+            <div class="col-5">
+                <input asp-for="JobPost.StartDate" type="text" class="datepicker form-control" />
+                <span asp-validation-for="JobPost.StartDate" class="text-danger"></span>
+            </div>
+        </div>*@
+        <div class="mb-4 col-6">
+            <label asp-for="JobPost.StartDate" class="fw-bold"></label>
+            <br />
+            <input asp-for="JobPost.StartDate" id="startDate" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
+            <span asp-validation-for="JobPost.StartDate" class="text-danger"></span>
+            <span class="text-danger" id="startDateError"></span>
+        </div>
+
+        <div class="mb-4 col-6">
+            <label asp-for="JobPost.EndDate" class="fw-bold"></label>
+            <br />
+            <input asp-for="JobPost.EndDate" id="endDate" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
+            <span asp-validation-for="JobPost.EndDate" class="text-danger"></span>
+            <span class="text-danger" id="endDateError"></span>
+        </div>
+
+        <div class="mb-4 col-6">
+            <label asp-for="JobPost.HourlyRate" class="fw-bold"></label>
+            <input asp-for="JobPost.HourlyRate" class="form-control" placeholder="Rands">
+            <span asp-validation-for="JobPost.HourlyRate" class="text-danger"></span>
+        </div>
+
+        <div class="mb-4 col-6">
+            <label class="fw-bold mb-1" style="margin-right:10px">Limited to:</label>
+            <br />
+            @foreach (var openTo in Model.JobPost.OpenTos)
+            {
+                <input type="radio" asp-for="JobPost.OpenTo" value="@openTo" />
+
+                @openTo
+            }
+            <br />
+            <span asp-validation-for="JobPost.OpenTo" class="text-danger"></span>
+        </div>
+
+        <div class="mb-4">
+            <label class="fw-bold">Limited to</label>
+            <br />
+            <input type="checkbox" asp-for="JobPost.FirstYear" /><label class="col-2">Year 1</label>
+            <input type="checkbox" asp-for="JobPost.SecondYear" /><label class="col-2">Year 2</label>
+            <input type="checkbox" asp-for="JobPost.ThirdYear" /><label class="col-2">Year 3</label>
+            <input type="checkbox" asp-for="JobPost.Honours" /><label class="col-2">Honours</label>
+            <input type="checkbox" asp-for="JobPost.Graduates" /><label class="col-2">Graduates</label>
+            <br />
+            <input type="checkbox" asp-for="JobPost.Masters" /><label class="col-2">Master's</label>
+            <input type="checkbox" asp-for="JobPost.PhD" /><label class="col-2">PhD</label>
+            <input type="checkbox" asp-for="JobPost.Postdoc" /><label class="col-2">Postdoc</label>
+
+            @*                <input type="checkbox" asp-for="JobPost.FacultyCheck" /><label class="col-2">Faculty</label>
+            <input type="checkbox" asp-for="JobPost.DepartmentCheck" /><label class="col-2">Department</label>*@
+            <br />
+            @*                <span asp-validation-for="JobPost.FirstYear" class="text-danger"></span>*@
+        </div>
+
+        <div class="mb-4 col-6">
+            <label asp-for="JobPost.MinimumRequirements" class=" fw-bold"></label>
+            <textarea asp-for="JobPost.MinimumRequirements" class="form-control" ></textarea>
+            <span asp-validation-for="JobPost.MinimumRequirements" class="text-danger"></span>
+        </div>
+
+        <div class="mb-4 col-6">
+            <label asp-for="JobPost.ApplicationInstruction" class=" fw-bold"></label>
+            <textarea asp-for="JobPost.ApplicationInstruction" class="form-control"></textarea>
+            <span asp-validation-for="JobPost.ApplicationInstruction" class="text-danger"></span>
+        </div>
+
+        <div class="mb-4 col-6">
+            <label asp-for="JobPost.ClosingDate" class="fw-bold"></label>
+            <br />
+            <input asp-for="JobPost.ClosingDate" id="closingDate" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
+            <span asp-validation-for="JobPost.ClosingDate" class="text-danger"></span>
+            <span class="text-danger" id="closingDateError"></span>
+        </div>
+
+        <div class="mb-4 col-6">
+            <label asp-for="JobPost.ContactPerson" class=" fw-bold"></label>
+            <input asp-for="JobPost.ContactPerson" class="form-control" >
+            <span asp-validation-for="JobPost.ContactPerson" class="text-danger"></span>
+        </div>
+
+        <div class="mb-4 col-6">
+            <label asp-for="JobPost.Email" class="col-2 fw-bold"></label>
+            <input asp-for="JobPost.Email" class="form-control" >
+            <span asp-validation-for="JobPost.Email" class="text-danger"></span>
+        </div>
+
+        <div class="mb-4 col-6">
+            <label asp-for="JobPost.ContactNo" class="fw-bold"></label>
+            <input asp-for="JobPost.ContactNo" class="form-control" pattern="[0][0-9]{9}">
+            <span asp-validation-for="JobPost.ContactNo" class="text-danger"></span>
+        </div>
+
+        @if (Model.JobPost.Id != 0)
+        {
+            <div class="mb-4">
+                <label asp-for="JobPost.ReviewerComment" class="col-2 fw-bold"></label>
+                <textarea asp-for="JobPost.ReviewerComment" class="form-control" readonly="readonly"></textarea>
+                <span asp-validation-for="JobPost.ReviewerComment" class="text-danger"></span>
+            </div>
+        }
+
+
+
+        <div class="mb-4 form-group row">
+            <label asp-for="JobPost.StatusId" class="col-sm-2 col-form-label" hidden></label>
+            <div class="col-5">
+                <select asp-for="JobPost.StatusId" asp-items=@Model.StatusList class="form-select" hidden>
+                </select>
+                <br />
+                <span asp-validation-for="JobPost.StatusId" class="text-danger"></span>
+            </div>
+
+        </div>
+
+
+        @if (Model.JobPost.Id != 0)
+        {
+            <button type="submit" class="btn btn-primary" style="width:150px;margin-right:10px">Save</button>
+        }
+        else
+        {
+            @*<button id="createPost" type="submit" class="btn btn-primary" style="width:150px;margin-right:10p">Create</button>*@
+            <button type="submit" onclick="return ValidateInput()" class="btn btn-primary" style="width:150px;margin-right:10px">Create</button>
+        }
+
+        @*<a asp-controller="JobPost" asp-action="ApplicationIndex" class="btn btn-secondary" style="width:150px">View Applicants</a>*@
+
+        <a asp-controller="JobPost" asp-action="Index" class="btn btn-secondary" style="width:150px">Back</a>
+    </div>
+
+
+</form>
+
+@section Scripts
+    {
+@*    <script>
+        $(function () {
+            $('.datepicker').datepicker();
+        });
+    </script>*@
+    <script>
+        $(document).ready(function () {
+
+            $('#faculty').change(function () {
+                var obid = this.value;
+                $('#department').empty();
+                $.ajax({
+                    type: 'Get',
+                    url: '@Url.Action("getdepartments","JobPost")',
+                    datatype: 'json',
+                    data: { id: obid },
+                    success: function (dep) {
+                        $.each(dep, function (index, item) {
+                            $('#department').append('<option value="' + item.id + '">' + item.name + '</option')
+                        });
+                    }
+                });
+            });
+        })
+    </script>
+
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+
+    <script>
+        $(document).ready(function (){
+            $('#jobtype').change(function () {
+                var obid = this.value;
+                $('#weekhour').empty();
+                //$('#weekhour').append('<option disabled selected>Range</option>');
+                $.ajax({
+                    type: 'Get',
+                    url: '@Url.Action("getweekhour","JobPost")',
+                    datatype: 'json',
+                    data: { id: obid },
+                    success: function (week) {
+                        if (obid != 2) {
+                            $('#weekhour').show();
+                            $('#weekhour').append('<option disabled selected>Number of hours required in a week</option>');
+                            $('#weekhour').attr('disabled', false);
+                            $.each(week, function (index, item) {
+                                $('#weekhour').append('<option value="' + item.id + '">' + item.name + '</option');
+                            });
+                        }
+                        else {
+                            $('#weekhour').hide();
+                            $.each(week, function (index, item) {
+                                $('#weekhour').append('<option value="' + item.id + '">' + item.name + '</option')
+                            });
+                        }
+                    }
+                });
+            });
+        })
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            var startDateInput = document.getElementById("startDate");
+            var endDateInput = document.getElementById("endDate");
+            var closingDateInput = document.getElementById("closingDate");
+
+            var startDateError = document.getElementById("startDateError");
+            var endDateError = document.getElementById("endDateError");
+            var closingDateError = document.getElementById("closingDateError");
+
+            startDateInput.addEventListener("change", validateDates);
+            //startDateInput.addEventListener("submit", validateDates);
+            endDateInput.addEventListener("change", validateDates);
+            closingDateInput.addEventListener("change", validateDates);
+
+            startDateError.textContent = "";
+            endDateError.textContent = "";
+            closingDateError.textContent = "";
+
+            function validateDates() {
+                var startDate = new Date(startDateInput.value);
+                var endDate = new Date(endDateInput.value);
+                var closingDate = new Date(closingDateInput.value);
+
+
+                //if (startDate > endDate) {
+                    //startDateError.textContent = "Start date cannot be after the end date.";
+                    //startDateInput.value = null;
+                    //endDateError.textContent = null;
+                    //closingDateError.textContent=null;
+                //}
+
+                if (startDate < closingDate) {
+                    startDateError.textContent = "Start date cannot be before the closing date.";
+                    startDateInput.value = null;
+                    endDateError.textContent = null;
+                    closingDateError.textContent = null;
+                }
+                if (startDate > closingDate) {
+                    startDateError.textContent = null;
+                }
+
+                if (endDate < startDate) {
+                    endDateError.textContent = "End date cannot be before the start date.";
+                    endDateInput.value = null;
+                    startDateError.textContent = null;
+                    closingDateError.textContent = null;
+                }
+
+                if (endDate > startDate) {
+                    endDateError.textContent = null;
+                }
+                if (endDate < closingDate) {
+                    endDateError.textContent = "End date cannot be before the closing date.";
+                    endDateInput.value = null;
+                    startDateError.textContent = null;
+                    closingDateError.textContent = null;
+                }
+
+                if (closingDate > startDate) {
+                    closingDateError.textContent = "Closing date cannot be after the start date.";
+                    closingDateInput.value = null;
+                    startDateError.textContent = null;
+                    endDateError.textContent = null;
+                }
+
+                if (closingDate < startDate) {
+                    closingDateError.textContent = null;
+                }
+                if (closingDate > endDate) {
+                    closingDateError.textContent = "Closing date cannot be after the end date.";
+                    closingDateInput.value = null;
+                    startDateError.textContent = null;
+                    endDateError.textContent = null;
+                }
+
+                if (closingDate < endDate) {
+                    closingDateError.textContent = null;
+                }
+
+                //else{
+                    //startDateError.textContent=null;
+                   // endDateError.textContent = null;
+                    //closingDateError.textContent = null;
+                //}
+
+            }
+
+            //$('#createPost').click(function (event)){
+                //if (!startDateInput || !endDateInput || !closingDateInput) {
+                    //event.preventDefault();
+                //}
+            //}
+        });
+    </script>
+
+
+    @*<script>
+        $(document).ready(function () {
+
+            $('#startDate').change(function () {
+                var endDate = new Date($('#endDate').val());
+                var closingDate = new Date($('#closingDate').val());
+                var startDate = new Date($(this).val());
+
+                if (startDate > endDate) {
+                    //$('#startEnd').val('Start date cannot be after the end date.');
+                    alert('Start date cannot be after the end date.');
+                    $(this).val('');
+                }
+
+                if (startDate < closingDate) {
+                    alert('Start date cannot be before the closing date.');
+                    $(this).val('');
+                }
+            });
+
+            $('#endDate').change(function () {
+                var startDate = new Date($('#startDate').val());
+                var closingDate = new Date($('#closingDate').val());
+                var endDate = new Date($(this).val());
+
+                if (endDate < startDate) {
+                    alert('End date cannot be before the start date.');
+                    $(this).val('');
+                }
+                if (endDate < closingDate) {
+                    alert('End date cannot be before the closing date.');
+                    $(this).val('');
+                }
+            });
+
+            $('#closingDate').change(function () {
+                var startDate = new Date($('#startDate').val());
+                var endDate = new Date($('#endDate').val());
+                var closingDate = new Date($(this).val());
+
+                if (closingDate > startDate) {
+                    alert('Closing date cannot be after the start date.');
+                    $(this).val('');
+                }
+                if (closingDate > endDate) {
+                    alert('Closing date cannot be after the end date.');
+                    $(this).val('');
+                }
+            });
+
+        });
+    </script>*@
+
+    }
+
+
+
+
+
+@*<script src="~/lib//jquery/dist/jquery.min.js"></script>
+<script src="~/js/CascadingJobtype.js"></script>*@
+

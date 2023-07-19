@@ -1,11 +1,14 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SEP.Models;
+using SmartBreadcrumbs.Attributes;
 using System.Diagnostics;
 
 namespace SEPWebApp.Areas.Home.Controllers
 {
     [Area("Home")]
+    /*    [DefaultBreadcrumb("Home", FromAction = "Index")]*/
+    [DefaultBreadcrumb("Home")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -24,18 +27,26 @@ namespace SEPWebApp.Areas.Home.Controllers
 
             if (_signInManager.IsSignedIn(User))
             {
+                if (User.IsInRole("Approver"))
+                {
+                    return RedirectToAction("Index", "Approver", new { area = "Approver" });
+                }
 
-                if (User.IsInRole("Employer"))
+                else if (User.IsInRole("Employer"))
                 {
                     return RedirectToAction("Index", "Employer", new { area = "Employer" });
                 }
-                if (User.IsInRole("Student"))
+                else
                 {
                     return RedirectToAction("Index", "Student", new { area = "Student" });
-                }
-            }
 
-            return RedirectToAction("Login", "Account", new { area = "Identity" });
+                }
+
+            }
+            return View();
+
+            /*            return RedirectToAction("Login", "Account", new { area = "Identity" });*/
+
         }
 
 

@@ -2,12 +2,13 @@
 
 namespace SEP.Models
 {
-    public enum Faculty
+    public class Faculty
     {
-        [Display(Name = "Commerce, Law and Management")] CommerceLawManagement,
-        [Display(Name = "Engineering and the Built Environment")] Engineering,
-        [Display(Name = "Health Sciences")] HealthSciences,
-        Humanities,
-        Science
+
+        [Key]
+        public int Id { get; set; }
+        [Required]
+        public string Name { get; set; }
+        public List<Department> Departments { get; set; }
     }
 }

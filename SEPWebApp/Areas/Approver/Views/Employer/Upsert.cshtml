@@ -1,0 +1,118 @@
+﻿@model SEP.Models.ViewModels.EmployerVM
+
+
+<form method="post" asp-action="Upsert">
+    <input asp-for="Employer.Id" hidden />
+    <input asp-for="Employer.JobTitle" hidden />
+    <input asp-for="Employer.CompanyRegNo" hidden />
+    <input asp-for="Employer.BusinessName" hidden />
+    <input asp-for="Employer.TradingName" hidden />
+    <input asp-for="Employer.BusinessTypeId" hidden />
+    <input asp-for="Employer.RegisteredAddress" hidden />
+    <input asp-for="Employer.ApplicationUserId" hidden />
+    
+    
+        <div class="p-3 mt-2 row">
+
+            @*        Register section*@
+    @*        <div class="form-floating mb-3">
+                <input asp-for="ApplicationUser.Title" disabled class="form-control" />
+                <label asp-for="ApplicationUser.Title">Title</label>
+                <span asp-validation-for="ApplicationUser.Title" class="text-danger"></span>
+            </div>*@
+
+            <div class="mb-4 col-6">
+                <label class="fw-bold mb-1">Title:</label>
+                <br />
+                <label>@Model.ApplicationUser.Title</label>
+            </div>
+
+            <div class="mb-4 col-6">
+                <label class="fw-bold mb-1">First Name:</label>
+                <br />
+                <label>@Model.ApplicationUser.FirstName</label>
+            </div>
+
+            <div class="mb-4 col-6">
+                <label class="fw-bold mb-1">Last Name:</label>
+                <br />
+                <label>@Model.ApplicationUser.LastName</label>
+            </div>
+
+            <div class="mb-4 col-6">
+                <label class="fw-bold mb-1">Telephone:</label>
+                <br />
+                <label>@Model.ApplicationUser.Telephone</label>
+            </div>
+
+
+
+
+            @*        Employer section*@
+
+            <div class="mb-4 col-6">
+                <label class="fw-bold mb-1">Job Title:</label>
+                <br />
+                <label>@Model.Employer.JobTitle</label>
+            </div>
+            <div class="mb-4 col-6">
+                <label class="fw-bold mb-1">Company registration number:</label>
+                <br />
+                <label>@Model.Employer.CompanyRegNo</label>
+            </div>
+            <div class="mb-4 col-6">
+                <label class="fw-bold mb-1">Business Name:</label>
+                <br />
+                <label>@Model.Employer.BusinessName</label>
+            </div>
+            <div class="mb-4 col-6">
+                <label class="fw-bold mb-1">Trading Name:</label>
+                <br />
+                <label>@Model.Employer.TradingName</label>
+            </div>
+            <div class="mb-4 col-6">
+                <label class="fw-bold mb-1">Business  Type:</label>
+                <br />
+                <label>@Model.Employer.BusinessType.Name</label>
+            </div>
+
+
+            <div class="mb-4 col-6">
+                <label class="fw-bold mb-1">Registered Address:</label>
+                <br />
+                <label>@Model.Employer.RegisteredAddress</label>
+            </div>
+
+        
+
+            <div class="mb-5 form-group row">
+                <div class="col-3">
+                <label class="col-3 col-form-label fw-bold">Status:</label>
+                    <select asp-for="Employer.StatusId" asp-items=@Model.StatusList class="form-select">
+                    </select>
+                    <br />
+                    <span asp-validation-for="Employer.StatusId" class="text-danger"></span>
+                </div>
+
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width:150px; margin-right:10px">Save</button>
+            <a asp-controller="Employer" asp-action="Index" class="btn btn-secondary" style="width:150px">Back</a>
+        </div>
+
+
+
+</form>
+
+@section Scripts
+    {
+    <script>
+        $(function () {
+            $('.datepicker').datepicker();
+        });
+    </script>
+
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

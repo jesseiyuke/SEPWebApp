@@ -2,9 +2,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using SEP.DataAccess;
+using SEP.DataAccess.Data;
 using SEP.DataAccess.Repository;
 using SEP.DataAccess.Repository.IRepository;
 using SEP.Utility;
+using SmartBreadcrumbs.Extensions;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,11 +17,26 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
     builder.Configuration.GetConnectionString("DefaultConnection")
     ));
 
+builder.Services.AddSingleton<FakeJobPost>();
 builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddDefaultTokenProviders()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddSingleton<IEmailSender, EmailSender>();
+
+builder.Services.AddControllersWithViews()
+    .AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+);
+
+builder.Services.AddBreadcrumbs(Assembly.GetExecutingAssembly(), options =>
+{
+    options.TagName = "nav";
+    options.TagClasses = "";
+    options.OlClasses = "breadcrumb";
+    options.LiClasses = "breadcrumb-item";
+    options.ActiveLiClasses = "breadcrumb-item active";
+});
 
 /*builder.Services.AddControllersWithViews().AddRazorPagesOptions(options =>
 {

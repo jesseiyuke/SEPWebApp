@@ -3,6 +3,7 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
@@ -58,6 +59,7 @@ namespace SEPWebApp.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
         }
 
         private async Task LoadAsync(IdentityUser user)
@@ -67,9 +69,11 @@ namespace SEPWebApp.Areas.Identity.Pages.Account.Manage
 
             Username = userName;
 
+
             Input = new InputModel
             {
                 PhoneNumber = phoneNumber
+                
             };
         }
 

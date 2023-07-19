@@ -1,0 +1,60 @@
+﻿@model JobPost
+
+
+<form method="get" asp-action="ApplicationIndex">
+
+    <div class="col pb-2">
+        <label class="col-sm-2 col-form-label fw-bold">Job Title :</label>
+        <label>@Model.JobTitle</label>
+    </div>
+
+    <div class="col pb-2">
+        <label class="col-sm-2 col-form-label fw-bold">Description of job : </label>
+        <label>@Model.JobDescription</label>
+    </div>
+</form>
+
+
+
+
+<table id="tblData" class="table table-bordered table-striped" style="width:100%">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Surname
+            </th>
+            <th>
+                Faculty
+            </th>
+            <th>
+                Department
+            </th>
+            <th>
+                Level
+            </th>
+            <th>
+                Gender
+            </th>
+            <th>
+                Status
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+</table>
+
+
+
+
+<div>
+@*    <a asp-controller="JobPost" asp-action="Export" class="btn btn-secondary">Export to Excel</a>*@
+    <a asp-controller="JobPost" asp-action="Index" class="btn btn-secondary">Back</a>
+</div>
+
+@section Scripts{
+    <script src="~/js/JobPostApplicant.js" asp-append-version="true"></script>
+}
+

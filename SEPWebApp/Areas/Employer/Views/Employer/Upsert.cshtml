@@ -1,0 +1,127 @@
+﻿@model SEP.Models.ViewModels.EmployerVM
+
+
+<form method="post" asp-action="Upsert">
+    <input asp-for="Employer.Id" hidden />
+    <div class="p-3 mt-2 row">
+        <div class="row pb-2">
+            <h2 class="text-primary">Manage Profile</h2>
+        </div>
+
+        @*        Register section*@
+
+@*        <div class="mb-4 col-6">
+            <label class="fw-bold mb-1">Title</label>
+            <br />
+            <label>@Model.ApplicationUser.Title</label>
+        </div>
+
+        <div class="mb-4 col-6">
+            <label class="fw-bold mb-1">First Name</label>
+            <br />
+            <label>@Model.ApplicationUser.FirstName</label>
+        </div>
+
+        <div class="mb-4 col-6">
+            <label class="fw-bold mb-1">Last Name</label>
+            <br />
+            <label>@Model.ApplicationUser.LastName</label>
+        </div>
+
+        <div class="mb-4 col-6">
+            <label class="fw-bold mb-1">Telephone</label>
+            <br />
+            <label>@Model.ApplicationUser.Telephone</label>
+        </div>*@
+@*        <div class="col pb-2">
+            <label class="col-1 col-form-label fw-bold">Title:</label>
+            <label>@Model.ApplicationUser.Title</label>
+            <span asp-validation-for="ApplicationUser.Title" class="text-danger"></span>
+        </div>
+
+
+        <div class="form-floating mb-3 col-5">
+            <input asp-for="ApplicationUser.FirstName" disabled class="form-control" />
+            <label asp-for="ApplicationUser.FirstName">First Name</label>
+            <span asp-validation-for="ApplicationUser.FirstName" class="text-danger"></span>
+        </div>*@
+
+
+
+
+        @*        Employer section*@
+        <div class="mb-4 col-6">
+            <label class="fw-bold mb-1">Job Title</label>
+            <input asp-for="Employer.JobTitle" class="form-control" aria-required="true" />
+            <span asp-validation-for="Employer.JobTitle" class="text-danger"></span>
+        </div>
+        <div class="mb-4 col-6">
+            <label class="fw-bold mb-1">Company registration number</label>
+            <input asp-for="Employer.CompanyRegNo" class="form-control" aria-required="true" />
+            <span asp-validation-for="Employer.CompanyRegNo" class="text-danger"></span>
+        </div>
+        <div class="mb-4 col-6">
+            <label class="fw-bold mb-1">Business Name</label>
+            <input asp-for="Employer.BusinessName" class="form-control" aria-required="true" />
+            <span asp-validation-for="Employer.BusinessName" class="text-danger"></span>
+        </div>
+        <div class="mb-4 col-6">
+            <label class="fw-bold mb-1">Trading Name</label>
+            <input asp-for="Employer.TradingName" class="form-control" aria-required="true" />
+            <span asp-validation-for="Employer.TradingName" class="text-danger"></span>
+        </div>
+
+        <div class="mb-4 col-6">
+            <label class="fw-bold mb-1">Registered Address</label>
+            <textarea asp-for="Employer.RegisteredAddress" class="form-control" aria-required="true"></textarea>
+            <span asp-validation-for="Employer.RegisteredAddress" class="text-danger"></span>
+        </div>
+
+        <div class="mb-4 col-6">
+            <div>
+                <label class="fw-bold mb-1">Business Type</label>
+                <select asp-for="Employer.BusinessTypeId" asp-items=@Model.BusinessTypeList class="form-select" aria-required="true">
+                    <option disabled selected>Select Business Type</option> @*default value in select list*@
+                </select>
+                <br />
+                <span asp-validation-for="Employer.BusinessTypeId" class="text-danger"></span>
+            </div>
+        </div>
+@*        <div class="form-floating mb-3">
+            <input asp-for="Employer.BusinessType" class="form-control" aria-required="true" />
+            <label asp-for="Employer.BusinessType">Business Type</label>
+            <span asp-validation-for="Employer.BusinessType" class="text-danger"></span>
+        </div>*@
+
+
+
+            <div class="mb-3 form-group row">
+            <div class="col-5">
+                <select asp-for="Employer.StatusId" asp-items=@Model.StatusList class="form-select" hidden>
+                </select>
+                <br />
+                <span asp-validation-for="Employer.StatusId" class="text-danger"></span>
+            </div>
+
+        </div>
+
+
+        <button type="submit" class="btn btn-primary" style="width:150px;margin-right:10px">Save</button>
+        <a asp-controller="Employer" asp-action="Index" class="btn btn-secondary" style="width:150px">Back</a>
+    </div>
+
+
+</form>
+
+@section Scripts
+    {
+    <script>
+        $(function () {
+            $('.datepicker').datepicker();
+        });
+    </script>
+
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

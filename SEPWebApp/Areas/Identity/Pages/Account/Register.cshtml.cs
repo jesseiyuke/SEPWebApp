@@ -10,14 +10,18 @@ using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
+using SEP.DataAccess.Repository.IRepository;
 using SEP.Models;
 using SEP.Utility;
+using SmartBreadcrumbs.Attributes;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Text.Encodings.Web;
 
 namespace SEPWebApp.Areas.Identity.Pages.Account
 {
+    [Breadcrumb("Register")]
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<IdentityUser> _signInManager;
@@ -27,6 +31,7 @@ namespace SEPWebApp.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IUnitOfWork _unitOfWork;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
@@ -34,8 +39,10 @@ namespace SEPWebApp.Areas.Identity.Pages.Account
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
-            RoleManager<IdentityRole> roleManager)
+            RoleManager<IdentityRole> roleManager,
+            IUnitOfWork unitOfWork)
         {
+            _unitOfWork = unitOfWork;
             _roleManager = roleManager;
             _userManager = userManager;
             _userStore = userStore;
@@ -97,43 +104,78 @@ namespace SEPWebApp.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
-
-            public string? Title { get; set; }
-            public string? FirstName { get; set; }
-            public string? LastName { get; set; }
+            [Required]
+            [DisplayName("Title")]
+            [RegularExpression("^[a-zA-Z]+$", ErrorMessage = "Title should contain only letters.")]
+            [StringLength(60, MinimumLength = 2, ErrorMessage = "Title must be at least 2 characters long")]
+            public string Title { get; set; }
+            [Required]
+            [DisplayName("First Name")]
+            [StringLength(60, MinimumLength = 1, ErrorMessage = "First Name must be at least 1 character long")]
+            [RegularExpression("^[a-zA-Z]+$", ErrorMessage = "First name should contain only letters.")]
+            public string FirstName { get; set; }
+            [Required]
+            [DisplayName("Last Name")]
+            [RegularExpression("^[a-zA-Z]+$", ErrorMessage = "Last name should contain only letters.")]
+            [StringLength(60, MinimumLength = 1, ErrorMessage = "Last Name must be at least 1 character long")]
+            public string LastName { get; set; }
+            [Required]
+            [DisplayName("Telephone")]
+            [StringLength(10, ErrorMessage = "Must be 10 digits")]
+            [RegularExpression(@"^\d+$", ErrorMessage = "Cellphone number must contain only numbers.")]
             public string? Telephone { get; set; }
-            public string? Cellphone { get; set; }
+            [Required]
+            [DisplayName("Cellphone")]
+            [StringLength(10, ErrorMessage = "Must be 10 digits")]
+            [RegularExpression(@"^\d+$", ErrorMessage = "Cellphone number must contain only numbers.")]
+            public string? Cellphone { get; set; } //Cellphone property in database
 
-            public string? Role { get; set; }
+            [Required(ErrorMessage = "What are you?")]
+            [DisplayName("Role")]
+            public string Role { get; set; }
 
             [ValidateNever]
             public IEnumerable<SelectListItem> RoleList { get; set; }
-        }
 
+        }
 
         public async Task OnGetAsync(string returnUrl = null)
         {
+
             if (!_roleManager.RoleExistsAsync(SD.Role_Approver).GetAwaiter().GetResult())
             {
-                _roleManager.CreateAsync(new IdentityRole(SD.Role_Approver)).GetAwaiter().GetResult();
                 _roleManager.CreateAsync(new IdentityRole(SD.Role_Employer)).GetAwaiter().GetResult();
                 _roleManager.CreateAsync(new IdentityRole(SD.Role_Student)).GetAwaiter().GetResult();
+                _roleManager.CreateAsync(new IdentityRole(SD.Role_Approver)).GetAwaiter().GetResult();
             }
 
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
+
+
             Input = new InputModel()
             {
-                RoleList = _roleManager.Roles.Select(x => x.Name).Select(i => new SelectListItem
+                RoleList = _roleManager.Roles.Where(s => s.Name != SD.Role_Approver).Select(x => x.Name).Select(i => new SelectListItem
                 {
                     Text = i,
                     Value = i
-                })
+                }),
+
+                //.Where(s => s.Name != SD.Role_Approver).
+
+                //Create employer object
+                //Employer = new(),
+
+
+                //JobTitle=_unitOfWork.Employer.GetFirstOrDefault(u => u.JobTitle== )
+
             };
+            /*            int numberOfRolesToShow = 2;
+                        Input.RoleList = Input.RoleList.Take(numberOfRolesToShow);*/
         }
 
-        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
+        public async Task<IActionResult> OnPostAsync(string? returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
@@ -151,11 +193,13 @@ namespace SEPWebApp.Areas.Identity.Pages.Account
                 user.PhoneNumber = Input.Cellphone;
 
 
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+
 
                     if (Input.Role == null) //if null it will be student
                     {
@@ -193,6 +237,18 @@ namespace SEPWebApp.Areas.Identity.Pages.Account
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
+
+            Input = new InputModel()
+            {
+                RoleList = _roleManager.Roles.Where(s => s.Name != SD.Role_Approver).Select(x => x.Name).Select(i => new SelectListItem
+                {
+                    Text = i,
+                    Value = i
+                }),
+
+            };
+            /*            int numberOfRolesToShow = 2;
+                        Input.RoleList = Input.RoleList.Take(numberOfRolesToShow);*/
 
             // If we got this far, something failed, redisplay form
             return Page();

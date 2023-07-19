@@ -1,0 +1,51 @@
+﻿@model Qualifications
+@{
+    ViewData["Title"] = "AddQualifications";
+}
+<h4>Qualification</h4>
+<form>
+    <input asp-for="Id" hidden />
+
+    <div class="col pb-2">
+        <label class="col-sm-2 col-form-label fw-bold">Institution</label>
+        <label>@Model.Institution</label>
+    </div>
+
+    <div class="col pb-2">
+        <label class="col-sm-2 col-form-label fw-bold">Start Date</label>
+        <label>@Model.StartDate.ToString("MMMM-yyyy")</label>
+    </div>
+    <div class="col pb-2">
+        <label class="col-sm-2 col-form-label fw-bold">End Date</label>
+        <label>@Model.EndDate.ToString("MMMM-yyyy")</label>
+    </div>
+
+    <div class="col pb-2">
+        <label class="col-sm-2 col-form-label fw-bold">Qualification</label>
+        <label>@Model.Qalificatiion</label>
+    </div>
+
+    <div class="col pb-2">
+        <label class="col-sm-2 col-form-label fw-bold">Subjects</label>
+        <label>@Model.Subjects</label>
+    </div>
+    <div class="col pb-2">
+        <label class="col-sm-2 col-form-label fw-bold">Qualification</label>
+        <label>@Model.Qalificatiion</label>
+    </div>
+    <div class="col pb-2">
+        <label class="col-sm-2 col-form-label fw-bold">Majors</label>
+        <label>@Model.Majors</label>
+    </div>
+
+    <div class="col pb-2">
+        <label class="col-sm-2 col-form-label fw-bold">SubMajors</label>
+        <label>@Model.SubMajors</label>
+    </div>
+
+    <div class="col pb-2">
+        <label class="col-sm-2 col-form-label fw-bold">Research</label>
+        <label>@Model.Research</label>
+    </div>
+
+</form>

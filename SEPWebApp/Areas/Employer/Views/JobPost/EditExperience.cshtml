@@ -1,0 +1,34 @@
+﻿@model Experience
+@{
+    ViewData["Title"] = "Experience";
+}
+
+<h3>Work Experience</h3>
+<form>
+    
+    <input type="text" asp-for="Id" hidden class="form-control form-control-lg" />
+    <div class="col pb-2">
+        <label class="col-sm-2 col-form-label fw-bold">Employer Name</label>
+        <label>@Model.EmployerName</label>
+    </div>
+
+    <div class="col pb-2">
+        <label class="col-sm-2 col-form-label fw-bold">Start Date</label>
+        <label>@Model.StartDate.ToString("MMMM-yyyy")</label>
+    </div>
+
+    <div class="col pb-2">
+        <label class="col-sm-2 col-form-label fw-bold">End Date</label>
+        <label>@Model.EndDate.ToString("MMMM-yyyy")</label>
+    </div>
+
+    <div class="col pb-2">
+        <label class="col-sm-2 col-form-label fw-bold">Job Title</label>
+        <label>@Model.JobTitle</label>
+    </div>
+    <div class="col pb-2">
+        <label class="col-sm-2 col-form-label fw-bold">Tasks And Responsilities</label>
+        <label>@Model.TasksAndResponsilities</label>
+    </div>
+   
+</form>

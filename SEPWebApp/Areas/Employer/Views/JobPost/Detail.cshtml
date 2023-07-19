@@ -1,0 +1,213 @@
+﻿@model SEP.Models.ViewModels.JobPostVM
+
+<form method="post" asp-action="Detail">
+    <input asp-for="StudentApplication.Id" hidden />
+@*    <input asp-for="JobPost.ApplicationUserId" hidden />*@
+
+    <div class="p-3 mt-2 row">
+        <div class="row pb-2">
+            <h2 class="text-primary">Details:</h2>
+        </div>
+
+        <div class="mb-2 col-6">
+            <label class="fw-bold mb-1">Job Title</label>
+            <br />
+            <label>@Model.StudentApplication.jobPost.JobTitle</label>
+        </div>
+
+        <div class="mb-2 col-6">
+            <label class="fw-bold mb-1">Description of job</label>
+            <br />
+            <label>@Model.StudentApplication.jobPost.JobDescription</label>
+        </div>
+        <br />
+
+        <div class="row pb-2">
+            <h2 class="text-primary">Profile:</h2>
+        </div>
+
+
+        <div class="mb-4 col-6">
+            <label class="fw-bold mb-1">First Name</label>
+            <br />
+            <label>@Model.StudentApplication.Student.ApplicationUser.FirstName</label>
+        </div>
+
+        <div class="mb-4 col-6">
+            <label class="fw-bold mb-1">Last Name</label>
+            <br />
+            <label>@Model.StudentApplication.Student.ApplicationUser.LastName</label>
+        </div>
+
+        <div class="mb-4 col-6">
+            <label class="fw-bold mb-1">Email</label>
+            <br />
+            <label>@Model.StudentApplication.Student.ApplicationUser.Email</label>
+        </div>
+
+        <div class="mb-4 col-6">
+            <label class="fw-bold mb-1">Telephone</label>
+            <br />
+            <label>@Model.StudentApplication.Student.ApplicationUser.Telephone</label>
+        </div>
+
+
+        <div class="mb-4 col-6">
+            <label class="fw-bold mb-1">Faculty</label>
+            <br />
+            <label>@Model.StudentApplication.Student.Department.Faculty.Name</label>
+        </div>
+        <div class="mb-4 col-6">
+            <label class="fw-bold mb-1">Department</label>
+            <br />
+            <label>@Model.StudentApplication.Student.Department.Name</label>
+        </div>
+        <div class="mb-4 col-6">
+            <label class="fw-bold mb-1">Year of Study</label>
+            <br />
+            <label>@Model.StudentApplication.Student.YearOfStudy.Name</label>
+        </div>
+        <div class="mb-4 col-6">
+            <label class="fw-bold mb-1">Gender</label>
+            <br />
+            <label>@Model.StudentApplication.Student.Gender.Name</label>
+        </div>
+        <div class="mb-4 col-6">
+            <label class="fw-bold mb-1">Nationality</label>
+            <br />
+            <label>@Model.StudentApplication.Student.Nationality.Name</label>
+            <br />
+        </div>
+        <div class="mb-4 col-6">
+            <label class="fw-bold mb-1">Address</label>
+            <br />
+            <label>@Model.StudentApplication.Student.Address</label>
+            <br />
+        </div>
+        <div class="mb-4 col-6">
+            <label class="fw-bold mb-1">ID/Passport No</label>
+            <br />
+            <label>@Model.StudentApplication.Student.IdNo</label>
+            <br />
+        </div>
+        <div class="mb-4 col-6">
+            <label class="fw-bold mb-1">Drivers License</label>
+            <br />
+@*            <input asp-for="StudentApplication.Student.DriversLicense.Name" disabled class="col-4">*@
+            <label>@Model.StudentApplication.Student.DriversLicense.Name</label>
+            <br />
+        </div>
+        <div class="mb-4 col-6">
+            <label class="fw-bold mb-1">Career Objective</label>
+            <br />
+            <label>@Model.StudentApplication.Student.CareerObjective</label>
+            <br />
+        </div>
+        <div class="mb-4 col-6">
+            <label class="fw-bold mb-1">Achievements</label>
+            <br />
+            <label>@Model.StudentApplication.Student.Achivements</label>
+            <br />
+        </div>
+        <div class="mb-4 col-6">
+            <label class="fw-bold mb-1">Skills</label>
+            <br />
+            <label>@Model.StudentApplication.Student.Skills</label>
+            <br />
+        </div>
+        <div class="mb-4 col-6">
+            <label class="fw-bold mb-1">Interests</label>
+            <br />
+            <label>@Model.StudentApplication.Student.Interests</label>
+            <br />
+        </div>
+
+        <div class="mb-4 col-6">
+            <div class="row pb-2">
+                <h2 class="text-primary">Referees</h2>
+            </div>
+
+            @foreach (var referee in Model.Referees)
+            {
+                <div class="from-group row">
+                    <label class="col-5">@referee.JobTitle</label>
+                    <div class="col pb-2">
+                        <a asp-controller="JobPost" asp-action="EditReferees" asp-route-id="@referee.Id" class="btn btn-primary" style="width:100px">View</a>
+
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="mb-4 col-6">
+            <div class="row pb-2">
+                <h2 class="text-primary">Work Experience</h2>
+            </div>
+
+            @foreach (var experience in Model.Experience)
+            {
+                <div class="from-group row">
+                    <label class="col-5">@experience.JobTitle</label>
+                    <div class="col pb-2">
+                        <a asp-controller="JobPost" asp-action="EditExperience" asp-route-id="@experience.Id" class="btn btn-primary" style="width:100px">View</a>
+
+                    </div>
+                </div>
+            }
+        </div>
+
+        
+        <div class="mb-4 col-6">
+            <div class="row pb-2">
+                <h2 class="text-primary">Education</h2>
+            </div>
+
+            @foreach (var education in Model.Qualification)
+            {
+                <div class="from-group row">
+                    <label class="col-5">@education.Qalificatiion</label>
+                    <div class="col pb-2">
+                        <a asp-controller="JobPost" asp-action="EditQualification" asp-route-id="@education.Id" class="btn btn-primary" style="width:100px">View</a>
+
+                    </div>
+                </div>
+            }
+        </div>
+
+
+        <div class="mb-4 col-6">
+            <div class="row pb-2">
+                <h2 class="text-primary">Documents:</h2>
+            </div>
+            @foreach (ApplicationDocument document in Model.StudentApplication.Documents)
+            {
+                <div class="col pb-2">
+                    <label class="col-5">@document.Description</label>
+                    <a href="@document.FilePath" target="_blank">@document.Name</a>
+                </div>
+            }
+        </div>
+
+
+
+
+    </div>
+
+    <div class="mb-3 form-group col-5">
+        <div>
+            <label class="col-sm-2 col-form-label fw-bold">Status :</label>
+            <select asp-for="StudentApplication.applicationStatus.Id">
+                <option disabled selected>Select Outcome</option>
+                @foreach (var fac in Model.ApplicationStatusList)
+                {
+                    <option value="@fac.Id">@fac.Name</option>
+                }
+            </select>
+            <br />
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary" style="width:150px;margin-right:10px">Save</button>
+    <a href="/Employer/JobPost/ApplicationIndex?id=@Model.StudentApplication.JobPostId" class="btn btn-secondary" style="width:150px">Back</a>
+
+</form>

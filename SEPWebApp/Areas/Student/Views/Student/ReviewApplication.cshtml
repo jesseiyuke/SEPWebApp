@@ -1,0 +1,110 @@
+﻿@model StudentApplication
+<div>
+    <div class="col pb-2">
+        <label class="col-sm-2 col-form-label">Status :</label>
+        <label><b>@Model.applicationStatus.Name</b></label>
+    </div>
+    <div class="col pb-2">
+        <label class="col-sm-2 col-form-label">Job Title :</label>
+        <input disabled asp-for="@Model.jobPost.JobTitle" />
+    </div>
+    <div class="col pb-2">
+        <label class="col-sm-2 col-form-label">Location : </label>
+        <input disabled asp-for="@Model.jobPost.Location" />    
+    </div>
+    <div class="col pb-2">
+        <label class="col-sm-2 col-form-label">Description of job : </label>
+        <input disabled asp-for="@Model.jobPost.JobDescription" />
+    </div>
+    <div class="col pb-2">
+        <label class="col-sm-2 col-form-label">Key responsiblities : </label>
+        <textArea disabled asp-for="@Model.jobPost.KeyResponsibilities" ></textArea>
+    </div>
+    <div class="col pb-2">
+        <label class="col-sm-2 col-form-label">Fulltime or Part-time : </label>
+        <input disabled asp-for="@Model.jobPost.JobType.Name" />
+    </div>
+    <div class="col pb-2">
+        <label class="col-sm-2 col-form-label">Number of hours in a week : </label>
+        <input disabled asp-for="@Model.jobPost.WeekHour.Name" />
+    </div>
+    <div class="col pb-2">
+        <label class="col-sm-2 col-form-label">Rate</label>
+        <input disabled asp-for="@Model.jobPost.HourlyRate" />
+    </div>
+    <div class="col pb-2">
+         <label class="col-sm-2 col-form-label" asp-for="jobPost.StartDate">Start Date</label>
+        <input asp-for="jobPost.StartDate" type="date" disabled/>
+    </div>
+    <div class="col pb-2">
+        <label class="col-sm-2 col-form-label" asp-for="jobPost.EndDate">End Date</label>
+        <input asp-for="jobPost.EndDate" type="date" disabled/>
+    </div>
+    <div class="col pb-2">
+        <label class="col-sm-2 col-form-label">Minimum Requirements : </label >
+        <input asp-for="@Model.jobPost.MinimumRequirements" disabled />
+    </div>
+    <div class="col pb-2">
+        <label class="col-sm-2 col-form-label">Application instruction : </label class="col-sm-2 col-form-label">
+        <textarea asp-for="@Model.jobPost.ApplicationInstruction" disabled></textarea>
+    </div>
+    <div class="col pb-2">
+         <label class="col-sm-2 col-form-label" asp-for="jobPost.ClosingDate" >Closing Date</label>
+        <input asp-for="jobPost.ClosingDate" type="date" disabled/>
+    </div>
+    <h3>Documents</h3>
+    @foreach (ApplicationDocument document in Model.Documents)
+    {
+        <div class="col pb-2">
+            <label class="col-sm-2 col-form-label" asp-for="jobPost.ClosingDate" >@document.Description</label>
+            <a href="@document.FilePath" target="_blank">@document.Name</a>
+@*            <a asp-controller="Student" asp-action="DeleteDocument" asp-route-id="@document.Id" class="btn btn-primary mx-2">Delete</a>*@
+@*            <a onClick=Delete('/Student/Student/WithdrawApplication/${data}') class="btn btn-primary mx-2">Withdraw</a>*@
+@*            <a href="/Student/Student/DeleteDocument?id=@document.Id" class="btn btn-primary mx-2">Delete</a>*@
+        </div>
+    }
+    @if (Model.StatusId==1)
+    {
+        <a href="/Student/Student/File?id=@Model.Id" class="btn btn-primary mx-2">Add documents</a>
+    }
+    <a asp-area="Student" asp-action="History" class="btn btn-secondary" style="width:150px">Back</a>
+
+</div>
+
+
+@*@section Scripts
+    {
+    <script>
+        function Delete(url) {
+	Swal.fire({
+		title: 'Are you sure?',
+		text: "You won't be able to apply to this job post again!",
+		icon: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		confirmButtonText: 'Yes, delete it!'
+	}).then((result) => {
+		if (result.isConfirmed) {
+			$.ajax({
+				url: url,
+				type: 'DELETE',
+				success: function (data) {
+					if (data.success) {
+						dataTable.ajax.reload();
+						toastr.success(data.message);
+					}
+					else {
+						toastr.error(data.message);
+					}
+				}
+			})
+		}
+	})
+}
+    </script>
+
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}*@
